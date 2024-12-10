@@ -35,13 +35,7 @@ php -S localhost:8888 -t public public/index.php
 
 The project is organized for clarity, modularity, and separation of concerns.
 
-Core application logic, such as controllers and services, resides in the `app/` directory. Configuration and bootstrap files are in `bootstrap/`, while publicly accessible files are in `public/`.
-
-Route definitions are located in `routes/`. Logs and cached files are stored in `storage/`.
-
-The `tests/` directory contains unit and feature tests.
-
-Additionally, the `workbench/` folder can be used as a sandbox for testing and development purposes.
+The core application logic, such as controllers, resides in the `app/` directory. Configuration and initialization files for the application, container, environment, middleware, and controllers are organized in `bootstrap/`. Publicly accessible files, like the entry point and assets, are located in `public/`. Route definitions can be found in `routes/`, while logs and cached files are stored in `storage/`. The `tests/` directory holds unit and feature tests to ensure code quality. Additionally, the `workbench/` folder serves as a sandbox for experimentation and development.
 
 Here’s a breakdown of the directory structure:
 
