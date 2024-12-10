@@ -1,38 +1,58 @@
-# Skeleton
+# Slim App Template
 
-<p align="center">
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/require/php" alt="PHP Version Require"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/v" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/downloads" alt="Total Downloads"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/license" alt="License"></a>
-</p>
-
-A starter structure built with the [Slim PHP framework](https://www.slimframework.com/docs/v3/).
+A template for building backend applications using the [Slim PHP framework](https://www.slimframework.com/docs/v4/).
 
 ## License
 Licensed under the [MIT license](https://opensource.org/licenses/MIT). Totally free for private or commercial projects.
 
-## Get Started
-### Introduction
-I created this bare-bones, boilerplate project for myself just to save a little time when developing my next big idea. 
+## Project Setup
 
-### Installation
-Run the following command in terminal to create a new skeleton project:
-```text
-composer create-project andrewdyer/skeleton project_name
+### Install Dependencies
+
+From the project root directory, run the following command to install required dependencies:
+
+```shell
+composer install
 ```
 
-### Web Server
+### Environment Configuration
+
+To ensure correct environment configuration, copy the `.env.example` file to `.env` and update it with your settings.
+
+```shell
+cp .env.example .env
+```
+
+### Start the Web Server
+
 Once installed, you can start a localhost web server by running the following command from the project root directory in terminal:
-```text
+
+```shell
 php -S localhost:8888 -t public public/index.php
 ```
 
-## Support
-If you are having general issues with this project, then please feel free to contact me on [Twitter](https://twitter.com/andyer92).
+## Project Structure
 
-If you believe you have found an issue, please report it using the [issue tracker](https://github.com/andrewdyer/skeleton/issues), or better yet, fork the repository and submit a pull request.
+The project is organized for clarity, modularity, and separation of concerns.
 
-Feel free to submit any minor enhancements too. Please do not contribute any big additions as the purpose of this project is to be a simple starting point.
+Core application logic, such as controllers and services, resides in the `app/` directory. Configuration and bootstrap files are in `bootstrap/`, while publicly accessible files are in `public/`.
 
-If you're using this as your starter structure, I'd love to hear your thoughts!
+Route definitions are located in `routes/`. Logs and cached files are stored in `storage/`.
+
+The `tests/` directory contains unit and feature tests.
+
+Additionally, the `workbench/` folder can be used as a sandbox for testing and development purposes.
+
+Here’s a breakdown of the directory structure:
+
+```text
+my-project/
+├── app/
+├── bootstrap/
+├── public/
+├── resources/
+├── routes/
+├── storage/
+├── tests/
+└── workbench/
+```
