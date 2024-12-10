@@ -1,6 +1,6 @@
 {
-    "name": "andrewdyer/skeleton",
-    "description": "A starter structure built with the Slim PHP framework",
+    "name": "andrewdyer/slim-app-template",
+    "description": "A template for building backend applications using the Slim PHP framework",
     "type": "project",
     "authors": [
         {
