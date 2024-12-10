@@ -5,9 +5,7 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 
-return function() {
-    $container = new Container();
-
+return function(Container $container) {
     $container->set('settings', function() {
         return [
             'app' => [
