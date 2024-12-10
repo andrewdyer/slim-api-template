@@ -1,3 +1,8 @@
 <?php
 
-$app->get('/', App\Http\Controllers\IndexController::class . ':index')->setName('index');
+use App\Http\Controllers\IndexController;
+use Slim\App;
+
+return function(App $app) {
+    $app->get('/', IndexController::class);
+};

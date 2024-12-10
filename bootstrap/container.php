@@ -1,44 +1,58 @@
 <?php
 
-$container = $app->getContainer();
+use DI\Container;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
 
-$container['foundHandler'] = function () {
-    return new Slim\Handlers\Strategies\RequestResponseArgs();
-};
+return function() {
+    $container = new Container();
 
-$container['logger'] = function ($container) {
-    $config = $container->get('settings')->get('logger');
+    $container->set('settings', function() {
+        return [
+            'app' => [
+                'display_error_details' => filter_var(get_env('APP_DISPLAY_ERROR_DETAILS'), FILTER_VALIDATE_BOOLEAN),
+                'log_errors'            => filter_var(get_env('APP_LOG_ERRORS'), FILTER_VALIDATE_BOOLEAN),
+                'log_error_details'     => filter_var(get_env('APP_LOG_ERROR_DETAILS'), FILTER_VALIDATE_BOOLEAN),
+            ],
+            'db' => [
+                'driver'    => get_env('DB_DRIVER'),
+                'host'      => get_env('DB_HOST'),
+                'port'      => get_env('DB_PORT'),
+                'database'  => get_env('DB_DATABASE'),
+                'username'  => get_env('DB_USERNAME'),
+                'password'  => get_env('DB_PASSWORD'),
+                'charset'   => get_env('DB_CHARSET'),
+                'collation' => get_env('DB_COLLATION'),
+                'prefix'    => get_env('DB_PREFIX'),
+            ],
+            'logger' => [
+                'name'        => get_env('LOG_NAME', 'app'),
+                'path'        => root_path('storage/logs/app.log'),
+                'level'       => Logger::toMonologLevel(get_env('LOG_LEVEL', 'DEBUG')),
+                'max_files'   => (int)get_env('LOG_MAX_FILES', 30),
+                'log_format'  => get_env('LOG_FORMAT', "[%datetime%] %level_name%: %message% %context% %extra%\n"),
+                'date_format' => get_env('LOG_DATE_FORMAT', 'Y-m-d H:i:s'),
+            ],
+        ];
+    });
 
-    $formatter = new Monolog\Formatter\LineFormatter(
-        $config['formatter']['format'] . "\n",
-        $config['formatter']['dateFormat'],
-        $config['formatter']['allowInlineLineBreaks'],
-        $config['formatter']['ignoreEmptyContextAndExtra']
-    );
+    $container->set(Logger::class, function($container) {
+        $settings = $container->get('settings')['logger'];
 
-    $handler = new Monolog\Handler\StreamHandler(
-        base_path('storage/logs/app.log'),
-        $config['handler']['level']
-    );
+        $logger = new Logger($settings['name']);
+        $handler = new RotatingFileHandler($settings['path'], $settings['max_files'], $settings['level']);
 
-    $handler->setFormatter($formatter);
+        $formatter = new LineFormatter(
+            "[%datetime%] %level_name%: %message% %context% %extra%\n",
+            'Y-m-d H:i:s'
+        );
+        $handler->setFormatter($formatter);
 
-    $logger = new Monolog\Logger($config['name']);
-    $logger->pushHandler($handler);
+        $logger->pushHandler($handler);
 
-    return $logger;
-};
+        return $logger;
+    });
 
-$container['view'] = function ($container) {
-    $config = $container->get('settings')->get('view');
-
-    $view = new Slim\Views\Twig(base_path('resources/views'), [
-        'cache' => $config['cache'],
-    ]);
-
-    $router = $container->get('router');
-    $uri = Slim\Http\Uri::createFromEnvironment(new Slim\Http\Environment($_SERVER));
-    $view->addExtension(new Slim\Views\TwigExtension($router, $uri));
-
-    return $view;
+    return $container;
 };
