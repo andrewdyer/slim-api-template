@@ -7,6 +7,13 @@ if (!function_exists('root_path')) {
     }
 }
 
+if (!function_exists('require_from_root')) {
+    function require_from_root($path)
+    {
+        return require_once root_path($path);
+    }
+}
+
 if (!function_exists('get_env')) {
     function get_env($key, $default = null)
     {

@@ -4,15 +4,15 @@ use Slim\Factory\AppFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-(require_once __DIR__ . '/environment.php')();
+require_from_root('bootstrap/environment.php')();
 
-$container = (require_once __DIR__ . '/container.php')();
+$container = require_from_root('bootstrap/container.php')();
 
 AppFactory::setContainer($container);
 
-(require_once __DIR__ . '/database.php')($container);
+require_from_root('bootstrap/database.php')($container);
 
-(require_once __DIR__ . '/controllers.php')($container);
+require_from_root('bootstrap/controllers.php')($container);
 
 $app = AppFactory::create();
 
