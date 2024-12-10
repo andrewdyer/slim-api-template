@@ -8,15 +8,15 @@ return function() {
     $container->set('settings', function() {
         return [
             'db' => [
-                'driver'    => 'mysql',
-                'host'      => '127.0.0.1',
-                'port'      => 3306,
-                'database'  => 'development_db',
-                'username'  => 'root',
-                'password'  => 'password',
-                'charset'   => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix'    => '',
+                'driver'    => getenv('DB_DRIVER'),
+                'host'      => getenv('DB_HOST'),
+                'port'      => getenv('DB_PORT'),
+                'database'  => getenv('DB_DATABASE'),
+                'username'  => getenv('DB_USERNAME'),
+                'password'  => getenv('DB_PASSWORD'),
+                'charset'   => getenv('DB_CHARSET'),
+                'collation' => getenv('DB_COLLATION'),
+                'prefix'    => getenv('DB_PREFIX'),
             ],
         ];
     });
