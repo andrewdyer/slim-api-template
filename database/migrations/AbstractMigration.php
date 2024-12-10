@@ -18,6 +18,7 @@ abstract class AbstractMigration extends BaseAbstractMigration
     public function init(): void
     {
         $adapter = $this->getAdapter();
+
         $capsule = new Capsule();
         $capsule->addConnection([
             'driver'    => $adapter->getOption('adapter'),
@@ -31,6 +32,7 @@ abstract class AbstractMigration extends BaseAbstractMigration
             'prefix'    => $adapter->getOption('prefix'),
         ]);
         $capsule->setAsGlobal();
+
         $this->schema = $capsule->schema();
     }
 }
