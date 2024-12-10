@@ -8,6 +8,8 @@ $container = (require_once __DIR__ . '/container.php')();
 
 AppFactory::setContainer($container);
 
+(require_once __DIR__ . '/database.php')($container);
+
 $app = AppFactory::create();
 
 return $app;

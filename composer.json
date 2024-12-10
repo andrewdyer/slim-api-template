@@ -10,6 +10,7 @@
     ],
     "license": "MIT",
     "require": {
+        "illuminate/database": "^11.35",
         "php-di/php-di": "^7.0",
         "slim/psr7": "^1.7",
         "slim/slim": "^4.14"
