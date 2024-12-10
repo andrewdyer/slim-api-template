@@ -18,6 +18,11 @@
             "app/helpers.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require": {
         "illuminate/database": "^11.35",
         "php-di/php-di": "^7.0",
@@ -27,6 +32,7 @@
         "vlucas/phpdotenv": "^5.6"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.65"
+        "friendsofphp/php-cs-fixer": "^3.65",
+        "phpunit/phpunit": "^11.5"
     }
 }
