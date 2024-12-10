@@ -12,6 +12,8 @@ AppFactory::setContainer($container);
 
 (require_once __DIR__ . '/database.php')($container);
 
+(require_once __DIR__ . '/controllers.php')($container);
+
 $app = AppFactory::create();
 
 return $app;

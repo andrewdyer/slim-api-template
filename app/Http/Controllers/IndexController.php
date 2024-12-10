@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class IndexController extends Controller
+class IndexController
 {
-    public function index(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response): Response
     {
-        return $this->getView()->render($response, 'index/index.html.twig', [
-            'controllerName' => 'IndexController',
-            'controllerLocation' => __DIR__ . '/IndexController.php',
-        ]);
+        $response->getBody()->write('Hello, World!');
+
+        return $response;
     }
 }
