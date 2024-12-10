@@ -10,8 +10,6 @@ $container = require_from_root('bootstrap/container.php')();
 
 AppFactory::setContainer($container);
 
-require_from_root('bootstrap/database.php')($container);
-
 require_from_root('bootstrap/controllers.php')($container);
 
 $app = AppFactory::create();

@@ -15,17 +15,6 @@ return function() {
                 'log_errors'            => filter_var(get_env('APP_LOG_ERRORS'), FILTER_VALIDATE_BOOLEAN),
                 'log_error_details'     => filter_var(get_env('APP_LOG_ERROR_DETAILS'), FILTER_VALIDATE_BOOLEAN),
             ],
-            'db' => [
-                'driver'    => get_env('DB_DRIVER'),
-                'host'      => get_env('DB_HOST'),
-                'port'      => get_env('DB_PORT'),
-                'database'  => get_env('DB_DATABASE'),
-                'username'  => get_env('DB_USERNAME'),
-                'password'  => get_env('DB_PASSWORD'),
-                'charset'   => get_env('DB_CHARSET'),
-                'collation' => get_env('DB_COLLATION'),
-                'prefix'    => get_env('DB_PREFIX'),
-            ],
             'logger' => [
                 'name'        => get_env('LOG_NAME', 'app'),
                 'path'        => root_path('storage/logs/app.log'),
