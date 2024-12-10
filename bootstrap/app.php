@@ -16,4 +16,6 @@ require_from_root('bootstrap/controllers.php')($container);
 
 $app = AppFactory::create();
 
+require_from_root('bootstrap/middleware.php')($app);
+
 return $app;

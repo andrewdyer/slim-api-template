@@ -10,6 +10,11 @@ return function() {
 
     $container->set('settings', function() {
         return [
+            'app' => [
+                'display_error_details' => filter_var(get_env('APP_DISPLAY_ERROR_DETAILS'), FILTER_VALIDATE_BOOLEAN),
+                'log_errors'            => filter_var(get_env('APP_LOG_ERRORS'), FILTER_VALIDATE_BOOLEAN),
+                'log_error_details'     => filter_var(get_env('APP_LOG_ERROR_DETAILS'), FILTER_VALIDATE_BOOLEAN),
+            ],
             'db' => [
                 'driver'    => get_env('DB_DRIVER'),
                 'host'      => get_env('DB_HOST'),
