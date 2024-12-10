@@ -35,3 +35,17 @@ if (!function_exists('get_env')) {
         return $default;
     }
 }
+
+if (!function_exists('get_env_bool')) {
+    function get_env_bool($key, $default = false): bool
+    {
+        return filter_var(get_env($key, $default), FILTER_VALIDATE_BOOLEAN);
+    }
+}
+
+if (!function_exists('get_env_int')) {
+    function get_env_int($key, $default = 0): int
+    {
+        return (int)get_env($key, $default);
+    }
+}

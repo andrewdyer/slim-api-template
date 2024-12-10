@@ -11,15 +11,15 @@ return function() {
     $container->set('settings', function() {
         return [
             'app' => [
-                'display_error_details' => filter_var(get_env('APP_DISPLAY_ERROR_DETAILS'), FILTER_VALIDATE_BOOLEAN),
-                'log_errors'            => filter_var(get_env('APP_LOG_ERRORS'), FILTER_VALIDATE_BOOLEAN),
-                'log_error_details'     => filter_var(get_env('APP_LOG_ERROR_DETAILS'), FILTER_VALIDATE_BOOLEAN),
+                'display_error_details' => get_env_bool('APP_DISPLAY_ERROR_DETAILS'),
+                'log_errors'            => get_env_bool('APP_LOG_ERRORS'),
+                'log_error_details'     => get_env_bool('APP_LOG_ERROR_DETAILS'),
             ],
             'logger' => [
                 'name'        => get_env('LOG_NAME', 'app'),
                 'path'        => root_path('storage/logs/app.log'),
                 'level'       => Logger::toMonologLevel(get_env('LOG_LEVEL', 'DEBUG')),
-                'max_files'   => (int)get_env('LOG_MAX_FILES', 30),
+                'max_files'   => get_env_int('LOG_MAX_FILES', 30),
                 'log_format'  => get_env('LOG_FORMAT', "[%datetime%] %level_name%: %message% %context% %extra%\n"),
                 'date_format' => get_env('LOG_DATE_FORMAT', 'Y-m-d H:i:s'),
             ],
