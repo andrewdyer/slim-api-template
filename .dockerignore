@@ -1,0 +1,23 @@
+# Version control
+/.git
+
+# Dependency directories
+/vendor
+
+# Dependency lock files
+/composer.lock
+
+# Log files
+*.log
+
+# Cache files
+*.cache
+
+# Environment configuration files
+*.env
+
+# Test files
+/tests
+
+# Documentation files
+*.md

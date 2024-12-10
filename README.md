@@ -50,3 +50,12 @@ my-project/
 ├── tests/
 └── workbench/
 ```
+## Dockerizing
+
+### `docker build -t slim-app-template .`
+
+Builds a Docker image for the application.
+
+### `docker run --name my-app -p 8888:80 -d slim-app-template`
+
+Runs a container from the previously built Docker image.
