@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/bootstrap/app.php';
+
 return [
     'paths' => [
         'migrations' => '%%PHINX_CONFIG_DIR%%/database/migrations',
@@ -9,13 +11,13 @@ return [
         'default_migration_table' => 'migrations',
         'default_environment'     => 'default',
         'default'                 => [
-            'adapter' => 'mysql',
-            'host'    => '127.0.0.1',
-            'name'    => 'development_db',
-            'user'    => 'root',
-            'pass'    => 'password',
-            'port'    => '3306',
-            'charset' => 'utf8mb4',
+            'adapter' => get_env('DB_DRIVER'),
+            'host'    => get_env('DB_HOST'),
+            'port'    => get_env('DB_PORT'),
+            'name'    => get_env('DB_DATABASE'),
+            'user'    => get_env('DB_USERNAME'),
+            'pass'    => get_env('DB_PASSWORD'),
+            'charset' => get_env('DB_CHARSET'),
         ],
     ],
     'version_order'        => 'creation',

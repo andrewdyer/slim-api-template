@@ -12,7 +12,10 @@
     "autoload": {
         "psr-4": {
             "Database\\Migrations\\": "database/migrations/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "require": {
         "illuminate/database": "^11.35",
