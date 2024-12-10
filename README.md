@@ -44,7 +44,6 @@ my-project/
 ├── app/
 ├── bootstrap/
 ├── public/
-├── resources/
 ├── routes/
 ├── storage/
 ├── tests/
