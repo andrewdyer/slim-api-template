@@ -16,7 +16,7 @@ return $config->setRules([
     'array_syntax' => ['syntax' => 'short'],
     'binary_operator_spaces' => [
         'default' => 'single_space',
-        'operators' => ['=>' => 'align_single_space_minimal']
+        'operators' => ['=>' => 'single_space']
     ],
     'blank_line_after_namespace' => true,
     'blank_line_after_opening_tag' => true,
