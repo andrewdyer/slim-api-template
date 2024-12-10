@@ -11,7 +11,7 @@ $container = new Container();
 
 AppFactory::setContainer($container);
 
-require_from_root('bootstrap/container.php')($container);
+require_from_root('bootstrap/services.php')($container);
 
 require_from_root('bootstrap/controllers.php')($container);
 
