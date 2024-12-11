@@ -3,19 +3,14 @@
 namespace Tests\Http\Controllers;
 
 use App\Http\Controllers\IndexController;
-use PHPUnit\Framework\TestCase;
-use Slim\Psr7\Factory\ResponseFactory;
-use Slim\Psr7\Factory\ServerRequestFactory;
 
-class IndexControllerTest extends TestCase
+class IndexControllerTest extends AbstractControllerTestCase
 {
     public function testInvoke()
     {
         // Create a mock request and response
-        $requestFactory = new ServerRequestFactory();
-        $responseFactory = new ResponseFactory();
-        $request = $requestFactory->createServerRequest('GET', '/');
-        $response = $responseFactory->createResponse();
+        $request = $this->createRequest('GET', '/');
+        $response = $this->createResponse();
 
         // Instantiate the controller
         $controller = new IndexController();
