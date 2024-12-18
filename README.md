@@ -100,3 +100,7 @@ docker run --name my-app --publish 8888:80 --detach slim-app
 ```
 
 This command runs a container named my-app from the slim-app-template image in detached mode.
+
+## Learn More
+
+Before contributing to this project, please refer to the [contributing](./CONTRIBUTING.md) documentation.
