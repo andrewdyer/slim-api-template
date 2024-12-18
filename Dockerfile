@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM php:8.2-apache AS build
+FROM php:8.3-apache AS build
 
 # Install dependencies and PHP extensions
 RUN apt-get update \
@@ -24,7 +24,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
 # Stage 2: Runtime
-FROM php:8.2-apache
+FROM php:8.3-apache
 
 # Enable Apache modules
 RUN a2enmod rewrite ssl

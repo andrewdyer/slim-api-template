@@ -9,6 +9,12 @@ Licensed under the [MIT license](https://opensource.org/licenses/MIT) and is fre
 
 This template is built with Slim version 4 and Slim PSR-7 and integrates additional tools and configurations to enhance development. It focuses on clarity, modularity, and maintainability, providing a solid foundation to help you get started quickly and save valuable time when setting up a new backend project.
 
+### Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- **PHP 8.3 or higher**: This project requires PHP version 8.3 or higher.
+
 ### Project Features Overview
 
 This template includes the following tools and configurations:
