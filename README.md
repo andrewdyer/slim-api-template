@@ -19,6 +19,7 @@ This template includes the following tools and configurations:
 - [Twig](https://twig.symfony.com/) for templating and rendering views.
 - [Monolog](https://seldaek.github.io/monolog/) for structured logging.
 - [PHP Coding Standards Fixer](https://cs.symfony.com/) for maintaining consistent code style.
+- CI (Continuous Integration) setup with [GitHub Actions](https://github.com/features/actions) for automated testing.
 - [Docker](https://www.docker.com/) support for containerizing the application.
 
 ### Project Architecture Overview
@@ -100,7 +101,3 @@ docker run --name my-app --publish 8888:80 --detach slim-app
 ```
 
 This command runs a container named my-app from the slim-app-template image in detached mode.
-
-## Learn More
-
-Before contributing to this project, please refer to the [contributing](./CONTRIBUTING.md) documentation.

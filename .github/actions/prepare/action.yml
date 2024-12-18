@@ -1,0 +1,17 @@
+description: Sets up the repository by installing PHP and dependencies for CI jobs
+
+name: Prepare
+
+runs:
+  steps:
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
+        tools: composer
+
+    - name: Install dependencies
+      run: composer install
+      shell: bash
+
+  using: composite
