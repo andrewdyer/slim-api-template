@@ -16,6 +16,7 @@ This template includes the following tools and configurations:
 - [PHP-DI](https://php-di.org/) for dependency injection to manage dependencies in a clean and modular way.
 - [PHP dotenv](https://github.com/vlucas/phpdotenv) for managing environment configurations securely.
 - [PHPUnit](https://phpunit.de/) for unit testing to ensure the reliability of your code.
+- [Twig](https://twig.symfony.com/) for templating and rendering views.
 - [Monolog](https://seldaek.github.io/monolog/) for structured logging.
 - [PHP Coding Standards Fixer](https://cs.symfony.com/) for maintaining consistent code style.
 - [Docker](https://www.docker.com/) support for containerizing the application.
@@ -44,6 +45,9 @@ src/
 ├── public/                  # Publicly accessible files (entry point)
 │   └── index.php            # Main entry point for the application
 │
+├── resources/               # Application resources
+│   └── views/               # Twig templates for rendering views
+│
 ├── routes/                  # Route definitions
 │   └── web.php              # Defines application routes and maps them to controllers
 │
@@ -60,6 +64,8 @@ The `app/` directory contains the core application logic, such as controllers an
 The `bootstrap/` directory holds the initialization and configuration files. It sets up the Slim app, dependency injection container, middleware, environment variables, and services. This ensures the application is correctly configured before handling requests.
 
 The `public/` directory contains publicly accessible files. The index.php file serves as the entry point for the application, handling all incoming HTTP requests and bootstrapping the Slim app.
+
+The `resources/` directory stores application resources, such as views. Twig templates are used for rendering views, allowing you to separate the presentation layer from the application logic.
 
 The `routes/` directory defines the application’s routes. The web.php file contains route definitions, which map incoming HTTP requests to their corresponding controllers.
 

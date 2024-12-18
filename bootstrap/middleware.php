@@ -2,6 +2,8 @@
 
 use Monolog\Logger;
 use Slim\App;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
 
 return function(App $app) {
     $container = $app->getContainer();
@@ -15,4 +17,6 @@ return function(App $app) {
         $settings['log_error_details'],
         $logger
     );
+
+    $app->add(TwigMiddleware::create($app, $container->get(Twig::class)));
 };

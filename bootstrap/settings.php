@@ -18,6 +18,9 @@ return function(Container $container) {
                 'log_format' => get_env('LOG_FORMAT', "[%datetime%] %level_name%: %message% %context% %extra%\n"),
                 'date_format' => get_env('LOG_DATE_FORMAT', 'Y-m-d H:i:s'),
             ],
+            'view' => [
+                'cache' => get_env_bool('VIEW_CACHE_DISABLED') ? false : root_path('storage/views'),
+            ],
         ];
     });
 };
