@@ -3,75 +3,94 @@
 A template for building backend applications using the [Slim PHP framework](https://www.slimframework.com/docs/v4/).
 
 ## License
-Licensed under the [MIT license](https://opensource.org/licenses/MIT). Totally free for private or commercial projects.
+Licensed under the [MIT license](https://opensource.org/licenses/MIT) and is free for private or commercial projects.
 
 ## Introduction
 
-This template is built with Slim version 4 and Slim PSR-7, and includes the following extended setup:
+This template is built with Slim version 4 and Slim PSR-7 and integrates additional tools and configurations to enhance development. It focuses on clarity, modularity, and maintainability, providing a solid foundation to help you get started quickly and save valuable time when setting up a new backend project.
 
-- [PHP-DI](https://php-di.org/) for dependency injection.
-- [PHP dotenv](https://github.com/vlucas/phpdotenv) for environment configuration.
-- [PHPUnit](https://phpunit.de/) for testing.
-- [Monolog](https://seldaek.github.io/monolog/) for logging.
-- [PHP Coding Standards Fixer](https://cs.symfony.com/) for code formatting.
+### Project Features Overview
 
-## Project Structure
+This template includes the following tools and configurations:
 
-This project emphasizes clarity, modularity, and separation of concerns.
+- [PHP-DI](https://php-di.org/) for dependency injection to manage dependencies in a clean and modular way.
+- [PHP dotenv](https://github.com/vlucas/phpdotenv) for managing environment configurations securely.
+- [PHPUnit](https://phpunit.de/) for unit testing to ensure the reliability of your code.
+- [Monolog](https://seldaek.github.io/monolog/) for structured logging.
+- [PHP Coding Standards Fixer](https://cs.symfony.com/) for maintaining consistent code style.
+- [Docker](https://www.docker.com/) support for containerizing the application.
 
-### `app/`
-The core application logic, such as controllers, resides in this directory.
+### Project Architecture Overview
 
-### `bootstrap/`
-Configuration and initialization files for the application, container, environment, middleware, and controllers are organized here.
+The primary source code is located in the `src/` folder and follows a modular structure influenced by the **MVC design pattern** and **Dependency Injection (DI) principles**.
 
-### `public/`
-Publicly accessible files, like the entry point and assets, are located in this directory.
+Here's a detailed breakdown of the key directories:
 
-### `routes/`
-Route definitions can be found in this directory.
-
-### `storage/`
-Logs and cached files are stored in this directory.
-
-### `tests/`
-This directory holds unit and feature tests to ensure code quality.
-
-### `workbench/`
-This folder serves as a sandbox for experimentation and development.
-
-## Getting Started
-
-### Install Dependencies
-
-From the project root directory, run the following command to install required dependencies:
-
-```shell
-composer install
+```plaintext
+src/
+├── app/                     # Core application logic
+│   ├── Http/                # HTTP-related classes and controllers
+│   │   └── Controllers/     # Controllers for handling incoming requests
+│   └── helpers.php          # Utility functions used across the application
+│
+├── bootstrap/               # Initialization and configuration files
+│   ├── app.php              # Initializes the Slim app and dependencies
+│   ├── controllers.php      # Registers controllers with the DI container
+│   ├── environment.php      # Loads environment variables from .env files
+│   ├── middleware.php       # Registers middleware for request handling
+│   ├── services.php         # Sets up additional services and dependencies
+│   └── settings.php         # Defines application settings and configurations
+│
+├── public/                  # Publicly accessible files (entry point)
+│   └── index.php            # Main entry point for the application
+│
+├── routes/                  # Route definitions
+│   └── web.php              # Defines application routes and maps them to controllers
+│
+├── storage/                 # Stores logs and cached files
+│
+├── tests/                   # Unit and feature tests
+│   └── ExampleTest.php      # Example test file to get started with PHPUnit
+│
+└── workbench/               # Sandbox for experimentation and development
 ```
 
-### Environment Configuration
+The `app/` directory contains the core application logic, such as controllers and middleware. Controllers handle incoming HTTP requests and return appropriate responses. Utility functions and other reusable logic are also stored here.
 
-To ensure correct environment configuration, copy the `.env.example` file to `.env` and update it with your settings.
+The `bootstrap/` directory holds the initialization and configuration files. It sets up the Slim app, dependency injection container, middleware, environment variables, and services. This ensures the application is correctly configured before handling requests.
 
-```shell
-cp .env.example .env
-```
+The `public/` directory contains publicly accessible files. The index.php file serves as the entry point for the application, handling all incoming HTTP requests and bootstrapping the Slim app.
 
-### Start the Web Server
+The `routes/` directory defines the application’s routes. The web.php file contains route definitions, which map incoming HTTP requests to their corresponding controllers.
 
-Once installed, you can start a localhost web server by running the following command from the project root directory in terminal:
+The `storage/` directory is used for storing logs and cached files generated by the application. It helps keep these files separate from the core source code.
 
-```shell
-php -S localhost:8888 -t public public/index.php
-```
+The `tests/` directory contains unit and feature tests written with PHPUnit. The tests ensure that your application functions as expected and helps maintain code quality.
+
+The `workbench/` directory acts as a sandbox for experimentation and development. It allows you to try out new ideas or code snippets without affecting the main application.
+
+### When to use
+
+If you like what you’ve seen so far and think this setup fits your needs, you can quickly get started by clicking the **Use this template** button at the top of the repository on GitHub.
 
 ## Dockerizing
 
-### `docker build -t slim-app-template .`
+### Building the Docker Image
 
-Builds a Docker image for the application.
+To build a Docker image for the application, run the following command:
 
-### `docker run --name my-app -p 8888:80 -d slim-app-template`
+```sh
+docker build -t slim-app .
+```
 
-Runs a container from the previously built Docker image.
+This command creates a Docker image named slim-app-template using the Dockerfile in the current directory.
+
+### Running the Docker Container
+
+To run a container from the previously built Docker image, use the following command:
+
+```shell
+docker run --name my-app --publish 8888:80 --detach slim-app
+```
+
+This command runs a container named my-app from the slim-app-template image in detached mode.
