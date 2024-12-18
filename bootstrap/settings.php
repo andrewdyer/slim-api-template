@@ -13,7 +13,6 @@ return function(Container $container) {
             ],
             'logger' => [
                 'name' => get_env('LOG_NAME', 'app'),
-                'path' => root_path('storage/logs/app.log'),
                 'level' => Logger::toMonologLevel(get_env('LOG_LEVEL', 'DEBUG')),
                 'max_files' => get_env_int('LOG_MAX_FILES', 30),
                 'log_format' => get_env('LOG_FORMAT', "[%datetime%] %level_name%: %message% %context% %extra%\n"),

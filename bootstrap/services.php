@@ -10,7 +10,7 @@ return function(Container $container) {
         $settings = $container->get('settings')['logger'];
 
         $logger = new Logger($settings['name']);
-        $handler = new RotatingFileHandler($settings['path'], $settings['max_files'], $settings['level']);
+        $handler = new RotatingFileHandler(root_path('storage/logs/app.log'), $settings['max_files'], $settings['level']);
 
         $formatter = new LineFormatter(
             "[%datetime%] %level_name%: %message% %context% %extra%\n",
