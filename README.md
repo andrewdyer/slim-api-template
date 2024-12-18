@@ -13,7 +13,7 @@ This template is built with Slim version 4 and Slim PSR-7 and integrates additio
 
 Before you begin, ensure you have met the following requirements:
 
-- **PHP 8.3 or higher**: This project requires PHP version 8.3 or higher.
+- **PHP**: This project requires PHP version 8.3 or higher.
 - **Composer**: Dependency management tool for PHP.
 - **Docker** (optional): For containerizing the application.
 
