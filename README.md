@@ -63,7 +63,6 @@ src/
 ├── storage/                 # Stores logs and cached files
 │
 ├── tests/                   # Unit and feature tests
-│   └── ExampleTest.php      # Example test file to get started with PHPUnit
 │
 └── workbench/               # Sandbox for experimentation and development
 ```
