@@ -29,6 +29,4 @@ return function(Container $container) {
 
         return Twig::create(root_path('/resources/views'), ['cache' => $settings['cache']]);
     });
-
-    return $container;
 };
