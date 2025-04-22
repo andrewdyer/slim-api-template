@@ -3,12 +3,12 @@
 use DI\Container;
 use Monolog\Logger;
 
-/*
- * SETTINGS
- *
- * Registers application-level settings in the dependency injection container
- * under the 'settings' key. These settings are used to configure various parts
- * of the application, including error handling, logging, views, and more.
+/**
+ * This file is used to register application-level settings in the dependency 
+ * injection container under the 'settings' key.
+ * 
+ * These settings are used to configure various parts of the application, 
+ * including error handling, logging, views, and more.
  *
  * Access settings anywhere DI is available:
  * $container->get('settings')['app']['display_error_details'];

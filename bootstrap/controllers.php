@@ -5,14 +5,14 @@ use DI\Container;
 use Slim\Views\Twig;
 
 /*
- * CONTROLLERS
+ * This file is used to register controller classes in the dependency 
+ * injection container.
  *
- * Registers controller classes in the dependency injection container.
- * Controllers are responsible for handling incoming HTTP requests and
- * returning appropriate responses.
+ * Controllers are responsible for handling incoming HTTP requests 
+ * and returning appropriate responses.
  *
- * Each controller should be defined in `src/app/Http/Controllers` and
- * registered here with its required dependencies.
+ * Each controller should be defined in `src/app/Http/Controllers` 
+ * and registered here with its required dependencies.
  *
  * To register a new controller:
  * $container->set(MyController::class, function () use ($container) {

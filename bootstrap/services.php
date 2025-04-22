@@ -7,15 +7,16 @@ use Monolog\Logger;
 use Slim\Views\Twig;
 
 /*
- * SERVICES
+ * This file is used to register shared services and dependencies 
+ * in the dependency injection container.
  *
- * Registers shared services and dependencies in the dependency injection container.
- * These may include loggers, templating engines, database clients, external APIs,
- * or any custom service classes used throughout the application.
+ * These may include loggers, templating engines, database clients, 
+ * external APIs, or any custom service classes used throughout 
+ * the application.
  *
- * Each service should be defined in `app/Services` and registered here with its
- * required configuration or dependencies, often sourced from the settings defined
- * in `settings.php`.
+ * Each service should be defined in `app/Services` and registered 
+ * here with its required configuration or dependencies, often 
+ * sourced from the settings defined in `settings.php`.
  *
  * To register a new service:
  * $container->set(MyService::class, function () use ($container) {
