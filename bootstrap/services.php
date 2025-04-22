@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\LoggerService;
+use App\Services\TwigService;
 use DI\Container;
 use Monolog\Logger;
 use Slim\Views\Twig;
@@ -13,9 +14,10 @@ return function(Container $container) {
         return (new LoggerService($settings))();
     });
 
+    // Register the Twig service
     $container->set(Twig::class, function($container) {
         $settings = $container->get('settings')['view'];
 
-        return Twig::create(root_path('/resources/views'), ['cache' => $settings['cache']]);
+        return (new TwigService($settings))();
     });
 };
