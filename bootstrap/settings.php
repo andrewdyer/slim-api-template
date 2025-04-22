@@ -1,13 +1,10 @@
 <?php
 
-use DI\Container;
-use Monolog\Logger;
-
 /**
- * This file is used to register application-level settings in the dependency 
- * injection container under the 'settings' key.
- * 
- * These settings are used to configure various parts of the application, 
+ * Registers application-level settings in the dependency injection container
+ * under the 'settings' key.
+ *
+ * These settings are used to configure various parts of the application,
  * including error handling, logging, views, and more.
  *
  * Access settings anywhere DI is available:
@@ -15,6 +12,10 @@ use Monolog\Logger;
  *
  * To add or customize settings, extend the returned array below.
  */
+
+use DI\Container;
+use Monolog\Logger;
+
 return function(Container $container) {
     $container->set('settings', function() {
         return [
