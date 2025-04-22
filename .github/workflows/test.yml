@@ -16,7 +16,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Prepare
-        uses: ./.github/actions/prepare
+        uses: andrewdyer/github-workflows/.github/actions/prepare-php@main
+        with:
+          php-version: '8.3'
 
       - name: Run tests
         run: composer test
