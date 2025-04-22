@@ -3,7 +3,7 @@
 use DI\Container;
 use Monolog\Logger;
 
-/**
+/*
  * SETTINGS
  *
  * Registers application-level settings in the dependency injection container

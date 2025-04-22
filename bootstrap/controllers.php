@@ -4,7 +4,7 @@ use App\Http\Controllers\IndexController;
 use DI\Container;
 use Slim\Views\Twig;
 
-/**
+/*
  * CONTROLLERS
  *
  * Registers controller classes in the dependency injection container.

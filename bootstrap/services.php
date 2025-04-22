@@ -12,7 +12,7 @@ use Slim\Views\Twig;
  * Registers shared services and dependencies in the dependency injection container.
  * These may include loggers, templating engines, database clients, external APIs,
  * or any custom service classes used throughout the application.
- * 
+ *
  * Each service should be defined in `app/Services` and registered here with its
  * required configuration or dependencies, often sourced from the settings defined
  * in `settings.php`.
