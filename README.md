@@ -1,3 +1,5 @@
+![Slim App Template](https://raw.githubusercontent.com/andrewdyer/andrewdyer/refs/heads/main/assets/images/covers/slim-app-template.png)
+
 # Slim App Template
 
 A template for building backend applications using the [Slim PHP framework](https://www.slimframework.com/docs/v4/).
