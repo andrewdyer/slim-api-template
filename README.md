@@ -1,15 +1,18 @@
+![Slim App Template](https://raw.githubusercontent.com/andrewdyer/andrewdyer/refs/heads/main/assets/images/covers/slim-app-template.png)
+
 # Slim App Template
 
 A template for building backend applications using the [Slim PHP framework](https://www.slimframework.com/docs/v4/).
 
 ## License
+
 Licensed under the [MIT license](https://opensource.org/licenses/MIT) and is free for private or commercial projects.
 
 ## Introduction
 
 This template is built with Slim version 4 and Slim PSR-7 and integrates additional tools and configurations to enhance development. It focuses on clarity, modularity, and maintainability, providing a solid foundation to help you get started quickly and save valuable time when setting up a new backend project.
 
-### Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
 
@@ -17,7 +20,7 @@ Before you begin, ensure you have met the following requirements:
 - **Composer**: Dependency management tool for PHP.
 - **Docker** (optional): For containerizing the application.
 
-### Project Features Overview
+## Features
 
 This template includes the following tools and configurations:
 
@@ -30,7 +33,7 @@ This template includes the following tools and configurations:
 - CI (Continuous Integration) setup with [GitHub Actions](https://github.com/features/actions) for automated testing.
 - [Docker](https://www.docker.com/) support for containerizing the application.
 
-### Project Architecture Overview
+## Architecture
 
 The primary source code is located in the `src/` folder and follows a modular structure influenced by the **MVC design pattern** and **Dependency Injection (DI) principles**.
 
@@ -83,7 +86,7 @@ The `tests/` directory contains unit and feature tests written with PHPUnit. The
 
 The `workbench/` directory acts as a sandbox for experimentation and development. It allows you to try out new ideas or code snippets without affecting the main application.
 
-### When to use
+## Getting Started
 
 If you like what you’ve seen so far and think this setup fits your needs, you can quickly get started by clicking the **Use this template** button at the top of the repository on GitHub.
 
