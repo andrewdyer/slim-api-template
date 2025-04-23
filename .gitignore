@@ -18,3 +18,5 @@
 .php-cs-fixer.cache
 .phpunit.result.cache
 
+# Ignore local config
+.php-cs-fixer.php
