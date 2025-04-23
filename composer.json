@@ -8,9 +8,6 @@
             "email": "andrewdyer@outlook.com"
         }
     ],
-    "scripts": {
-        "test": "phpunit tests"
-    },
     "autoload": {
         "psr-4": {
             "App\\": "app/"
@@ -43,6 +40,10 @@
             "url": "workbench/*/"
         }
     ],
+    "scripts": {
+        "cs": "php-cs-fixer fix",
+        "test": "phpunit tests"
+    },
     "config": {
         "sort-packages": true
     }
