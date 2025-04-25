@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Migrations;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -8,7 +10,7 @@ use Phinx\Migration\AbstractMigration as BaseAbstractMigration;
 
 abstract class AbstractMigration extends BaseAbstractMigration
 {
-    private Builder $schema;
+    private readonly Builder $schema;
 
     protected function getSchema(): Builder
     {
@@ -19,8 +21,7 @@ abstract class AbstractMigration extends BaseAbstractMigration
     {
         $adapter = $this->getAdapter();
 
-        $capsule = new Capsule();
-        $capsule->addConnection([
+        $connection = [
             'driver' => $adapter->getOption('adapter'),
             'host' => $adapter->getOption('host'),
             'port' => $adapter->getOption('port'),
@@ -30,7 +31,10 @@ abstract class AbstractMigration extends BaseAbstractMigration
             'charset' => $adapter->getOption('charset'),
             'collation' => $adapter->getOption('collation'),
             'prefix' => $adapter->getOption('prefix'),
-        ]);
+        ];
+
+        $capsule = new Capsule();
+        $capsule->addConnection($connection);
         $capsule->setAsGlobal();
 
         $this->schema = $capsule->schema();
