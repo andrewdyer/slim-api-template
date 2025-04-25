@@ -26,4 +26,5 @@ return [
         ],
     ],
     'version_order' => 'creation',
+    'migration_base_class' => Database\Migrations\AbstractMigration::class,
 ];
