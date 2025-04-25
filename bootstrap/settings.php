@@ -24,6 +24,17 @@ return function(Container $container) {
                 'log_errors' => get_env_bool('APP_LOG_ERRORS'),
                 'log_error_details' => get_env_bool('APP_LOG_ERROR_DETAILS'),
             ],
+            'db' => [
+                'driver' => get_env('DB_DRIVER'),
+                'host' => get_env('DB_HOST'),
+                'port' => get_env('DB_PORT'),
+                'database' => get_env('DB_DATABASE'),
+                'username' => get_env('DB_USERNAME'),
+                'password' => get_env('DB_PASSWORD'),
+                'charset' => get_env('DB_CHARSET'),
+                'collation' => get_env('DB_COLLATION'),
+                'prefix' => get_env('DB_PREFIX'),
+            ],
             'logger' => [
                 'name' => get_env('LOG_NAME', 'app'),
                 'level' => Logger::toMonologLevel(get_env('LOG_LEVEL', 'DEBUG')),
