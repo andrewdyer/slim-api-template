@@ -26,6 +26,7 @@
         "illuminate/database": "^12.10",
         "monolog/monolog": "^3.8",
         "php-di/php-di": "^7.0",
+        "robmorgan/phinx": "^0.16.7",
         "slim/psr7": "^1.7",
         "slim/slim": "^4.14",
         "slim/twig-view": "^3.4",
@@ -43,6 +44,12 @@
     ],
     "scripts": {
         "cs": "php-cs-fixer fix",
+        "phinx:migrate": "phinx migrate",
+        "phinx:rollback": "phinx rollback",
+        "phinx:status": "phinx status",
+        "phinx:seed": "phinx seed:run",
+        "phinx:seed:create": "phinx seed:create",
+        "phinx:create": "phinx create",
         "test": "phpunit tests"
     },
     "config": {
