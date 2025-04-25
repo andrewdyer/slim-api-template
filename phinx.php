@@ -12,6 +12,9 @@ return [
         'migrations' => '%%PHINX_CONFIG_DIR%%/database/migrations',
         'seeds' => '%%PHINX_CONFIG_DIR%%/database/seeds',
     ],
+    'templates' => [
+        'style' => 'up_down',
+    ],
     'environments' => [
         'default_migration_table' => 'migrations',
         'default_environment' => 'default',
