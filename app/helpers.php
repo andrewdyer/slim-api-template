@@ -1,5 +1,7 @@
 <?php
 
+use Psr\Http\Message\ResponseInterface;
+
 if (!function_exists('root_path')) {
     function root_path($path = ''): string
     {
@@ -47,5 +49,14 @@ if (!function_exists('get_env_int')) {
     function get_env_int($key, $default = 0): int
     {
         return (int)get_env($key, $default);
+    }
+}
+
+if (!function_exists('json_response')) {
+    function json_response(ResponseInterface $response, array $data, int $status = 200): ResponseInterface
+    {
+        $response->getBody()->write(json_encode($data));
+
+        return $response->withHeader('Content-Type', 'application/json')->withStatus($status);
     }
 }
