@@ -27,6 +27,8 @@ This template includes the following tools and configurations:
 - [PHP-DI](https://php-di.org/) for dependency injection to manage dependencies in a clean and modular way.
 - [PHP dotenv](https://github.com/vlucas/phpdotenv) for managing environment configurations securely.
 - [PHPUnit](https://phpunit.de/) for unit testing to ensure the reliability of your code.
+- [Illuminate Database (Eloquent)](https://laravel.com/docs/eloquent) for powerful and expressive ORM-based database interaction.
+- [Phinx](https://book.cakephp.org/phinx/) for version-controlled database migrations.
 - [Twig](https://twig.symfony.com/) for templating and rendering views.
 - [Monolog](https://seldaek.github.io/monolog/) for structured logging.
 - [PHP Coding Standards Fixer](https://cs.symfony.com/) for maintaining consistent code style.
