@@ -1,4 +1,4 @@
-![Slim App Template](https://raw.githubusercontent.com/andrewdyer/andrewdyer/refs/heads/main/assets/images/covers/slim-app-template.png)
+![Slim App Template](https://raw.githubusercontent.com/andrewdyer/public-assets/refs/heads/main/images/covers/slim-app-template.png)
 
 # Slim App Template
 
