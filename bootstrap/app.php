@@ -21,6 +21,9 @@ require_from_root('bootstrap/services.php')($container);
 
 $app = AppFactory::create();
 
+// Automatically parse JSON, form, and multipart bodies into $request->getParsedBody()
+$app->addBodyParsingMiddleware();
+
 require_from_root('bootstrap/middleware.php')($app);
 
 return $app;
