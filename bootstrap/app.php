@@ -21,6 +21,9 @@ require_from_root('bootstrap/services.php')($container);
 
 $app = AppFactory::create();
 
+// Enable route parsing and matching
+$app->addRoutingMiddleware();
+
 // Automatically parse JSON, form, and multipart bodies into $request->getParsedBody()
 $app->addBodyParsingMiddleware();
 
