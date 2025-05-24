@@ -15,6 +15,7 @@
  * });
  */
 
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\IndexController;
 use DI\Container;
 use Slim\Views\Twig;
@@ -22,5 +23,9 @@ use Slim\Views\Twig;
 return function(Container $container) {
     $container->set(IndexController::class, function() use ($container) {
         return new IndexController($container->get(Twig::class));
+    });
+
+    $container->set(UserController::class, function() {
+        return new UserController();
     });
 };
