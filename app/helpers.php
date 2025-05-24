@@ -17,19 +17,18 @@ if (!function_exists('require_from_root')) {
 if (!function_exists('get_env')) {
     function get_env($key, $default = null)
     {
-        if (isset($_ENV[$key])) {
+        if (array_key_exists($key, $_ENV)) {
             $value = $_ENV[$key];
 
-            switch (strtolower($value)) {
-                case 'true' === $value:
-                    return true;
-
-                case 'false' === $value:
-                    return false;
-
-                default:
-                    return $value;
+            if ($value === 'true' || $value === 'TRUE') {
+                return true;
             }
+
+            if ($value === 'false' || $value === 'FALSE') {
+                return false;
+            }
+
+            return $value;
         }
 
         return $default;
