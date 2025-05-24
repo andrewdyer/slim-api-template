@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
+use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -11,7 +13,7 @@ readonly class UserController
 {
     public function index(Request $request, Response $response): Response
     {
-        $users = [['id' => 1, 'name' => 'Alice'], ['id' => 2, 'name' => 'Bob']];
+        $users = User::all();
 
         $response->getBody()->write(json_encode($users));
 
@@ -20,7 +22,7 @@ readonly class UserController
 
     public function show(Request $request, Response $response, array $args): Response
     {
-        $user = ['id' => $args['id'], 'name' => 'Alice'];
+        $user = User::findOrFail((int)$args['id']);
 
         $response->getBody()->write(json_encode($user));
 
@@ -31,9 +33,12 @@ readonly class UserController
     {
         $data = $request->getParsedBody();
 
-        // Save user logic...
+        $user = new User();
+        $user->first_name = Arr::get($data, 'first_name');
+        $user->last_name = Arr::get($data, 'last_name');
+        $user->save();
 
-        $response->getBody()->write(json_encode(['message' => 'User created']));
+        $response->getBody()->write(json_encode($user));
 
         return $response->withStatus(201)->withHeader('Content-Type', 'application/json');
     }
@@ -42,19 +47,28 @@ readonly class UserController
     {
         $data = $request->getParsedBody();
 
-        // Update user logic...
+        $user = User::findOrFail((int)$args['id']);
 
-        $response->getBody()->write(json_encode(['message' => 'User updated']));
+        if ($firstName = Arr::get($data, 'first_name')) {
+            $user->first_name = $firstName;
+        }
+
+        if ($lastName = Arr::get($data, 'last_name')) {
+            $user->last_name = $lastName;
+        }
+
+        $user->save();
+
+        $response->getBody()->write(json_encode($user));
 
         return $response->withHeader('Content-Type', 'application/json');
     }
 
     public function destroy(Request $request, Response $response, array $args): Response
     {
-        // Delete user logic...
+        $user = User::findOrFail((int)$args['id']);
+        $user->delete();
 
-        $response->getBody()->write(json_encode(['message' => 'User deleted']));
-
-        return $response->withHeader('Content-Type', 'application/json');
+        return $response->withStatus(204);
     }
 }
