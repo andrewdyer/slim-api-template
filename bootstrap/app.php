@@ -16,8 +16,6 @@ require_from_root('bootstrap/settings.php')($container);
 
 require_from_root('bootstrap/database.php')($container);
 
-require_from_root('bootstrap/controllers.php')($container);
-
 require_from_root('bootstrap/services.php')($container);
 
 $app = AppFactory::create();

@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\IndexController;
+use App\Http\Actions\IndexAction;
 use Slim\App;
 
 return function(App $app) {
-    $app->get('/', IndexController::class);
+    $app->get('/', IndexAction::class);
 };
