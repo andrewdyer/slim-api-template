@@ -4,7 +4,7 @@ namespace Tests\Unit\Domains\User\Http\Actions;
 
 use App\Domains\User\Http\Actions\ListUsersAction;
 use App\Domains\User\Repositories\UserRepository;
-use App\Http\Responders\JsonResponder;
+use App\Infrastructure\Http\Responders\JsonResponder;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
