@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Http\Actions;
 
-use App\Domains\User\Repositories\UserRepository;
+use App\Domains\User\Services\UserService;
 use App\Infrastructure\Http\Responders\JsonResponder;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 readonly class UpdateUserAction
 {
-    public function __construct(private JsonResponder $responder, private UserRepository $repository)
+    public function __construct(private JsonResponder $responder, private UserService $userService)
     {
     }
 
@@ -21,7 +21,7 @@ readonly class UpdateUserAction
 
         $data = $request->getParsedBody();
 
-        $user = $this->repository->updateUser($userId, $data);
+        $user = $this->userService->update($userId, $data);
 
         return $this->responder->respond($response, $user, 201);
     }

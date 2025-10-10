@@ -1,42 +1,83 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Domains\User\Http\Actions;
 
 use App\Domains\User\Http\Actions\CreateUserAction;
-use App\Domains\User\Repositories\UserRepository;
+use App\Domains\User\Models\User;
+use App\Domains\User\Services\UserService;
 use App\Infrastructure\Http\Responders\JsonResponder;
-use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Tests\Support\ActionTestCase;
 
-final class CreateUserActionTest extends TestCase
+final class CreateUserActionTest extends ActionTestCase
 {
     public function testItCreatesUserAndReturnsJsonResponse()
     {
-        $data = [];
-        $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getParsedBody')
-            ->willReturn($data);
+        $mockData = ['first_name' => 'John', 'last_name' => 'Doe'];
+        $request = $this->createRequestWithBody($mockData);
+        $response = $this->createResponse();
 
-        $response = $this->createMock(ResponseInterface::class);
+        $mockedUser = $this->createMock(User::class);
+        $mockUserData = [
+            'id' => 1,
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'created_at' => '2025-10-10 12:00:00',
+            'updated_at' => '2025-10-10 12:00:00',
+        ];
+        $mockedUser->method('toArray')->willReturn($mockUserData);
+        $mockedUser->method('jsonSerialize')->willReturn($mockUserData);
 
-        $expectedResponse = [];
-        $repository = $this->createMock(UserRepository::class);
-        $repository->expects($this->once())
-            ->method('createUser')
-            ->with($data)
-            ->willReturn($expectedResponse);
+        $mockedUserService = $this->createMock(UserService::class);
+        $mockedUserService->expects($this->once())
+            ->method('create')
+            ->with($mockData)
+            ->willReturn($mockedUser);
 
-        $responder = $this->createMock(JsonResponder::class);
-        $responder->expects($this->once())
-            ->method('respond')
-            ->with($response, $expectedResponse, 201)
-            ->willReturn($response);
-
-        $action = new CreateUserAction($responder, $repository);
+        $responder = new JsonResponder();
+        $action = new CreateUserAction($responder, $mockedUserService);
 
         $result = $action($request, $response);
 
-        $this->assertSame($response, $result);
+        $responseData = $this->assertJsonResponse($result, 201);
+
+        $this->assertArrayHasKey('id', $responseData);
+        $this->assertEquals('John', $responseData['first_name']);
+        $this->assertEquals('Doe', $responseData['last_name']);
+        $this->assertArrayHasKey('created_at', $responseData);
+        $this->assertArrayHasKey('updated_at', $responseData);
+    }
+
+    public function testItHandlesEmptyRequestBody()
+    {
+        $mockData = [];
+        $request = $this->createRequestWithBody($mockData);
+        $response = $this->createResponse();
+
+        $mockedUser = $this->createMock(User::class);
+        $mockUserData = [
+            'id' => 1,
+            'first_name' => null,
+            'last_name' => null,
+            'created_at' => '2025-10-10 12:00:00',
+            'updated_at' => '2025-10-10 12:00:00',
+        ];
+        $mockedUser->method('toArray')->willReturn($mockUserData);
+        $mockedUser->method('jsonSerialize')->willReturn($mockUserData);
+
+        $mockedUserService = $this->createMock(UserService::class);
+        $mockedUserService->expects($this->once())
+            ->method('create')
+            ->with($mockData)
+            ->willReturn($mockedUser);
+
+        $responder = new JsonResponder();
+        $action = new CreateUserAction($responder, $mockedUserService);
+
+        $result = $action($request, $response);
+
+        $responseData = $this->assertJsonResponse($result, 201);
+        $this->assertArrayHasKey('id', $responseData);
     }
 }
