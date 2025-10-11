@@ -7,15 +7,23 @@ namespace App\Domains\User\Services;
 use App\Domains\User\Exceptions\UserNotFoundException;
 use App\Domains\User\Models\User;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Arr;
+use InvalidArgumentException;
 
 class UserService
 {
     public function create(array $data): User
     {
+        if (!array_key_exists('first_name', $data) || empty($data['first_name'])) {
+            throw new InvalidArgumentException('First name is required');
+        }
+
+        if (!array_key_exists('last_name', $data) || empty($data['last_name'])) {
+            throw new InvalidArgumentException('Last name is required');
+        }
+
         $user = new User();
-        $user->first_name = Arr::get($data, 'first_name');
-        $user->last_name = Arr::get($data, 'last_name');
+        $user->first_name = $data['first_name'];
+        $user->last_name = $data['last_name'];
         $user->save();
 
         return $user;
