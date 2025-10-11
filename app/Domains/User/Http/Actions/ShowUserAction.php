@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Http\Actions;
 
-use App\Domains\User\Repositories\UserRepository;
+use App\Domains\User\Services\UserService;
 use App\Http\Responders\JsonResponder;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 readonly class ShowUserAction
 {
-    public function __construct(private JsonResponder $responder, private UserRepository $repository)
+    public function __construct(private JsonResponder $responder, private UserService $userService)
     {
     }
 
@@ -19,7 +19,7 @@ readonly class ShowUserAction
     {
         $userId = (int)$args['id'];
 
-        $user = $this->repository->getUserById($userId);
+        $user = $this->userService->getById($userId);
 
         return $this->responder->respond($response, $user);
     }

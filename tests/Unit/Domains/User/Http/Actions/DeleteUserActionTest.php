@@ -1,39 +1,79 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Domains\User\Http\Actions;
 
+use App\Domains\User\Exceptions\UserNotFoundException;
 use App\Domains\User\Http\Actions\DeleteUserAction;
-use App\Domains\User\Repositories\UserRepository;
+use App\Domains\User\Services\UserService;
 use App\Http\Responders\JsonResponder;
-use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Tests\Support\ActionTestCase;
 
-final class DeleteUserActionTest extends TestCase
+final class DeleteUserActionTest extends ActionTestCase
 {
     public function testItDeletesUserAndReturnsJsonResponse()
     {
-        $request = $this->createMock(ServerRequestInterface::class);
-
-        $response = $this->createMock(ResponseInterface::class);
+        $request = $this->createEmptyRequest();
+        $response = $this->createResponse();
 
         $userId = 1;
-        $repository = $this->createMock(UserRepository::class);
-        $repository->expects($this->once())
-            ->method('deleteUser')
-            ->with($userId);
+        $mockedUserService = $this->createMock(UserService::class);
+        $mockedUserService->expects($this->once())
+            ->method('delete')
+            ->with($userId)
+            ->willReturn(true);
 
-        $expectedResponse = null;
-        $responder = $this->createMock(JsonResponder::class);
-        $responder->expects($this->once())
-            ->method('respond')
-            ->with($response, $expectedResponse, 204)
-            ->willReturn($response);
-
-        $action = new DeleteUserAction($responder, $repository);
+        $responder = new JsonResponder();
+        $action = new DeleteUserAction($responder, $mockedUserService);
 
         $result = $action($request, $response, ['id' => $userId]);
 
-        $this->assertSame($response, $result);
+        $this->assertEquals(204, $result->getStatusCode());
+        $this->assertEquals('application/json', $result->getHeaderLine('Content-Type'));
+
+        $body = (string)$result->getBody();
+        $this->assertTrue(empty($body) || $body === 'null');
+    }
+
+    public function testItHandlesStringIdParameter()
+    {
+        $request = $this->createEmptyRequest();
+        $response = $this->createResponse();
+
+        $userId = 42;
+        $mockedUserService = $this->createMock(UserService::class);
+        $mockedUserService->expects($this->once())
+            ->method('delete')
+            ->with($userId)
+            ->willReturn(true);
+
+        $responder = new JsonResponder();
+        $action = new DeleteUserAction($responder, $mockedUserService);
+
+        $result = $action($request, $response, ['id' => (string)$userId]);
+
+        $this->assertEquals(204, $result->getStatusCode());
+    }
+
+    public function testItThrowsExceptionWhenUserNotFound()
+    {
+        $request = $this->createEmptyRequest();
+        $response = $this->createResponse();
+
+        $userId = 999;
+        $mockedUserService = $this->createMock(UserService::class);
+        $mockedUserService->expects($this->once())
+            ->method('delete')
+            ->with($userId)
+            ->willThrowException(new UserNotFoundException($userId));
+
+        $responder = new JsonResponder();
+        $action = new DeleteUserAction($responder, $mockedUserService);
+
+        $this->expectException(UserNotFoundException::class);
+        $this->expectExceptionMessage('User with id 999 not found');
+
+        $action($request, $response, ['id' => (string)$userId]);
     }
 }
