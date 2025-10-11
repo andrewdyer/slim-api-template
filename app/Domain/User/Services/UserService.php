@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\User\Services;
+namespace App\Domain\User\Services;
 
-use App\Domains\User\Exceptions\UserNotFoundException;
-use App\Domains\User\Models\User;
+use App\Domain\User\Exceptions\UserNotFoundException;
+use App\Domain\User\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
 

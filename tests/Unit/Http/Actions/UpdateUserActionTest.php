@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domains\User\Http\Actions;
+namespace Tests\Unit\Http\Actions;
 
-use App\Domains\User\Http\Actions\UpdateUserAction;
-use App\Domains\User\Models\User;
-use App\Domains\User\Services\UserService;
+use App\Domain\User\Models\User;
+use App\Domain\User\Services\UserService;
+use App\Http\Actions\UpdateUserAction;
 use App\Http\Responders\JsonResponder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Support\ActionTestCase;

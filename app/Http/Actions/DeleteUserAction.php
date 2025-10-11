@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\User\Http\Actions;
+namespace App\Http\Actions;
 
-use App\Domains\User\Services\UserService;
+use App\Domain\User\Services\UserService;
 use App\Http\Responders\JsonResponder;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

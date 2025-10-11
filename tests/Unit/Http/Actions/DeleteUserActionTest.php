@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domains\User\Http\Actions;
+namespace Tests\Unit\Http\Actions;
 
-use App\Domains\User\Exceptions\UserNotFoundException;
-use App\Domains\User\Http\Actions\DeleteUserAction;
-use App\Domains\User\Services\UserService;
+use App\Domain\User\Exceptions\UserNotFoundException;
+use App\Domain\User\Services\UserService;
+use App\Http\Actions\DeleteUserAction;
 use App\Http\Responders\JsonResponder;
 use Tests\Support\ActionTestCase;
 

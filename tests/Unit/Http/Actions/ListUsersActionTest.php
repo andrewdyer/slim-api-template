@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domains\User\Http\Actions;
+namespace Tests\Unit\Http\Actions;
 
-use App\Domains\User\Http\Actions\ListUsersAction;
-use App\Domains\User\Models\User;
-use App\Domains\User\Services\UserService;
+use App\Domain\User\Models\User;
+use App\Domain\User\Services\UserService;
+use App\Http\Actions\ListUsersAction;
 use App\Http\Responders\JsonResponder;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\Support\ActionTestCase;

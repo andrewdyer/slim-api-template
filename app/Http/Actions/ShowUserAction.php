@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\User\Http\Actions;
+namespace App\Http\Actions;
 
-use App\Domains\User\Services\UserService;
+use App\Domain\User\Services\UserService;
 use App\Http\Responders\JsonResponder;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-readonly class UpdateUserAction
+readonly class ShowUserAction
 {
     public function __construct(private JsonResponder $responder, private UserService $userService)
     {
@@ -19,9 +19,7 @@ readonly class UpdateUserAction
     {
         $userId = (int)$args['id'];
 
-        $data = $request->getParsedBody();
-
-        $user = $this->userService->update($userId, $data);
+        $user = $this->userService->getById($userId);
 
         return $this->responder->respond($response, $user);
     }

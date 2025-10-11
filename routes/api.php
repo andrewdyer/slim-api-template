@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use App\Domains\User\Http\Actions\CreateUserAction;
-use App\Domains\User\Http\Actions\DeleteUserAction;
-use App\Domains\User\Http\Actions\ListUsersAction;
-use App\Domains\User\Http\Actions\ShowUserAction;
-use App\Domains\User\Http\Actions\UpdateUserAction;
+use App\Http\Actions\DeleteUserAction;
+use App\Http\Actions\ListUsersAction;
+use App\Http\Actions\ShowUserAction;
+use App\Http\Actions\UpdateUserAction;
 use Slim\App;
 
 return function(App $app) {

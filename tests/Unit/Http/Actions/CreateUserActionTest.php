@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domains\User\Http\Actions;
+namespace Tests\Unit\Http\Actions;
 
-use App\Domains\User\Http\Actions\CreateUserAction;
-use App\Domains\User\Models\User;
-use App\Domains\User\Services\UserService;
+use App\Domain\User\Models\User;
+use App\Domain\User\Services\UserService;
+use App\Http\Actions\CreateUserAction;
 use App\Http\Responders\JsonResponder;
 use InvalidArgumentException;
 use Tests\Support\ActionTestCase;
