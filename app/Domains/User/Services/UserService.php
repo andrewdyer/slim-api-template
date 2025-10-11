@@ -34,11 +34,17 @@ class UserService
         $user = $this->getById($id);
 
         if (array_key_exists('first_name', $data)) {
-            $user->first_name = $data['first_name'];
+            if (!is_string($data['first_name']) || strlen(trim($data['first_name'])) === 0) {
+                throw new InvalidArgumentException('First name is required');
+            }
+            $user->first_name = trim($data['first_name']);
         }
 
         if (array_key_exists('last_name', $data)) {
-            $user->last_name = $data['last_name'];
+            if (!is_string($data['last_name']) || strlen(trim($data['last_name'])) === 0) {
+                throw new InvalidArgumentException('Last name is required');
+            }
+            $user->last_name = trim($data['last_name']);
         }
 
         $user->save();
