@@ -36,7 +36,7 @@ abstract class ActionTestCase extends TestCase
         return new Response();
     }
 
-    protected function assertJsonResponse($response, int $expectedStatus = 200): array
+    protected function assertJsonResponse(ResponseInterface $response, int $expectedStatus = 200): array
     {
         $this->assertEquals($expectedStatus, $response->getStatusCode());
         $this->assertEquals('application/json', $response->getHeaderLine('Content-Type'));
