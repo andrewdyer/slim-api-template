@@ -102,7 +102,7 @@ final class UpdateUserActionTest extends ActionTestCase
     }
 
     #[DataProvider('invalidNameDataProvider')]
-    public function testItThrowsExceptionForInvalidNames(string $field, $value): void
+    public function testItThrowsExceptionForInvalidNames(string $field, mixed $value): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
