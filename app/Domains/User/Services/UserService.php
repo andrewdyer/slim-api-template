@@ -6,6 +6,7 @@ namespace App\Domains\User\Services;
 
 use App\Domains\User\Exceptions\UserNotFoundException;
 use App\Domains\User\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 
 class UserService
@@ -44,7 +45,7 @@ class UserService
         return (bool)$user->delete();
     }
 
-    public function getAll()
+    public function getAll(): Collection
     {
         return User::all();
     }

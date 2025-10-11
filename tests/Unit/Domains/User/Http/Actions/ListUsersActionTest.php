@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Domains\User\Http\Actions;
 
 use App\Domains\User\Http\Actions\ListUsersAction;
+use App\Domains\User\Models\User;
 use App\Domains\User\Services\UserService;
 use App\Http\Responders\JsonResponder;
+use Illuminate\Database\Eloquent\Collection;
 use Tests\Support\ActionTestCase;
 
 final class ListUsersActionTest extends ActionTestCase
@@ -16,15 +18,22 @@ final class ListUsersActionTest extends ActionTestCase
         $request = $this->createEmptyRequest();
         $response = $this->createResponse();
 
-        $mockUsersData = [
-            ['id' => 1, 'first_name' => 'John', 'last_name' => 'Doe'],
-            ['id' => 2, 'first_name' => 'Jane', 'last_name' => 'Smith'],
-        ];
+        $user1 = new User();
+        $user1->id = 1;
+        $user1->first_name = 'John';
+        $user1->last_name = 'Doe';
+
+        $user2 = new User();
+        $user2->id = 2;
+        $user2->first_name = 'Jane';
+        $user2->last_name = 'Smith';
+
+        $mockUsersCollection = new Collection([$user1, $user2]);
 
         $mockedUserService = $this->createMock(UserService::class);
         $mockedUserService->expects($this->once())
             ->method('getAll')
-            ->willReturn($mockUsersData);
+            ->willReturn($mockUsersCollection);
 
         $responder = new JsonResponder();
         $action = new ListUsersAction($responder, $mockedUserService);
@@ -50,10 +59,12 @@ final class ListUsersActionTest extends ActionTestCase
         $request = $this->createEmptyRequest();
         $response = $this->createResponse();
 
+        $mockEmptyCollection = new Collection([]);
+
         $mockedUserService = $this->createMock(UserService::class);
         $mockedUserService->expects($this->once())
             ->method('getAll')
-            ->willReturn([]);
+            ->willReturn($mockEmptyCollection);
 
         $responder = new JsonResponder();
         $action = new ListUsersAction($responder, $mockedUserService);
