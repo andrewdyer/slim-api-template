@@ -25,12 +25,12 @@ class UserService
     {
         $user = $this->getById($id);
 
-        if ($firstName = Arr::get($data, 'first_name')) {
-            $user->first_name = $firstName;
+        if (array_key_exists('first_name', $data)) {
+            $user->first_name = $data['first_name'];
         }
 
-        if ($lastName = Arr::get($data, 'last_name')) {
-            $user->last_name = $lastName;
+        if (array_key_exists('last_name', $data)) {
+            $user->last_name = $data['last_name'];
         }
 
         $user->save();
