@@ -7,7 +7,7 @@ namespace Tests\Unit\Domains\User\Http\Actions;
 use App\Domains\User\Http\Actions\UpdateUserAction;
 use App\Domains\User\Models\User;
 use App\Domains\User\Services\UserService;
-use App\Infrastructure\Http\Responders\JsonResponder;
+use App\Http\Responders\JsonResponder;
 use Tests\Support\ActionTestCase;
 
 final class UpdateUserActionTest extends ActionTestCase

@@ -8,7 +8,7 @@ use App\Domains\User\Exceptions\UserNotFoundException;
 use App\Domains\User\Http\Actions\ShowUserAction;
 use App\Domains\User\Models\User;
 use App\Domains\User\Services\UserService;
-use App\Infrastructure\Http\Responders\JsonResponder;
+use App\Http\Responders\JsonResponder;
 use Tests\Support\ActionTestCase;
 
 final class ShowUserActionTest extends ActionTestCase
