@@ -8,6 +8,7 @@ use App\Domains\User\Http\Actions\UpdateUserAction;
 use App\Domains\User\Models\User;
 use App\Domains\User\Services\UserService;
 use App\Http\Responders\JsonResponder;
+use InvalidArgumentException;
 use Tests\Support\ActionTestCase;
 
 final class UpdateUserActionTest extends ActionTestCase
@@ -88,7 +89,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
     public function testItThrowsExceptionWhenFirstNameIsEmpty()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('First name is required');
 
         $userId = 1;
@@ -101,7 +102,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new \InvalidArgumentException('First name is required'));
+            ->willThrowException(new InvalidArgumentException('First name is required'));
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
@@ -111,7 +112,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
     public function testItThrowsExceptionWhenLastNameIsEmpty()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Last name is required');
 
         $userId = 1;
@@ -124,7 +125,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new \InvalidArgumentException('Last name is required'));
+            ->willThrowException(new InvalidArgumentException('Last name is required'));
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
@@ -134,7 +135,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
     public function testItThrowsExceptionWhenFirstNameIsWhitespaceOnly()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('First name is required');
 
         $userId = 1;
@@ -147,7 +148,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new \InvalidArgumentException('First name is required'));
+            ->willThrowException(new InvalidArgumentException('First name is required'));
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
@@ -157,7 +158,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
     public function testItThrowsExceptionWhenLastNameIsWhitespaceOnly()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Last name is required');
 
         $userId = 1;
@@ -170,7 +171,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new \InvalidArgumentException('Last name is required'));
+            ->willThrowException(new InvalidArgumentException('Last name is required'));
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
@@ -180,7 +181,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
     public function testItThrowsExceptionWhenFirstNameIsNotString()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('First name is required');
 
         $userId = 1;
@@ -193,7 +194,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new \InvalidArgumentException('First name is required'));
+            ->willThrowException(new InvalidArgumentException('First name is required'));
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
@@ -203,7 +204,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
     public function testItThrowsExceptionWhenLastNameIsNotString()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Last name is required');
 
         $userId = 1;
@@ -216,7 +217,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new \InvalidArgumentException('Last name is required'));
+            ->willThrowException(new InvalidArgumentException('Last name is required'));
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
@@ -226,7 +227,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
     public function testItThrowsExceptionWhenFirstNameIsNotStringBoolean()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('First name is required');
 
         $userId = 1;
@@ -239,7 +240,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new \InvalidArgumentException('First name is required'));
+            ->willThrowException(new InvalidArgumentException('First name is required'));
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
@@ -249,7 +250,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
     public function testItThrowsExceptionWhenLastNameIsNotStringBoolean()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Last name is required');
 
         $userId = 1;
@@ -262,7 +263,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new \InvalidArgumentException('Last name is required'));
+            ->willThrowException(new InvalidArgumentException('Last name is required'));
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
