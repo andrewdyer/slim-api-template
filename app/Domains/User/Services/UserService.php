@@ -13,17 +13,17 @@ class UserService
 {
     public function create(array $data): User
     {
-        if (!array_key_exists('first_name', $data) || empty($data['first_name'])) {
+        if (!isset($data['first_name']) || !is_string($data['first_name']) || strlen(trim($data['first_name'])) === 0) {
             throw new InvalidArgumentException('First name is required');
         }
 
-        if (!array_key_exists('last_name', $data) || empty($data['last_name'])) {
+        if (!isset($data['last_name']) || !is_string($data['last_name']) || strlen(trim($data['last_name'])) === 0) {
             throw new InvalidArgumentException('Last name is required');
         }
 
         $user = new User();
-        $user->first_name = $data['first_name'];
-        $user->last_name = $data['last_name'];
+        $user->first_name = trim($data['first_name']);
+        $user->last_name = trim($data['last_name']);
         $user->save();
 
         return $user;
