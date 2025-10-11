@@ -23,6 +23,6 @@ readonly class UpdateUserAction
 
         $user = $this->userService->update($userId, $data);
 
-        return $this->responder->respond($response, $user, 201);
+        return $this->responder->respond($response, $user);
     }
 }

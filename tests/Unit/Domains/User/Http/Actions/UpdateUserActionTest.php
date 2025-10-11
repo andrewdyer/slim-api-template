@@ -43,7 +43,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
         $result = $action($request, $response, ['id' => (string)$userId]);
 
-        $responseData = $this->assertJsonResponse($result, 201);
+        $responseData = $this->assertJsonResponse($result);
 
         $this->assertEquals($userId, $responseData['id']);
         $this->assertEquals('John', $responseData['first_name']);
@@ -82,7 +82,7 @@ final class UpdateUserActionTest extends ActionTestCase
 
         $result = $action($request, $response, ['id' => (string)$userId]);
 
-        $responseData = $this->assertJsonResponse($result, 201);
+        $responseData = $this->assertJsonResponse($result, 200);
         $this->assertEquals('Jane', $responseData['first_name']);
         $this->assertEquals('Doe', $responseData['last_name']);
     }
