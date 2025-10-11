@@ -8,7 +8,7 @@ use App\Domains\User\Http\Actions\UpdateUserAction;
 use App\Domains\User\Models\User;
 use App\Domains\User\Services\UserService;
 use App\Http\Responders\JsonResponder;
-use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Support\ActionTestCase;
 
 final class UpdateUserActionTest extends ActionTestCase
@@ -87,36 +87,27 @@ final class UpdateUserActionTest extends ActionTestCase
         $this->assertEquals('Doe', $responseData['last_name']);
     }
 
-    public function testItThrowsExceptionWhenFirstNameIsEmpty()
+    public static function invalidNameDataProvider(): array
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('First name is required');
-
-        $userId = 1;
-        $mockData = ['first_name' => ''];
-
-        $request = $this->createRequestWithBody($mockData);
-        $response = $this->createResponse();
-
-        $mockedUserService = $this->createMock(UserService::class);
-        $mockedUserService->expects($this->once())
-            ->method('update')
-            ->with($userId, $mockData)
-            ->willThrowException(new InvalidArgumentException('First name is required'));
-
-        $responder = new JsonResponder();
-        $action = new UpdateUserAction($responder, $mockedUserService);
-
-        $action($request, $response, ['id' => (string)$userId]);
+        return [
+            ['first_name', ''],
+            ['first_name', '   '],
+            ['first_name', 123],
+            ['first_name', false],
+            ['last_name', ''],
+            ['last_name', '   '],
+            ['last_name', 123],
+            ['last_name', false],
+        ];
     }
 
-    public function testItThrowsExceptionWhenLastNameIsEmpty()
+    #[DataProvider('invalidNameDataProvider')]
+    public function testItThrowsExceptionForInvalidNames(string $field, $value): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Last name is required');
+        $this->expectException(\InvalidArgumentException::class);
 
         $userId = 1;
-        $mockData = ['last_name' => ''];
+        $mockData = [$field => $value];
 
         $request = $this->createRequestWithBody($mockData);
         $response = $this->createResponse();
@@ -125,145 +116,7 @@ final class UpdateUserActionTest extends ActionTestCase
         $mockedUserService->expects($this->once())
             ->method('update')
             ->with($userId, $mockData)
-            ->willThrowException(new InvalidArgumentException('Last name is required'));
-
-        $responder = new JsonResponder();
-        $action = new UpdateUserAction($responder, $mockedUserService);
-
-        $action($request, $response, ['id' => (string)$userId]);
-    }
-
-    public function testItThrowsExceptionWhenFirstNameIsWhitespaceOnly()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('First name is required');
-
-        $userId = 1;
-        $mockData = ['first_name' => '   '];
-
-        $request = $this->createRequestWithBody($mockData);
-        $response = $this->createResponse();
-
-        $mockedUserService = $this->createMock(UserService::class);
-        $mockedUserService->expects($this->once())
-            ->method('update')
-            ->with($userId, $mockData)
-            ->willThrowException(new InvalidArgumentException('First name is required'));
-
-        $responder = new JsonResponder();
-        $action = new UpdateUserAction($responder, $mockedUserService);
-
-        $action($request, $response, ['id' => (string)$userId]);
-    }
-
-    public function testItThrowsExceptionWhenLastNameIsWhitespaceOnly()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Last name is required');
-
-        $userId = 1;
-        $mockData = ['last_name' => '   '];
-
-        $request = $this->createRequestWithBody($mockData);
-        $response = $this->createResponse();
-
-        $mockedUserService = $this->createMock(UserService::class);
-        $mockedUserService->expects($this->once())
-            ->method('update')
-            ->with($userId, $mockData)
-            ->willThrowException(new InvalidArgumentException('Last name is required'));
-
-        $responder = new JsonResponder();
-        $action = new UpdateUserAction($responder, $mockedUserService);
-
-        $action($request, $response, ['id' => (string)$userId]);
-    }
-
-    public function testItThrowsExceptionWhenFirstNameIsNotString()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('First name is required');
-
-        $userId = 1;
-        $mockData = ['first_name' => 123];
-
-        $request = $this->createRequestWithBody($mockData);
-        $response = $this->createResponse();
-
-        $mockedUserService = $this->createMock(UserService::class);
-        $mockedUserService->expects($this->once())
-            ->method('update')
-            ->with($userId, $mockData)
-            ->willThrowException(new InvalidArgumentException('First name is required'));
-
-        $responder = new JsonResponder();
-        $action = new UpdateUserAction($responder, $mockedUserService);
-
-        $action($request, $response, ['id' => (string)$userId]);
-    }
-
-    public function testItThrowsExceptionWhenLastNameIsNotString()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Last name is required');
-
-        $userId = 1;
-        $mockData = ['last_name' => 123];
-
-        $request = $this->createRequestWithBody($mockData);
-        $response = $this->createResponse();
-
-        $mockedUserService = $this->createMock(UserService::class);
-        $mockedUserService->expects($this->once())
-            ->method('update')
-            ->with($userId, $mockData)
-            ->willThrowException(new InvalidArgumentException('Last name is required'));
-
-        $responder = new JsonResponder();
-        $action = new UpdateUserAction($responder, $mockedUserService);
-
-        $action($request, $response, ['id' => (string)$userId]);
-    }
-
-    public function testItThrowsExceptionWhenFirstNameIsNotStringBoolean()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('First name is required');
-
-        $userId = 1;
-        $mockData = ['first_name' => false];
-
-        $request = $this->createRequestWithBody($mockData);
-        $response = $this->createResponse();
-
-        $mockedUserService = $this->createMock(UserService::class);
-        $mockedUserService->expects($this->once())
-            ->method('update')
-            ->with($userId, $mockData)
-            ->willThrowException(new InvalidArgumentException('First name is required'));
-
-        $responder = new JsonResponder();
-        $action = new UpdateUserAction($responder, $mockedUserService);
-
-        $action($request, $response, ['id' => (string)$userId]);
-    }
-
-    public function testItThrowsExceptionWhenLastNameIsNotStringBoolean()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Last name is required');
-
-        $userId = 1;
-        $mockData = ['last_name' => false];
-
-        $request = $this->createRequestWithBody($mockData);
-        $response = $this->createResponse();
-
-        $mockedUserService = $this->createMock(UserService::class);
-        $mockedUserService->expects($this->once())
-            ->method('update')
-            ->with($userId, $mockData)
-            ->willThrowException(new InvalidArgumentException('Last name is required'));
+            ->willThrowException(new \InvalidArgumentException());
 
         $responder = new JsonResponder();
         $action = new UpdateUserAction($responder, $mockedUserService);
