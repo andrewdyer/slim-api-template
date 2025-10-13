@@ -7,9 +7,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 abstract class Controller
 {
-    protected readonly Request $request;
-    protected readonly Response $response;
-    protected readonly array $args;
+    protected Request $request;
+    protected Response $response;
+    protected array $args;
 
     public function __invoke(Request $request, Response $response, array $args): Response
     {
