@@ -1,44 +1,53 @@
 <?php
 
-$container = $app->getContainer();
+use DI\Container;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
+use Slim\Views\Twig;
 
-$container['foundHandler'] = function () {
-    return new Slim\Handlers\Strategies\RequestResponseArgs();
-};
+/**
+ * Register application services in the dependency injection container.
+ *
+ * Sets up core application services using configuration values
+ * defined in the settings service.
+ *
+ * @param Container $container The dependency injection container
+ * @return void
+ */
+return function(Container $container) {
+    $container->set(Logger::class, function($container) {
+        $settings = $container->get('settings')['logger'];
 
-$container['logger'] = function ($container) {
-    $config = $container->get('settings')->get('logger');
+        $logger = new Logger($settings['name']);
 
-    $formatter = new Monolog\Formatter\LineFormatter(
-        $config['formatter']['format'] . "\n",
-        $config['formatter']['dateFormat'],
-        $config['formatter']['allowInlineLineBreaks'],
-        $config['formatter']['ignoreEmptyContextAndExtra']
-    );
+        $handler = new RotatingFileHandler(
+            base_path('storage/logs/app.log'),
+            $settings['handler']['max_files'],
+            $settings['handler']['level']
+        );
 
-    $handler = new Monolog\Handler\StreamHandler(
-        base_path('storage/logs/app.log'),
-        $config['handler']['level']
-    );
+        $formatter = new LineFormatter(
+            $settings['formatter']['format'],
+            $settings['formatter']['date_format'],
+            $settings['formatter']['allow_inline_line_breaks'],
+            $settings['formatter']['ignore_empty_context_and_extra'],
+            $settings['formatter']['include_stack_traces']
+        );
 
-    $handler->setFormatter($formatter);
+        $handler->setFormatter($formatter);
 
-    $logger = new Monolog\Logger($config['name']);
-    $logger->pushHandler($handler);
+        $logger->pushHandler($handler);
 
-    return $logger;
-};
+        return $logger;
+    });
 
-$container['view'] = function ($container) {
-    $config = $container->get('settings')->get('view');
+    $container->set(Twig::class, function($container) {
+        $settings = $container->get('settings')['view'];
 
-    $view = new Slim\Views\Twig(base_path('resources/views'), [
-        'cache' => $config['cache'],
-    ]);
-
-    $router = $container->get('router');
-    $uri = Slim\Http\Uri::createFromEnvironment(new Slim\Http\Environment($_SERVER));
-    $view->addExtension(new Slim\Views\TwigExtension($router, $uri));
-
-    return $view;
+        return Twig::create(
+            base_path('resources/views'),
+            ['cache' => $settings['cache']]
+        );
+    });
 };
