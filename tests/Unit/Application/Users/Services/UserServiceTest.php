@@ -60,17 +60,17 @@ final class UserServiceTest extends TestCase
     public function testCreateUserSuccessfully(): void
     {
         $dto = new CreateUserDTO(
-            firstName: 'Alice',
-            lastName: 'Johnson',
-            email: 'alice@example.com'
+            firstName: 'Bob',
+            lastName: 'Smith',
+            email: 'bob@example.com'
         );
 
         $user = $this->service->create($dto);
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertSame('Alice', $user->getFirstName());
-        $this->assertSame('Johnson', $user->getLastName());
-        $this->assertSame('alice@example.com', $user->getEmail());
+        $this->assertSame('Bob', $user->getFirstName());
+        $this->assertSame('Smith', $user->getLastName());
+        $this->assertSame('bob@example.com', $user->getEmail());
 
         $this->assertCount(6, $this->repository->findAll());
     }
@@ -118,9 +118,9 @@ final class UserServiceTest extends TestCase
     {
         $dto = new UpdateUserDTO(
             id: 999,
-            firstName: 'Test',
-            lastName: 'User',
-            email: 'test@example.com'
+            firstName: 'Alice',
+            lastName: 'Johnson',
+            email: 'alice@example.com'
         );
 
         $this->expectException(UserNotFoundException::class);
@@ -136,14 +136,14 @@ final class UserServiceTest extends TestCase
             id: 1,
             firstName: null,
             lastName: null,
-            email: 'newemail@example.com'
+            email: 'alice@example.com'
         );
 
         $updatedUser = $this->service->update($dto);
 
         $this->assertSame($originalUser->getFirstName(), $updatedUser->getFirstName());
         $this->assertSame($originalUser->getLastName(), $updatedUser->getLastName());
-        $this->assertSame('newemail@example.com', $updatedUser->getEmail());
+        $this->assertSame('alice@example.com', $updatedUser->getEmail());
     }
 
     public function testUpdateUserPartiallyWithOnlyFirstName(): void
@@ -151,14 +151,14 @@ final class UserServiceTest extends TestCase
         $originalUser = $this->service->find(1);
         $dto = new UpdateUserDTO(
             id: 1,
-            firstName: 'UpdatedName',
+            firstName: 'Alice',
             lastName: null,
             email: null
         );
 
         $updatedUser = $this->service->update($dto);
 
-        $this->assertSame('UpdatedName', $updatedUser->getFirstName());
+        $this->assertSame('Alice', $updatedUser->getFirstName());
         $this->assertSame($originalUser->getLastName(), $updatedUser->getLastName());
         $this->assertSame($originalUser->getEmail(), $updatedUser->getEmail());
     }
@@ -167,17 +167,17 @@ final class UserServiceTest extends TestCase
     {
         $dto = new UpdateUserDTO(
             id: 1,
-            firstName: 'Jane',
-            lastName: 'Smith',
-            email: 'jane.smith@example.com'
+            firstName: 'Alice',
+            lastName: 'Johnson',
+            email: 'alice@example.com'
         );
 
         $updatedUser = $this->service->update($dto);
 
         $this->assertInstanceOf(User::class, $updatedUser);
         $this->assertSame(1, $updatedUser->getId());
-        $this->assertSame('Jane', $updatedUser->getFirstName());
-        $this->assertSame('Smith', $updatedUser->getLastName());
-        $this->assertSame('jane.smith@example.com', $updatedUser->getEmail());
+        $this->assertSame('Alice', $updatedUser->getFirstName());
+        $this->assertSame('Johnson', $updatedUser->getLastName());
+        $this->assertSame('alice@example.com', $updatedUser->getEmail());
     }
 }
