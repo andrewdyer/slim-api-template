@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Application\Http\Actions;
 
 use PHPUnit\Framework\TestCase;

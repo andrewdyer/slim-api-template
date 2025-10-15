@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Domain\Users\Entities;
 
 use App\Domain\Users\Entities\User;
