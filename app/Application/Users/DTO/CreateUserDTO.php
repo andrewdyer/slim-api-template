@@ -3,7 +3,7 @@
 namespace App\Application\Users\DTO;
 
 /**
- * Data Transfer Object for creating a new User.
+ * Data Transfer Object for creating a new user.
  *
  * This class encapsulates the data required to create a user
  * and provides a convenient static constructor (`fromArray`)
@@ -13,9 +13,9 @@ namespace App\Application\Users\DTO;
 final class CreateUserDTO
 {
     /**
-     * @param string $firstName the user's first name
-     * @param string $lastName  the user's last name
-     * @param string $email     the user's email address
+     * @param string $firstName The user's first name
+     * @param string $lastName  The user's last name
+     * @param string $email     The user's email address
      */
     public function __construct(
         public string $firstName,
@@ -36,9 +36,9 @@ final class CreateUserDTO
      *     email: string
      * } $data The input data, typically from the request body
      *
-     * @return self a populated CreateUserDTO instance
+     * @return self A populated CreateUserDTO instance
      *
-     * @throws \InvalidArgumentException if any required fields are missing
+     * @throws \InvalidArgumentException If any required fields are missing
      */
     public static function fromArray(array $data): self
     {

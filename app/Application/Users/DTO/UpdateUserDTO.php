@@ -3,7 +3,7 @@
 namespace App\Application\Users\DTO;
 
 /**
- * Data Transfer Object for updating an existing User.
+ * Data Transfer Object for updating an existing user.
  *
  * This class encapsulates the data required to update a user
  * and provides a convenient static constructor (`fromArray`)
@@ -14,10 +14,10 @@ namespace App\Application\Users\DTO;
 final class UpdateUserDTO
 {
     /**
-     * @param int         $id        the unique identifier of the user to update
-     * @param string|null $firstName the user's first name (null to keep existing value)
-     * @param string|null $lastName  the user's last name (null to keep existing value)
-     * @param string|null $email     the user's email address (null to keep existing value)
+     * @param int         $id        The unique identifier of the user to update
+     * @param string|null $firstName The user's first name (null to keep existing value)
+     * @param string|null $lastName  The user's last name (null to keep existing value)
+     * @param string|null $email     The user's email address (null to keep existing value)
      */
     public function __construct(
         public int $id,
@@ -35,14 +35,14 @@ final class UpdateUserDTO
      * fields will be updated; missing fields will be null and
      * the existing values will be preserved.
      *
-     * @param int $id the unique identifier of the user to update
+     * @param int $id The unique identifier of the user to update
      * @param array{
      *     first_name?: string,
      *     last_name?: string,
      *     email?: string
      * } $data The input data, typically from the request body
      *
-     * @return self a populated UpdateUserDTO instance
+     * @return self A populated UpdateUserDTO instance
      */
     public static function fromArray(int $id, array $data): self
     {

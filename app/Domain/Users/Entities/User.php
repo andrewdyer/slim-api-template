@@ -29,6 +29,8 @@ final readonly class User implements \JsonSerializable
 
     /**
      * Get the user's email address.
+     *
+     * @return string The user's email address
      */
     public function getEmail(): string
     {
@@ -37,6 +39,8 @@ final readonly class User implements \JsonSerializable
 
     /**
      * Get the user's first name.
+     *
+     * @return string The user's first name
      */
     public function getFirstName(): string
     {
@@ -44,7 +48,9 @@ final readonly class User implements \JsonSerializable
     }
 
     /**
-     * Get the user's ID.
+     * Get the user's unique identifier.
+     *
+     * @return int The user's ID
      */
     public function getId(): int
     {
@@ -53,6 +59,8 @@ final readonly class User implements \JsonSerializable
 
     /**
      * Get the user's last name.
+     *
+     * @return string The user's last name
      */
     public function getLastName(): string
     {

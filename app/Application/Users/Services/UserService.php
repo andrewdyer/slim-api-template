@@ -20,7 +20,7 @@ final readonly class UserService
     /**
      * Create a new UserService instance.
      *
-     * @param UserRepository $userRepository the repository used to persist and retrieve users
+     * @param UserRepository $userRepository The repository used to persist and retrieve users
      */
     public function __construct(
         protected UserRepository $userRepository,
@@ -33,7 +33,7 @@ final readonly class UserService
      * This method fetches and returns all user entities currently stored
      * in the repository. If no users exist, an empty array is returned.
      *
-     * @return User[] an array of all user entities in the system
+     * @return User[] An array of all user entities in the system
      */
     public function all(): array
     {
@@ -46,9 +46,9 @@ final readonly class UserService
      * This method receives a Data Transfer Object (DTO) that encapsulates
      * validated input data and delegates persistence to the repository layer.
      *
-     * @param CreateUserDTO $dto the data required to create a user
+     * @param CreateUserDTO $dto The data required to create a user
      *
-     * @return User the newly created user entity
+     * @return User The newly created user entity
      */
     public function create(CreateUserDTO $dto): User
     {
@@ -66,9 +66,9 @@ final readonly class UserService
      * the repository. The operation returns a boolean indicating whether
      * the deletion was successful or not.
      *
-     * @param int $id the unique identifier of the user to delete
+     * @param int $id The unique identifier of the user to delete
      *
-     * @return bool true if the user was successfully deleted, false if the user was not found
+     * @return bool True if the user was successfully deleted, false if the user was not found
      */
     public function delete(int $id): bool
     {
@@ -82,11 +82,11 @@ final readonly class UserService
      * identifier. If the user cannot be found, it throws an exception
      * rather than returning null, ensuring consistent error handling.
      *
-     * @param int $id the unique identifier of the user to find
+     * @param int $id The unique identifier of the user to find
      *
-     * @return User the user entity if found
+     * @return User The user entity if found
      *
-     * @throws UserNotFoundException if no user exists with the given ID
+     * @throws UserNotFoundException If no user exists with the given ID
      */
     public function find(int $id): User
     {
@@ -107,11 +107,11 @@ final readonly class UserService
      * be updated, allowing for partial updates. The method first verifies the
      * user exists before attempting the update operation.
      *
-     * @param UpdateUserDTO $dto the data containing user ID and fields to update
+     * @param UpdateUserDTO $dto The data containing user ID and fields to update
      *
-     * @return User the updated user entity
+     * @return User The updated user entity
      *
-     * @throws UserNotFoundException if no user exists with the given ID
+     * @throws UserNotFoundException If no user exists with the given ID
      */
     public function update(UpdateUserDTO $dto): User
     {

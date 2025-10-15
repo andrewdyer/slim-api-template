@@ -6,7 +6,7 @@ use App\Domain\Users\Entities\User;
 use App\Domain\Users\Repositories\UserRepository;
 
 /**
- * Class InMemoryUserRepository.
+ * In-memory implementation of the UserRepository interface.
  *
  * A simple in-memory implementation of the UserRepository interface.
  * Primarily intended for testing, prototyping, or demonstration purposes
@@ -20,12 +20,14 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Internal in-memory data store.
      *
-     * @var array<int, User> array of User entities keyed by their ID
+     * @var array<int, User> Array of User entities keyed by their ID
      */
     private array $store = [];
 
     /**
-     * @var int Auto-incrementing ID counter.
+     * Auto-incrementing ID counter.
+     *
+     * @var int
      */
     private int $nextId = 1;
 
@@ -47,11 +49,11 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Create a new User entity and add it to the store.
      *
-     * @param string $firstName the user's first name
-     * @param string $lastName  the user's last name
-     * @param string $email     the user's email address
+     * @param string $firstName The user's first name
+     * @param string $lastName  The user's last name
+     * @param string $email     The user's email address
      *
-     * @return User the newly created User entity
+     * @return User The newly created User entity
      */
     public function create(string $firstName, string $lastName, string $email): User
     {
@@ -64,9 +66,9 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Delete a user from the store by ID.
      *
-     * @param int $id the ID of the user to delete
+     * @param int $id The ID of the user to delete
      *
-     * @return bool true if the user was deleted, false if not found
+     * @return bool True if the user was deleted, false if not found
      */
     public function delete(int $id): bool
     {
@@ -82,7 +84,7 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Retrieve all users from the store.
      *
-     * @return User[] a sequential array of User entities
+     * @return User[] A sequential array of User entities
      */
     public function findAll(): array
     {
@@ -92,9 +94,9 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Find a user by their ID.
      *
-     * @param int $id the ID of the user to find
+     * @param int $id The ID of the user to find
      *
-     * @return User|null the User entity if found, otherwise null
+     * @return User|null The User entity if found, otherwise null
      */
     public function findById(int $id): ?User
     {
@@ -107,12 +109,12 @@ final class InMemoryUserRepository implements UserRepository
      * Only non-null fields will be updated. Fields passed as null
      * will retain their existing values.
      *
-     * @param int         $id        the ID of the user to update
-     * @param string|null $firstName the new first name (optional)
-     * @param string|null $lastName  the new last name (optional)
-     * @param string|null $email     the new email (optional)
+     * @param int         $id        The ID of the user to update
+     * @param string|null $firstName The new first name (optional)
+     * @param string|null $lastName  The new last name (optional)
+     * @param string|null $email     The new email (optional)
      *
-     * @return User|null the updated User entity, or null if the user was not found
+     * @return User|null The updated User entity, or null if the user was not found
      */
     public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
     {
