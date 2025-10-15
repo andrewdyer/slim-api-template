@@ -36,10 +36,6 @@ return (new PhpCsFixer\Config())
         'concat_space' => ['spacing' => 'one'],
         'binary_operator_spaces' => [
             'default' => 'single_space',
-            'operators' => [
-                '=' => 'align_single_space_minimal',
-                '=>' => 'align_single_space_minimal', 
-            ],
         ],
         'single_quote' => true,
         'no_trailing_comma_in_singleline' => true,
