@@ -34,7 +34,7 @@ $app->addErrorMiddleware(
 require_from_root('bootstrap/middleware.php')($app);
 
 // Register application routes
-require_from_root('routes/web.php')($app);
+require_from_root('bootstrap/routes.php')($app);
 
 // Return configured application instance
 return $app;
