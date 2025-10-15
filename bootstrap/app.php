@@ -9,11 +9,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_from_root('bootstrap/environment.php')();
 
 // Configure dependency injection container with all application services
-// Sets up the DI container and registers core services, database connections, and repositories
+// Sets up the DI container and registers core services, and repositories
 $container = new DI\Container();
 AppFactory::setContainer($container);
 require_from_root('bootstrap/settings.php')($container);
-require_from_root('bootstrap/database.php')($container);
 require_from_root('bootstrap/container.php')($container);
 require_from_root('bootstrap/repositories.php')($container);
 

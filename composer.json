@@ -19,7 +19,6 @@
     },
     "require": {
         "php": "^8.3",
-        "illuminate/database": "^12.33",
         "monolog/monolog": "^3.9",
         "php-di/php-di": "^7.1",
         "slim/psr7": "^1.7",
