@@ -3,25 +3,29 @@
 use Monolog\Logger;
 use Slim\Factory\AppFactory;
 
-// Bootstrap application
+// Load Composer autoloader and initialize environment variables
+// This establishes the foundation by loading all dependencies and configuration
 require_once __DIR__ . '/../vendor/autoload.php';
 require_from_root('bootstrap/environment.php')();
 
-// Setup dependency injection
+// Configure dependency injection container with all application services
+// Sets up the DI container and registers core services, and repositories
 $container = new DI\Container();
 AppFactory::setContainer($container);
 require_from_root('bootstrap/settings.php')($container);
-require_from_root('bootstrap/database.php')($container);
 require_from_root('bootstrap/container.php')($container);
+require_from_root('bootstrap/repositories.php')($container);
 
-// Create Slim application
+// Initialize the Slim application instance with the configured container
 $app = AppFactory::create();
 
-// Add core middleware (executes in reverse order: Error → Body → Routing)
+// Register core middleware stack in reverse execution order
+// Routing middleware enables route matching, body parsing handles request data
 $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
 
-// Error handling (needs container for settings)
+// Configure error handling middleware with application settings and logging
+// Retrieves display and logging preferences from settings to handle exceptions appropriately
 $settings = $container->get('settings');
 $logger = $container->get(Logger::class);
 $app->addErrorMiddleware(
@@ -31,11 +35,8 @@ $app->addErrorMiddleware(
     $logger
 );
 
-// Load application-specific middleware (Twig, CORS, Auth, etc.)
-require_from_root('bootstrap/middleware.php')($app);
-
-// Register application routes
-require_from_root('routes/web.php')($app);
+// Load and register all application routes from the routes configuration
+require_from_root('bootstrap/routes.php')($app);
 
 // Return configured application instance
 return $app;

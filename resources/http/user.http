@@ -1,0 +1,31 @@
+### Create user
+POST http://localhost:8888/api/users
+Content-Type: application/json
+
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "johndoe@example.com"
+}
+
+### Get users
+GET http://localhost:8888/api/users
+Content-Type: application/json
+
+### Get user
+GET http://localhost:8888/api/users/1
+Content-Type: application/json
+
+### Update user
+PUT http://localhost:8888/api/users/1
+Content-Type: application/json
+
+{
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "email": "janesmith@example.com"
+}
+
+### Delete user
+DELETE http://localhost:8888/api/users/1
+Content-Type: application/json

@@ -4,7 +4,6 @@ use DI\Container;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
-use Slim\Views\Twig;
 
 /**
  * Register application services in the dependency injection container.
@@ -40,14 +39,5 @@ return function(Container $container) {
         $logger->pushHandler($handler);
 
         return $logger;
-    });
-
-    $container->set(Twig::class, function($container) {
-        $settings = $container->get('settings')['view'];
-
-        return Twig::create(
-            base_path('resources/views'),
-            ['cache' => $settings['cache']]
-        );
     });
 };
