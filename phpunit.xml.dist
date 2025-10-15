@@ -26,7 +26,7 @@
             <file>./app/helpers.php</file>
         </exclude>
         <report>
-            <html outputDirectory="storage/reports/phpunit/code-coverage"/>
+            <html outputDirectory="storage/test-reports/phpunit/code-coverage"/>
         </report>
     </coverage>
 </phpunit>
