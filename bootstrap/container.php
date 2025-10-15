@@ -41,13 +41,4 @@ return function(Container $container) {
 
         return $logger;
     });
-
-    $container->set(Twig::class, function($container) {
-        $settings = $container->get('settings')['view'];
-
-        return Twig::create(
-            base_path('resources/views'),
-            ['cache' => $settings['cache']]
-        );
-    });
 };

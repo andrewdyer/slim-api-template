@@ -34,9 +34,6 @@ return function(Container $container) {
                     'include_stack_traces' => (bool)get_env('LOGGER_FORMATTER_INCLUDE_STACK_TRACES', false)
                 ],
             ],
-            'view' => [
-                'cache' => get_env('VIEW_CACHE_DISABLED') ? false : base_path('storage/views'),
-            ],
         ];
     });
 };
