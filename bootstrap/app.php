@@ -30,9 +30,6 @@ $app->addErrorMiddleware(
     $logger
 );
 
-// Load application-specific middleware (Twig, CORS, Auth, etc.)
-require_from_root('bootstrap/middleware.php')($app);
-
 // Register application routes
 require_from_root('bootstrap/routes.php')($app);
 
