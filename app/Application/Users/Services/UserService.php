@@ -28,6 +28,19 @@ final readonly class UserService
     }
 
     /**
+     * Retrieve all users from the system.
+     *
+     * This method fetches and returns all user entities currently stored
+     * in the repository. If no users exist, an empty array is returned.
+     *
+     * @return User[] an array of all user entities in the system
+     */
+    public function all(): array
+    {
+        return $this->userRepository->findAll();
+    }
+
+    /**
      * Create a new user in the system.
      *
      * This method receives a Data Transfer Object (DTO) that encapsulates
