@@ -20,17 +20,6 @@ return function(Container $container) {
                 'log_errors' => (bool)get_env('APP_LOG_ERRORS', true),
                 'log_error_details' => (bool)get_env('APP_LOG_ERROR_DETAILS', true),
             ],
-            'database' => [
-                'driver' => get_env('DB_DRIVER', 'mysql'),
-                'host' => get_env('DB_HOST', '127.0.0.1'),
-                'port' => get_env('DB_PORT', '3306'),
-                'database' => get_env('DB_DATABASE'),
-                'username' => get_env('DB_USERNAME'),
-                'password' => get_env('DB_PASSWORD'),
-                'charset' => get_env('DB_CHARSET', 'utf8mb4'),
-                'collation' => get_env('DB_COLLATION', 'utf8mb4_unicode_ci'),
-                'prefix' => '',
-            ],
             'logger' => [
                 'name' => get_env('LOGGER_NAME', 'app'),
                 'handler' => [
