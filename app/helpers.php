@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if (!function_exists('base_path')) {
+if (!function_exists('root_path')) {
     /**
      * Get the base path of the application with an optional sub-path.
      *
@@ -14,7 +14,7 @@ if (!function_exists('base_path')) {
      *
      * @return string The absolute path to the application root or specified sub-path
      */
-    function base_path(string $path = ''): string
+    function root_path(string $path = ''): string
     {
         $base = __DIR__ . DIRECTORY_SEPARATOR . '..';
 
@@ -79,7 +79,7 @@ if (!function_exists('require_from_root')) {
      */
     function require_from_root(string $path)
     {
-        $full = base_path($path);
+        $full = root_path($path);
 
         if (!file_exists($full)) {
             throw new RuntimeException("File {$full} not found");
