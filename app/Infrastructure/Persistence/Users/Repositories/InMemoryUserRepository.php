@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Persistence\Users\Repositories;
 
 use App\Domain\Users\Entities\User;
@@ -18,18 +20,17 @@ use App\Domain\Users\Repositories\UserRepository;
 final class InMemoryUserRepository implements UserRepository
 {
     /**
-     * Internal in-memory data store.
-     *
-     * @var array<int, User> Array of User entities keyed by their ID
-     */
-    private array $store = [];
-
-    /**
      * Auto-incrementing ID counter.
      *
      * @var int
      */
     private int $nextId = 1;
+    /**
+     * Internal in-memory data store.
+     *
+     * @var array<int, User> Array of User entities keyed by their ID
+     */
+    private array $store = [];
 
     /**
      * InMemoryUserRepository constructor.

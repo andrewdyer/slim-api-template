@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Application\Users\DTO;
 
 use App\Application\Users\DTO\CreateUserDTO;

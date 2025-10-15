@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Application\Users\Services;
 
 use App\Application\Users\DTO\CreateUserDTO;
@@ -28,21 +30,6 @@ final class UserServiceTest extends TestCase
      * User service instance under test.
      */
     private UserService $service;
-
-    /**
-     * Set up test dependencies before each test method.
-     *
-     * Initializes the in-memory repository and user service for testing.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->repository = new InMemoryUserRepository();
-        $this->service = new UserService($this->repository);
-    }
 
     /**
      * Test that the all method returns all users from the repository.
@@ -278,5 +265,20 @@ final class UserServiceTest extends TestCase
         $this->assertSame('Alice', $updatedUser->getFirstName());
         $this->assertSame('Johnson', $updatedUser->getLastName());
         $this->assertSame('alice@example.com', $updatedUser->getEmail());
+    }
+
+    /**
+     * Set up test dependencies before each test method.
+     *
+     * Initializes the in-memory repository and user service for testing.
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->repository = new InMemoryUserRepository();
+        $this->service = new UserService($this->repository);
     }
 }
