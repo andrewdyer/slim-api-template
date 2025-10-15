@@ -5,8 +5,23 @@ namespace Tests\Unit\Application\Users\DTO;
 use App\Application\Users\DTO\UpdateUserDTO;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Test cases for the UpdateUserDTO data transfer object.
+ *
+ * This test class verifies that the UpdateUserDTO correctly handles
+ * constructor parameters, array conversion, and type casting for
+ * user update operations.
+ */
 final class UpdateUserDTOTest extends TestCase
 {
+    /**
+     * Test constructor with all available fields populated.
+     *
+     * Verifies that when all constructor parameters are provided, the DTO
+     * correctly stores and returns each value through its properties.
+     *
+     * @return void
+     */
     public function testConstructorWithAllFields(): void
     {
         $dto = new UpdateUserDTO(
@@ -22,6 +37,14 @@ final class UpdateUserDTOTest extends TestCase
         $this->assertSame('john.doe@example.com', $dto->email);
     }
 
+    /**
+     * Test constructor with only the required ID field.
+     *
+     * Verifies that when only the ID is provided, all optional fields
+     * are correctly set to null by default.
+     *
+     * @return void
+     */
     public function testConstructorWithOnlyId(): void
     {
         $dto = new UpdateUserDTO(id: 1);
@@ -32,6 +55,14 @@ final class UpdateUserDTOTest extends TestCase
         $this->assertNull($dto->email);
     }
 
+    /**
+     * Test constructor with partial field population.
+     *
+     * Verifies that when some optional fields are provided and others
+     * are omitted, the DTO correctly handles the partial data.
+     *
+     * @return void
+     */
     public function testConstructorWithPartialFields(): void
     {
         $dto = new UpdateUserDTO(
@@ -45,6 +76,14 @@ final class UpdateUserDTOTest extends TestCase
         $this->assertNull($dto->email);
     }
 
+    /**
+     * Test fromArray method with type casting to string.
+     *
+     * Verifies that the fromArray factory method correctly converts
+     * non-string values (like integers) to strings for all fields.
+     *
+     * @return void
+     */
     public function testFromArrayCastsToString(): void
     {
         $data = [
@@ -61,6 +100,14 @@ final class UpdateUserDTOTest extends TestCase
         $this->assertSame('789', $dto->email);
     }
 
+    /**
+     * Test fromArray method with all fields populated.
+     *
+     * Verifies that the fromArray factory method correctly maps array keys
+     * to DTO properties when all expected fields are present in the data.
+     *
+     * @return void
+     */
     public function testFromArrayWithAllFields(): void
     {
         $data = [
@@ -77,6 +124,14 @@ final class UpdateUserDTOTest extends TestCase
         $this->assertSame('jane.smith@example.com', $dto->email);
     }
 
+    /**
+     * Test fromArray method with empty data array.
+     *
+     * Verifies that when an empty array is passed to fromArray, the DTO
+     * is created with only the ID set and all other fields as null.
+     *
+     * @return void
+     */
     public function testFromArrayWithEmptyData(): void
     {
         $dto = UpdateUserDTO::fromArray(4, []);
@@ -87,6 +142,14 @@ final class UpdateUserDTOTest extends TestCase
         $this->assertNull($dto->email);
     }
 
+    /**
+     * Test fromArray method with mixed field presence.
+     *
+     * Verifies that the fromArray method correctly handles arrays where
+     * some fields are present and others are omitted entirely.
+     *
+     * @return void
+     */
     public function testFromArrayWithMixedFields(): void
     {
         $data = [
@@ -103,6 +166,15 @@ final class UpdateUserDTOTest extends TestCase
         $this->assertSame('updated@example.com', $dto->email);
     }
 
+    /**
+     * Test fromArray method with explicit null values.
+     *
+     * Verifies that when array values are explicitly set to null,
+     * the DTO correctly preserves these null values rather than
+     * attempting to convert them.
+     *
+     * @return void
+     */
     public function testFromArrayWithNullValues(): void
     {
         $data = [
@@ -119,6 +191,14 @@ final class UpdateUserDTOTest extends TestCase
         $this->assertNull($dto->email);
     }
 
+    /**
+     * Test fromArray method with only one field specified.
+     *
+     * Verifies that when only a single field is provided in the array,
+     * that field is set correctly while others remain null.
+     *
+     * @return void
+     */
     public function testFromArrayWithPartialFields(): void
     {
         $data = [
