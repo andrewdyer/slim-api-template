@@ -36,7 +36,10 @@
             "url": "workbench/*/"
         }
     ],
-    "scripts": {},
+    "scripts": {
+        "cs:check": "php-cs-fixer check --verbose --diff",
+        "cs:fix": "php-cs-fixer fix"
+    },
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
