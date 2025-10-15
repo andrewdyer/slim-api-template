@@ -1,9 +1,11 @@
 {
     "name": "andrewdyer/skeleton",
-    "description": "A starter structure built with the Slim PHP framework",
-    "keywords": ["framework", "slim"],
     "type": "project",
-    "license": "MIT",
+    "scripts": {
+      "test": "phpunit",
+      "cs:check": "php-cs-fixer check --verbose --diff",
+      "cs:fix": "php-cs-fixer fix"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "app/"
@@ -36,11 +38,6 @@
             "url": "workbench/*/"
         }
     ],
-    "scripts": {
-        "test": "phpunit",
-        "cs:check": "php-cs-fixer check --verbose --diff",
-        "cs:fix": "php-cs-fixer fix"
-    },
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
