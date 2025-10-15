@@ -23,13 +23,13 @@ final class UserTest extends TestCase
      * @dataProvider userProvider
      *
      * @param int    $id        User's unique identifier
-     * @param string $email     User's email address
      * @param string $firstName User's first name
      * @param string $lastName  User's last name
+     * @param string $email     User's email address
      *
      * @return void
      */
-    public function testGetters(int $id, string $email, string $firstName, string $lastName)
+    public function testGetters(int $id, string $firstName, string $lastName, string $email)
     {
         $user = new User($id, $firstName, $lastName, $email);
 
@@ -49,13 +49,13 @@ final class UserTest extends TestCase
      * @dataProvider userProvider
      *
      * @param int    $id        User's unique identifier
-     * @param string $email     User's email address
      * @param string $firstName User's first name
      * @param string $lastName  User's last name
+     * @param string $email     User's email address
      *
      * @return void
      */
-    public function testJsonSerialize(int $id, string $email, string $firstName, string $lastName)
+    public function testJsonSerialize(int $id, string $firstName, string $lastName, string $email)
     {
         $user = new User($id, $firstName, $lastName, $email);
 
