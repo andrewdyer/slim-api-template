@@ -4,7 +4,6 @@ use DI\Container;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
-use Slim\Views\Twig;
 
 /**
  * Register application services in the dependency injection container.
