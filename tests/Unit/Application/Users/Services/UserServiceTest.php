@@ -32,17 +32,6 @@ final class UserServiceTest extends TestCase
         $this->assertContainsOnlyInstancesOf(User::class, $users);
     }
 
-    public function testAllReturnsEmptyArrayWhenNoUsers(): void
-    {
-        $emptyRepository = new InMemoryUserRepository([]);
-        $emptyService = new UserService($emptyRepository);
-
-        $users = $emptyService->all();
-
-        $this->assertIsArray($users);
-        $this->assertEmpty($users);
-    }
-
     public function testCreateUserAddsUniqueId(): void
     {
         $dto = new CreateUserDTO(

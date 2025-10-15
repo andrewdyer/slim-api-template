@@ -25,22 +25,23 @@ final class InMemoryUserRepository implements UserRepository
     private array $store = [];
 
     /**
+     * @var int Auto-incrementing ID counter.
+     */
+    private int $nextId = 1;
+
+    /**
      * InMemoryUserRepository constructor.
      *
      * Preloads the repository with a couple of example users
      * for testing or demonstration purposes.
-     *
-     * @param array<int, User>|null $users optional initial users to populate the store
      */
-    public function __construct(?array $users = null)
+    public function __construct()
     {
-        $this->store = $users ?? [
-            1 => new User(1, 'Bill', 'Gates', 'billgates@example.com'),
-            2 => new User(2, 'Steve', 'Jobs', 'stevejobs@example.com'),
-            3 => new User(3, 'Mark', 'Zuckerberg', 'markzuckerberg@example.com'),
-            4 => new User(4, 'Evan', 'Spiegel', 'evanspiegel@example.com'),
-            5 => new User(5, 'Jack', 'Dorsey', 'jackdorsey@example.com'),
-        ];
+        $this->create('Bill', 'Gates', 'billgates@example.com');
+        $this->create('Steve', 'Jobs', 'stevejobs@example.com');
+        $this->create('Mark', 'Zuckerberg', 'markzuckerberg@example.com');
+        $this->create('Evan', 'Spiegel', 'evanspiegel@example.com');
+        $this->create('Jack', 'Dorsey', 'jackdorsey@example.com');
     }
 
     /**
@@ -54,10 +55,8 @@ final class InMemoryUserRepository implements UserRepository
      */
     public function create(string $firstName, string $lastName, string $email): User
     {
-        $id = count($this->store) + 1;
-
-        $user = new User($id, $firstName, $lastName, $email);
-        $this->store[$id] = $user;
+        $user = new User($this->nextId++, $firstName, $lastName, $email);
+        $this->store[$user->getId()] = $user;
 
         return $user;
     }
