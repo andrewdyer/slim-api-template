@@ -3,6 +3,7 @@
 namespace App\Application\Users\Services;
 
 use App\Application\Users\DTO\CreateUserDTO;
+use App\Application\Users\DTO\UpdateUserDTO;
 use App\Application\Users\Exceptions\UserNotFoundException;
 use App\Domain\Users\Entities\User;
 use App\Domain\Users\Repositories\UserRepository;
@@ -67,5 +68,29 @@ final readonly class UserService
         }
 
         return $user;
+    }
+
+    /**
+     * Update an existing user in the system.
+     *
+     * This method receives a Data Transfer Object (DTO) containing the user ID
+     * and optional updated field values. Only non-null fields in the DTO will
+     * be updated, allowing for partial updates. The method first verifies the
+     * user exists before attempting the update operation.
+     *
+     * @param UpdateUserDTO $dto the data containing user ID and fields to update
+     *
+     * @return User the updated user entity
+     *
+     * @throws UserNotFoundException if no user exists with the given ID
+     */
+    public function update(UpdateUserDTO $dto): User
+    {
+        $user = $this->find($dto->id);
+
+        return $this->userRepository->update(id: $user->getId(),
+            firstName: $dto->firstName ?? $user->getFirstName(),
+            lastName: $dto->lastName ?? $user->getLastName(),
+            email: $dto->email ?? $user->getEmail());
     }
 }
