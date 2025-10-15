@@ -29,10 +29,12 @@ final class InMemoryUserRepository implements UserRepository
      *
      * Preloads the repository with a couple of example users
      * for testing or demonstration purposes.
+     *
+     * @param array<int, User>|null $users optional initial users to populate the store
      */
-    public function __construct()
+    public function __construct(?array $users = null)
     {
-        $this->store = [
+        $this->store = $users ?? [
             1 => new User(1, 'John', 'Doe', 'johndoe@example.com'),
             2 => new User(2, 'Jane', 'Smith', 'janesmith@example.com'),
         ];

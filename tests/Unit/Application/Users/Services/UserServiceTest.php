@@ -34,7 +34,7 @@ final class UserServiceTest extends TestCase
 
     public function testAllReturnsEmptyArrayWhenNoUsers(): void
     {
-        $emptyRepository = new InMemoryUserRepository();
+        $emptyRepository = new InMemoryUserRepository([]);
         $emptyService = new UserService($emptyRepository);
 
         $users = $emptyService->all();
