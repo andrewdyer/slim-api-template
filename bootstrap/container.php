@@ -21,7 +21,7 @@ return function(Container $container) {
         $logger = new Logger($settings['name']);
 
         $handler = new RotatingFileHandler(
-            base_path('storage/logs/app.log'),
+            root_path('storage/logs/app.log'),
             $settings['handler']['max_files'],
             $settings['handler']['level']
         );

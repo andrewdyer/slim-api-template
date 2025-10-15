@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if (!function_exists('base_path')) {
+if (!function_exists('root_path')) {
     /**
      * Get the base path of the application with an optional sub-path.
      *
@@ -14,9 +14,17 @@ if (!function_exists('base_path')) {
      *
      * @return string The absolute path to the application root or specified sub-path
      */
-    function base_path($path = ''): string
+    function root_path(string $path = ''): string
     {
-        return __DIR__ . '/..//' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        $base = __DIR__ . DIRECTORY_SEPARATOR . '..';
+
+        if ($path) {
+            $path = ltrim($path, '/\\');
+
+            return $base . DIRECTORY_SEPARATOR . $path;
+        }
+
+        return $base;
     }
 }
 
@@ -34,7 +42,7 @@ if (!function_exists('get_env')) {
      * @return mixed The environment variable value with type conversion applied,
      *               or the default value if not found
      */
-    function get_env($key, $default = null)
+    function get_env(string $key, mixed $default = null)
     {
         if (isset($_ENV[$key])) {
             $value = $_ENV[$key];
@@ -71,7 +79,8 @@ if (!function_exists('require_from_root')) {
      */
     function require_from_root(string $path)
     {
-        $full = base_path($path);
+        $full = root_path($path);
+
         if (!file_exists($full)) {
             throw new RuntimeException("File {$full} not found");
         }
