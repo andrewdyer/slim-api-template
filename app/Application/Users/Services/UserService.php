@@ -47,6 +47,22 @@ final readonly class UserService
     }
 
     /**
+     * Delete a user from the system.
+     *
+     * This method attempts to remove a user with the specified ID from
+     * the repository. The operation returns a boolean indicating whether
+     * the deletion was successful or not.
+     *
+     * @param int $id the unique identifier of the user to delete
+     *
+     * @return bool true if the user was successfully deleted, false if the user was not found
+     */
+    public function delete(int $id): bool
+    {
+        return $this->userRepository->delete($id);
+    }
+
+    /**
      * Find a user by their ID.
      *
      * This method retrieves a user from the repository using their unique

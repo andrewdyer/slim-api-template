@@ -55,6 +55,26 @@ final class UserServiceTest extends TestCase
         $this->assertCount(3, $this->repository->findAll());
     }
 
+    public function testDeleteNonExistentUserReturnsFalse(): void
+    {
+        $initialCount = count($this->repository->findAll());
+
+        $result = $this->service->delete(999);
+
+        $this->assertFalse($result);
+        $this->assertCount($initialCount, $this->repository->findAll());
+    }
+
+    public function testDeleteUserSuccessfully(): void
+    {
+        $initialCount = count($this->repository->findAll());
+
+        $result = $this->service->delete(1);
+
+        $this->assertTrue($result);
+        $this->assertCount($initialCount - 1, $this->repository->findAll());
+    }
+
     public function testFindUserSuccessfully(): void
     {
         $user = $this->service->find(1);
