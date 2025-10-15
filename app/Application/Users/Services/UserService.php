@@ -117,9 +117,11 @@ final readonly class UserService
     {
         $user = $this->find($dto->id);
 
-        return $this->userRepository->update(id: $user->getId(),
-            firstName: $dto->firstName ?? $user->getFirstName(),
-            lastName: $dto->lastName ?? $user->getLastName(),
-            email: $dto->email ?? $user->getEmail());
+        return $this->userRepository->update(
+            id: $user->getId(),
+            firstName: $dto->firstName,
+            lastName: $dto->lastName,
+            email: $dto->email
+        );
     }
 }
