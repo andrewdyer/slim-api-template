@@ -12,6 +12,7 @@ $container = new DI\Container();
 AppFactory::setContainer($container);
 require_from_root('bootstrap/settings.php')($container);
 require_from_root('bootstrap/container.php')($container);
+require_from_root('bootstrap/repositories.php')($container);
 
 // Create Slim application
 $app = AppFactory::create();
