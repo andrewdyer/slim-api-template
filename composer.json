@@ -1,5 +1,5 @@
 {
-    "name": "andrewdyer/skeleton",
+    "name": "andrewdyer/slim-adr-template",
     "type": "project",
     "scripts": {
       "test": "phpunit",
