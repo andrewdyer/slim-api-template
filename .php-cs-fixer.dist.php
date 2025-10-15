@@ -34,7 +34,13 @@ return (new PhpCsFixer\Config())
         // Spacing & formatting
         'array_syntax' => ['syntax' => 'short'],
         'concat_space' => ['spacing' => 'one'],
-        'binary_operator_spaces' => ['default' => 'align_single_space_minimal'],
+        'binary_operator_spaces' => [
+            'default' => 'single_space',
+            'operators' => [
+                '=' => 'align_single_space_minimal',
+                '=>' => 'align_single_space_minimal', 
+            ],
+        ],
         'single_quote' => true,
         'no_trailing_comma_in_singleline' => true,
         'trailing_comma_in_multiline' => ['elements' => ['arrays']],
