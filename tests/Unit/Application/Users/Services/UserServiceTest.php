@@ -28,7 +28,7 @@ final class UserServiceTest extends TestCase
         $users = $this->service->all();
 
         $this->assertIsArray($users);
-        $this->assertCount(2, $users);
+        $this->assertCount(5, $users);
         $this->assertContainsOnlyInstancesOf(User::class, $users);
     }
 
@@ -72,7 +72,7 @@ final class UserServiceTest extends TestCase
         $this->assertSame('Johnson', $user->getLastName());
         $this->assertSame('alice@example.com', $user->getEmail());
 
-        $this->assertCount(3, $this->repository->findAll());
+        $this->assertCount(6, $this->repository->findAll());
     }
 
     public function testDeleteNonExistentUserReturnsFalse(): void
@@ -101,9 +101,9 @@ final class UserServiceTest extends TestCase
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertSame(1, $user->getId());
-        $this->assertSame('John', $user->getFirstName());
-        $this->assertSame('Doe', $user->getLastName());
-        $this->assertSame('johndoe@example.com', $user->getEmail());
+        $this->assertSame('Bill', $user->getFirstName());
+        $this->assertSame('Gates', $user->getLastName());
+        $this->assertSame('billgates@example.com', $user->getEmail());
     }
 
     public function testFindUserThrowsExceptionWhenNotFound(): void

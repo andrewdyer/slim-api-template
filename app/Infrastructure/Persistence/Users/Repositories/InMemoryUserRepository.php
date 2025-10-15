@@ -35,8 +35,11 @@ final class InMemoryUserRepository implements UserRepository
     public function __construct(?array $users = null)
     {
         $this->store = $users ?? [
-            1 => new User(1, 'John', 'Doe', 'johndoe@example.com'),
-            2 => new User(2, 'Jane', 'Smith', 'janesmith@example.com'),
+            1 => new User(1, 'Bill', 'Gates', 'billgates@example.com'),
+            2 => new User(2, 'Steve', 'Jobs', 'stevejobs@example.com'),
+            3 => new User(3, 'Mark', 'Zuckerberg', 'markzuckerberg@example.com'),
+            4 => new User(4, 'Evan', 'Spiegel', 'evanspiegel@example.com'),
+            5 => new User(5, 'Jack', 'Dorsey', 'jackdorsey@example.com'),
         ];
     }
 
