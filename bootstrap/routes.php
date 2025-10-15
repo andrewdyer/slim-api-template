@@ -8,6 +8,16 @@ use App\Application\Http\Actions\User\UpdateUserAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
+/**
+ * Define application routes and group them logically.
+ *
+ * This file registers all HTTP routes for the application using Slim's
+ * routing system. Routes are organized in groups for better maintainability
+ * and to apply middleware consistently.
+ *
+ * @param Slim\App $app The Slim application instance to register routes with
+ * @return void
+ */
 return function (App $app) {
     $app->group('/api', function (RouteCollectorProxy $api) {
         $api->group('/users', function (RouteCollectorProxy $users) {
