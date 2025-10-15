@@ -3,6 +3,7 @@
 namespace App\Application\Users\Services;
 
 use App\Application\Users\DTO\CreateUserDTO;
+use App\Application\Users\Exceptions\UserNotFoundException;
 use App\Domain\Users\Entities\User;
 use App\Domain\Users\Repositories\UserRepository;
 
@@ -42,5 +43,29 @@ final readonly class UserService
             $dto->lastName,
             $dto->email
         );
+    }
+
+    /**
+     * Find a user by their ID.
+     *
+     * This method retrieves a user from the repository using their unique
+     * identifier. If the user cannot be found, it throws an exception
+     * rather than returning null, ensuring consistent error handling.
+     *
+     * @param int $id the unique identifier of the user to find
+     *
+     * @return User the user entity if found
+     *
+     * @throws UserNotFoundException if no user exists with the given ID
+     */
+    public function find(int $id): User
+    {
+        $user = $this->userRepository->findById($id);
+
+        if (null === $user) {
+            throw new UserNotFoundException("User with ID {$id} not found.");
+        }
+
+        return $user;
     }
 }

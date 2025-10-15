@@ -3,6 +3,7 @@
 namespace Tests\Unit\Application\Users\Services;
 
 use App\Application\Users\DTO\CreateUserDTO;
+use App\Application\Users\Exceptions\UserNotFoundException;
 use App\Application\Users\Services\UserService;
 use App\Domain\Users\Entities\User;
 use App\Infrastructure\Persistence\Users\Repositories\InMemoryUserRepository;
@@ -51,5 +52,24 @@ final class UserServiceTest extends TestCase
         $this->assertSame('alice@example.com', $user->getEmail());
 
         $this->assertCount(3, $this->repository->findAll());
+    }
+
+    public function testFindUserSuccessfully(): void
+    {
+        $user = $this->service->find(1);
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertSame(1, $user->getId());
+        $this->assertSame('John', $user->getFirstName());
+        $this->assertSame('Doe', $user->getLastName());
+        $this->assertSame('johndoe@example.com', $user->getEmail());
+    }
+
+    public function testFindUserThrowsExceptionWhenNotFound(): void
+    {
+        $this->expectException(UserNotFoundException::class);
+        $this->expectExceptionMessage('User with ID 999 not found.');
+
+        $this->service->find(999);
     }
 }
