@@ -14,7 +14,7 @@ if (!function_exists('base_path')) {
      *
      * @return string The absolute path to the application root or specified sub-path
      */
-    function base_path($path = ''): string
+    function base_path(string $path = ''): string
     {
         $base = __DIR__ . DIRECTORY_SEPARATOR . '..';
 
@@ -42,7 +42,7 @@ if (!function_exists('get_env')) {
      * @return mixed The environment variable value with type conversion applied,
      *               or the default value if not found
      */
-    function get_env($key, $default = null)
+    function get_env(string $key, mixed $default = null)
     {
         if (isset($_ENV[$key])) {
             $value = $_ENV[$key];
@@ -80,6 +80,7 @@ if (!function_exists('require_from_root')) {
     function require_from_root(string $path)
     {
         $full = base_path($path);
+
         if (!file_exists($full)) {
             throw new RuntimeException("File {$full} not found");
         }
