@@ -3,6 +3,7 @@
 namespace App\Application\Http\Actions\User;
 
 use App\Application\Users\DTO\UpdateUserDTO;
+use App\Application\Users\Exceptions\UserNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
