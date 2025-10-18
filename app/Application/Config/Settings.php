@@ -42,4 +42,20 @@ final readonly class Settings
 
         return $this->data[$key] ?? null;
     }
+
+    /**
+     * Check for the existence of a top-level key in the settings array.
+     *
+     * This method determines whether the specified $key exists in the settings.
+     * Keys set to null are considered present since array_key_exists is used
+     * for the check.
+     *
+     * @param string $key Top-level key to check for existence
+     *
+     * @return bool True if the key exists in the settings array, otherwise false
+     */
+    public function has(string $key): bool
+    {
+        return array_key_exists($key, $this->data);
+    }
 }

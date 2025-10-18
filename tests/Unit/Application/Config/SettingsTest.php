@@ -66,4 +66,24 @@ final class SettingsTest extends TestCase
 
         $this->assertSame(['a' => 1], $settings->get('nested'));
     }
+
+    /**
+     * Test that has($key) accurately reports the existence of keys.
+     *
+     * Verifies that the Settings instance correctly identifies present and
+     * missing keys, treating keys set to null as existing because the check
+     * uses array_key_exists().
+     *
+     * @return void
+     */
+    public function testHasDetectsExistingAndMissingKeys(): void
+    {
+        $data = ['present' => null, 'other' => 123];
+
+        $settings = new Settings($data);
+
+        $this->assertTrue($settings->has('present'));
+        $this->assertTrue($settings->has('other'));
+        $this->assertFalse($settings->has('missing'));
+    }
 }
