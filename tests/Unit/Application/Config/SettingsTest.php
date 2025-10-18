@@ -32,6 +32,7 @@ final class SettingsTest extends TestCase
 
         $this->assertSame($data, $settings->all());
     }
+
     /**
      * Test that get() returns the value for an existing key.
      *
