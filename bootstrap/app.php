@@ -1,5 +1,6 @@
 <?php
 
+use App\Application\Config\Settings;
 use Monolog\Logger;
 use Slim\Factory\AppFactory;
 
@@ -26,12 +27,12 @@ $app->addBodyParsingMiddleware();
 
 // Configure error handling middleware with application settings and logging
 // Retrieves display and logging preferences from settings to handle exceptions appropriately
-$settings = $container->get('settings');
+$settings = $container->get(Settings::class);
 $logger = $container->get(Logger::class);
 $app->addErrorMiddleware(
-    $settings['app']['display_error_details'],
-    $settings['app']['log_errors'],
-    $settings['app']['log_error_details'],
+    $settings->get('display_error_details'),
+    $settings->get('log_errors'),
+    $settings->get('log_error_details'),
     $logger
 );
 
