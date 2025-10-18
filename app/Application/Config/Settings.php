@@ -24,23 +24,30 @@ final readonly class Settings
     }
 
     /**
-     * Retrieve settings data.
+     * Retrieve a configuration value by key.
      *
-     * This method returns the full settings array when $key is null. When
-     * $key is provided, it returns the corresponding value or null if the
-     * key does not exist.
+     * This method returns the value for the provided $key. If the key does
+     * not exist in the settings, it will return $default if provided;
+     * otherwise, it throws an InvalidArgumentException.
      *
-     * @param string|null $key Optional top-level key to retrieve
+     * @param string     $key     The top-level key to retrieve
+     * @param mixed|null $default Optional default value to return if key is missing
      *
-     * @return mixed Returns the full settings array when $key is null, otherwise the value or null
+     * @return mixed The value associated with the key, or $default if provided
+     *
+     * @throws \InvalidArgumentException If the key does not exist and no default is provided
      */
-    public function get(?string $key = null): mixed
+    public function get(string $key, mixed $default = null): mixed
     {
-        if (null === $key) {
-            return $this->data;
+        if (array_key_exists($key, $this->data)) {
+            return $this->data[$key];
         }
 
-        return $this->data[$key] ?? null;
+        if (func_num_args() === 2) {
+            return $default;
+        }
+
+        throw new \InvalidArgumentException("Configuration key '{$key}' not found.");
     }
 
     /**

@@ -17,52 +17,60 @@ use PHPUnit\Framework\TestCase;
 final class SettingsTest extends TestCase
 {
     /**
-     * Test that get() with no key returns the full settings array.
+     * Test that get() returns the value for an existing key.
      *
-     * Verifies that when no key is provided the Settings instance returns
-     * the entire configuration array that was passed to the constructor.
-     *
-     * @return void
-     */
-    public function testGetAllReturnsSettingsArray(): void
-    {
-        $data = ['foo' => 'bar', 'nested' => ['a' => 1]];
-
-        $settings = new Settings($data);
-
-        $this->assertSame($data, $settings->get());
-    }
-
-    /**
-     * Test that get($key) returns the value for an existing key.
-     *
-     * Verifies that when a valid key is provided the expected scalar value
-     * is returned from the Settings instance.
+     * Verifies that when a valid key is provided, the expected value is returned.
      *
      * @return void
      */
     public function testGetExistingKeyReturnsValue(): void
     {
-        $data = ['foo' => 'bar'];
-
-        $settings = new Settings($data);
+        $settings = new Settings(['foo' => 'bar']);
 
         $this->assertSame('bar', $settings->get('foo'));
     }
 
     /**
-     * Test that get($key) returns nested arrays as expected.
+     * Test that get() returns the default value if key is missing.
      *
-     * Verifies that nested configuration values (arrays) are returned intact
-     * when requested by their top-level key.
+     * Confirms that when a key does not exist, the provided default is returned instead of throwing.
+     *
+     * @return void
+     */
+    public function testGetMissingKeyReturnsDefault(): void
+    {
+        $settings = new Settings(['foo' => 'bar']);
+
+        $this->assertSame('default', $settings->get('baz', 'default'));
+        $this->assertNull($settings->get('baz', null));
+    }
+
+    /**
+     * Test that get() throws an exception if key is missing and no default provided.
+     *
+     * Ensures that missing keys without a default trigger an InvalidArgumentException.
+     *
+     * @return void
+     */
+    public function testGetMissingKeyThrowsException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Configuration key 'baz' not found.");
+
+        $settings = new Settings(['foo' => 'bar']);
+        $settings->get('baz');
+    }
+
+    /**
+     * Test that get() returns nested arrays correctly.
+     *
+     * Ensures that nested configuration values are returned intact when requested by their top-level key.
      *
      * @return void
      */
     public function testGetNestedKeyReturnsArray(): void
     {
-        $data = ['nested' => ['a' => 1]];
-
-        $settings = new Settings($data);
+        $settings = new Settings(['nested' => ['a' => 1]]);
 
         $this->assertSame(['a' => 1], $settings->get('nested'));
     }
