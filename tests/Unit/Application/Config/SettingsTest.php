@@ -25,7 +25,9 @@ final class SettingsTest extends TestCase
      */
     public function testGetExistingKeyReturnsValue(): void
     {
-        $settings = new Settings(['foo' => 'bar']);
+        $data = ['foo' => 'bar'];
+
+        $settings = new Settings($data);
 
         $this->assertSame('bar', $settings->get('foo'));
     }
@@ -39,7 +41,9 @@ final class SettingsTest extends TestCase
      */
     public function testGetMissingKeyReturnsDefault(): void
     {
-        $settings = new Settings(['foo' => 'bar']);
+        $data = ['foo' => 'bar'];
+
+        $settings = new Settings($data);
 
         $this->assertSame('default', $settings->get('baz', 'default'));
         $this->assertNull($settings->get('baz', null));
@@ -57,7 +61,9 @@ final class SettingsTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Configuration key 'baz' not found.");
 
-        $settings = new Settings(['foo' => 'bar']);
+        $data = ['foo' => 'bar'];
+
+        $settings = new Settings($data);
         $settings->get('baz');
     }
 
@@ -70,7 +76,9 @@ final class SettingsTest extends TestCase
      */
     public function testGetNestedKeyReturnsArray(): void
     {
-        $settings = new Settings(['nested' => ['a' => 1]]);
+        $data = ['nested' => ['a' => 1]];
+
+        $settings = new Settings($data);
 
         $this->assertSame(['a' => 1], $settings->get('nested'));
     }
