@@ -1,5 +1,6 @@
 <?php
 
+use App\Application\Config\Settings;
 use DI\Container;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
@@ -16,22 +17,24 @@ use Monolog\Logger;
  */
 return function(Container $container) {
     $container->set(Logger::class, function($container) {
-        $settings = $container->get('settings')['logger'];
+        $settings = $container->get(Settings::class);
 
-        $logger = new Logger($settings['name']);
+        $loggerSettings = $settings->get('logger');
+
+        $logger = new Logger($loggerSettings['name']);
 
         $handler = new RotatingFileHandler(
             root_path('storage/logs/app.log'),
-            $settings['handler']['max_files'],
-            $settings['handler']['level']
+            $loggerSettings['handler']['max_files'],
+            $loggerSettings['handler']['level']
         );
 
         $formatter = new LineFormatter(
-            $settings['formatter']['format'],
-            $settings['formatter']['date_format'],
-            $settings['formatter']['allow_inline_line_breaks'],
-            $settings['formatter']['ignore_empty_context_and_extra'],
-            $settings['formatter']['include_stack_traces']
+            $loggerSettings['formatter']['format'],
+            $loggerSettings['formatter']['date_format'],
+            $loggerSettings['formatter']['allow_inline_line_breaks'],
+            $loggerSettings['formatter']['ignore_empty_context_and_extra'],
+            $loggerSettings['formatter']['include_stack_traces']
         );
 
         $handler->setFormatter($formatter);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Application\Config\Settings;
 use DI\Container;
 use Monolog\Logger;
 
@@ -13,13 +14,11 @@ use Monolog\Logger;
  * @return void
  */
 return function(Container $container) {
-    $container->set('settings', function() {
-        return [
-            'app' => [
-                'display_error_details' => (bool)get_env('APP_DISPLAY_ERROR_DETAILS', false),
-                'log_errors' => (bool)get_env('APP_LOG_ERRORS', true),
-                'log_error_details' => (bool)get_env('APP_LOG_ERROR_DETAILS', true),
-            ],
+    $container->set(Settings::class, function() {
+        return new Settings([
+            'display_error_details' => (bool)get_env('APP_DISPLAY_ERROR_DETAILS', false),
+            'log_errors' => (bool)get_env('APP_LOG_ERRORS', true),
+            'log_error_details' => (bool)get_env('APP_LOG_ERROR_DETAILS', true),
             'logger' => [
                 'name' => get_env('LOGGER_NAME', 'app'),
                 'handler' => [
@@ -34,6 +33,6 @@ return function(Container $container) {
                     'include_stack_traces' => (bool)get_env('LOGGER_FORMATTER_INCLUDE_STACK_TRACES', false)
                 ],
             ],
-        ];
+        ]);
     });
 };
