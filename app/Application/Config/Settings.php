@@ -19,8 +19,20 @@ final readonly class Settings
      * @param array<string,mixed> $data The settings array to be exposed by this instance
      */
     public function __construct(
-        protected array $data,
+        private array $data,
     ) {
+    }
+
+    /**
+     * Retrieve all configuration settings.
+     *
+     * This method returns the entire settings array.
+     *
+     * @return array<string,mixed> The full configuration data
+     */
+    public function all(): array
+    {
+        return $this->data;
     }
 
     /**

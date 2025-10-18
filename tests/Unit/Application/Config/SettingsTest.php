@@ -17,6 +17,22 @@ use PHPUnit\Framework\TestCase;
 final class SettingsTest extends TestCase
 {
     /**
+     * Test that all() returns all settings data.
+     *
+     * Verifies that the all() method returns the complete set of configuration data
+     * as an associative array.
+     *
+     * @return void
+     */
+    public function testAllReturnsAllSettings(): void
+    {
+        $data = ['one' => 1, 'two' => ['a' => 'b']];
+
+        $settings = new Settings($data);
+
+        $this->assertSame($data, $settings->all());
+    }
+    /**
      * Test that get() returns the value for an existing key.
      *
      * Verifies that when a valid key is provided, the expected value is returned.
