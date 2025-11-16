@@ -1,11 +1,4 @@
-# Skeleton
-
-<p align="center">
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/require/php" alt="PHP Version Require"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/v" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/downloads" alt="Total Downloads"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/license" alt="License"></a>
-</p>
+![Slim App Template](https://public-assets.andrewdyer.rocks/images/covers/slim-app-template.png)
 
 A starter structure built with the [Slim PHP framework](https://www.slimframework.com/docs/v3/).
 
