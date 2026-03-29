@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../bootstrap/app.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+$appFactory = require __DIR__ . '/../bootstrap/app.php';
+
+$app = $appFactory();
 
 $app->run();

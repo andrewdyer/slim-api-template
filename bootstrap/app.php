@@ -4,31 +4,38 @@ declare(strict_types=1);
 
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
+use Slim\App;
 use Slim\Factory\AppFactory;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+return function (): App {
+    // Load environment
+    require_from_root('bootstrap/environment.php')('.env');
 
-require_from_root('bootstrap/environment.php')('.env');
+    // Build container
+    $containerBuilder = new ContainerBuilder();
 
-$containerBuilder = new ContainerBuilder();
+    require_from_root('bootstrap/settings.php')($containerBuilder);
+    require_from_root('bootstrap/dependencies.php')($containerBuilder);
 
-require_from_root('bootstrap/settings.php')($containerBuilder);
-require_from_root('bootstrap/dependencies.php')($containerBuilder);
+    $container = $containerBuilder->build();
 
-$container = $containerBuilder->build();
+    // Create app
+    AppFactory::setContainer($container);
+    $app = AppFactory::create();
 
-AppFactory::setContainer($container);
+    // Middleware
+    $app->addRoutingMiddleware();
 
-$app = AppFactory::create();
+    $settings = $container->get(SettingsInterface::class);
 
-$app->addRoutingMiddleware();
+    $app->addErrorMiddleware(
+        $settings->get('displayErrorDetails'),
+        $settings->get('logError'),
+        $settings->get('logErrorDetails')
+    );
 
-$settings = $container->get(SettingsInterface::class);
+    // Routes
+    require_from_root('bootstrap/routes.php')($app);
 
-$errorMiddleware = $app->addErrorMiddleware(
-    $settings->get('displayErrorDetails'),
-    $settings->get('logError'),
-    $settings->get('logErrorDetails')
-);
-
-require_from_root('bootstrap/routes.php')($app);
+    return $app;
+};
