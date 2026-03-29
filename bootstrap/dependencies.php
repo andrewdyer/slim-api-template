@@ -1,33 +1,32 @@
 <?php
 
+use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
-return function (ContainerInterface $container) {
-    $container['foundHandler'] = function () {
-        return new Slim\Handlers\Strategies\RequestResponseArgs();
-    };
+return function (ContainerBuilder $containerBuilder) {
+    $containerBuilder->addDefinitions([
+        LoggerInterface::class =>function (ContainerInterface $container) {
+            $config = $container->get('settings')->get('logger');
 
-    $container[LoggerInterface::class] = function ($container) {
-        $config = $container->get('settings')->get('logger');
+            $formatter = new Monolog\Formatter\LineFormatter(
+                $config['formatter']['format'] . "\n",
+                $config['formatter']['dateFormat'],
+                $config['formatter']['allowInlineLineBreaks'],
+                $config['formatter']['ignoreEmptyContextAndExtra']
+            );
 
-        $formatter = new Monolog\Formatter\LineFormatter(
-            $config['formatter']['format'] . "\n",
-            $config['formatter']['dateFormat'],
-            $config['formatter']['allowInlineLineBreaks'],
-            $config['formatter']['ignoreEmptyContextAndExtra']
-        );
+            $handler = new Monolog\Handler\StreamHandler(
+                base_path('storage/logs/app.log'),
+                $config['handler']['level']
+            );
 
-        $handler = new Monolog\Handler\StreamHandler(
-            base_path('storage/logs/app.log'),
-            $config['handler']['level']
-        );
+            $handler->setFormatter($formatter);
 
-        $handler->setFormatter($formatter);
+            $logger = new Monolog\Logger($config['name']);
+            $logger->pushHandler($handler);
 
-        $logger = new Monolog\Logger($config['name']);
-        $logger->pushHandler($handler);
-
-        return $logger;
-    };
+            return $logger;
+        }
+    ]);
 };
