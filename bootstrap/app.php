@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
