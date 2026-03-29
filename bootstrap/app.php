@@ -34,5 +34,7 @@ $app = new Slim\App([
     ],
 ]);
 
-require_once base_path('bootstrap/container.php');
-require_once base_path('routes/web.php');
+$container = $app->getContainer();
+
+require_from_root('bootstrap/container.php')($container);
+require_from_root('routes/web.php')($app);
