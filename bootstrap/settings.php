@@ -5,6 +5,7 @@ declare(strict_types=1);
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use AndrewDyer\Settings\Settings;
 use DI\ContainerBuilder;
+use Monolog\Logger;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -21,14 +22,16 @@ return function (ContainerBuilder $containerBuilder) {
                 ],
                 'logger' => [
                     'name' => get_env('LOGGER_NAME', 'app'),
-                    'formatter' => [
-                        'format' => get_env('LOGGER_FORMAT', "[%datetime%] %level_name%: %message% %context% %extra%"),
-                        'dateFormat' => get_env('LOGGER_DATE_FORMAT', 'Y-m-d H:i:s'),
-                        'allowInlineLineBreaks' => (bool) get_env('LOGGER_ALLOW_INLINE_LINE_BREAKS', true),
-                        'ignoreEmptyContextAndExtra' => (bool) get_env('LOGGER_IGNORE_EMPTY_CONTEXT_AND_EXTRA', true),
-                    ],
                     'handler' => [
-                        'level' => Monolog\Logger::DEBUG,
+                        'level' => Logger::toMonologLevel(get_env('LOGGER_HANDLER_LEVEL', 'DEBUG')),
+                        'maxFiles' => (int)get_env('LOGGER_HANDLER_MAX_FILES', 30),
+                    ],
+                    'formatter' => [
+                        'format' => get_env('LOGGER_FORMATTER_FORMAT', "[%datetime%] %level_name%: %message% %context% %extra%\n"),
+                        'dateFormat' => get_env('LOGGER_FORMATTER_DATE_FORMAT', 'Y-m-d H:i:s'),
+                        'allowInlineLineBreaks' => (bool)get_env('LOGGER_FORMATTER_ALLOW_INLINE_LINE_BREAKS', true),
+                        'ignoreEmptyContextAndExtra' => (bool)get_env('LOGGER_FORMATTER_IGNORE_EMPTY_CONTEXT_AND_EXTRA', true),
+                        'includeStackTraces' => (bool)get_env('LOGGER_FORMATTER_INCLUDE_STACK_TRACES', false)
                     ],
                 ],
             ]);
