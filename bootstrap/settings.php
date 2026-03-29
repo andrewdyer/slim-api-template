@@ -7,7 +7,7 @@ use AndrewDyer\Settings\Settings;
 use DI\ContainerBuilder;
 use Monolog\Logger;
 
-return function (ContainerBuilder $containerBuilder) {
+return function (ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
         SettingsInterface::class => function () {
             return new Settings([

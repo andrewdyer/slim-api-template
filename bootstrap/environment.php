@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
 
-return function(?string $filename = '.env') {
+return function(?string $filename = '.env'): void {
     if (!get_env('APP_ENV')) {
         try {
             $dotenv = Dotenv::createImmutable(root_path('/'), $filename);

@@ -10,7 +10,7 @@ use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
-return function (ContainerBuilder $containerBuilder) {
+return function (ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
         LoggerInterface::class => function (ContainerInterface $container) {
             $settings = $container->get(SettingsInterface::class);
