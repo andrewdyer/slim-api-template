@@ -1,12 +1,14 @@
 <?php
 
+use Psr\Log\LoggerInterface;
+
 $container = $app->getContainer();
 
 $container['foundHandler'] = function () {
     return new Slim\Handlers\Strategies\RequestResponseArgs();
 };
 
-$container['logger'] = function ($container) {
+$container[LoggerInterface::class] = function ($container) {
     $config = $container->get('settings')->get('logger');
 
     $formatter = new Monolog\Formatter\LineFormatter(

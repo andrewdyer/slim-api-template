@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Slim\Container;
 
 abstract class Controller
@@ -19,8 +19,8 @@ abstract class Controller
         return $this->container;
     }
 
-    protected function getLogger(): Logger
+    protected function getLogger(): LoggerInterface
     {
-        return $this->getContainer()->get('logger');
+        return $this->getContainer()->get(LoggerInterface::class);
     }
 }
