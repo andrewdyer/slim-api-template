@@ -31,9 +31,6 @@ $app = new Slim\App([
                 'level' => Monolog\Logger::DEBUG,
             ],
         ],
-        'view' => [
-            'cache' => get_env('VIEW_CACHE_DISABLED') ? false : base_path('storage/views'),
-        ],
     ],
 ]);
 

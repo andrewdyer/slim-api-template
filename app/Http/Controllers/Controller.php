@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Monolog\Logger;
 use Slim\Container;
-use Slim\Views\Twig;
 
 abstract class Controller
 {
@@ -23,10 +22,5 @@ abstract class Controller
     protected function getLogger(): Logger
     {
         return $this->getContainer()->get('logger');
-    }
-
-    protected function getView(): Twig
-    {
-        return $this->getContainer()->get('view');
     }
 }
