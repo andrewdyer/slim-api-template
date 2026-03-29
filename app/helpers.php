@@ -3,7 +3,15 @@
 if (!function_exists('base_path')) {
     function base_path($path = ''): string
     {
-        return __DIR__ . '/..//' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        $base = __DIR__ . DIRECTORY_SEPARATOR . '..';
+
+        if ($path) {
+            $path = ltrim($path, '/\\');
+
+            return $base . DIRECTORY_SEPARATOR . $path;
+        }
+
+        return $base;
     }
 }
 
