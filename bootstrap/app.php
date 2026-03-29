@@ -16,6 +16,7 @@ return function (): App {
 
     require_from_root('bootstrap/settings.php')($containerBuilder);
     require_from_root('bootstrap/dependencies.php')($containerBuilder);
+    require_from_root('bootstrap/repositories.php')($containerBuilder);
 
     $container = $containerBuilder->build();
 
