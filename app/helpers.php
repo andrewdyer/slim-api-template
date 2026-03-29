@@ -36,3 +36,16 @@ if (!function_exists('get_env')) {
         return $default;
     }
 }
+
+if (!function_exists('require_from_root')) {
+    function require_from_root(string $path)
+    {
+        $full = base_path($path);
+
+        if (!file_exists($full)) {
+            throw new RuntimeException("File {$full} not found");
+        }
+
+        return require $full;
+    }
+}
