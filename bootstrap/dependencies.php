@@ -19,7 +19,7 @@ return function (ContainerBuilder $containerBuilder) {
             );
 
             $handler = new Monolog\Handler\StreamHandler(
-                base_path('storage/logs/app.log'),
+                root_path('storage/logs/app.log'),
                 $config['handler']['level']
             );
 

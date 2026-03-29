@@ -1,7 +1,7 @@
 <?php
 
-if (!function_exists('base_path')) {
-    function base_path($path = ''): string
+if (!function_exists('root_path')) {
+    function root_path($path = ''): string
     {
         $base = __DIR__ . DIRECTORY_SEPARATOR . '..';
 
@@ -40,7 +40,7 @@ if (!function_exists('get_env')) {
 if (!function_exists('require_from_root')) {
     function require_from_root(string $path)
     {
-        $full = base_path($path);
+        $full = root_path($path);
 
         if (!file_exists($full)) {
             throw new RuntimeException("File {$full} not found");
