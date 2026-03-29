@@ -9,9 +9,8 @@ class IndexController extends Controller
 {
     public function index(Request $request, Response $response): Response
     {
-        return $this->getView()->render($response, 'index/index.html.twig', [
-            'controllerName' => 'IndexController',
-            'controllerLocation' => __DIR__ . '/IndexController.php',
+        return $response->withJson([
+            'message' => 'Hello, world!',
         ]);
     }
 }
