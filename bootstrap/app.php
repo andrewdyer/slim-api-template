@@ -2,13 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-if (!get_env('APP_ENV')) {
-    try {
-        (Dotenv\Dotenv::createImmutable(base_path()))->load();
-    } catch (Dotenv\Exception\InvalidPathException $ex) {
-        exit($ex->getMessage());
-    }
-}
+require_from_root('bootstrap/environment.php')('.env');
 
 $app = new Slim\App([
     'settings' => [
