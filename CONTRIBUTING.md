@@ -50,16 +50,20 @@ Keeping dependencies up-to-date is crucial for maintaining the security and perf
 
 Please write tests for any new features or modifications to the project.
 
-- Run the full test suite with `composer test`.
-- Use `composer test:unit` for fast, isolated unit tests during development.
-- Use `composer test:integration` to verify end-to-end behaviour across layers.
-
 Tests live under `tests/` and are organised into two suites:
 
 - `tests/Unit/` — isolated unit tests for individual classes and methods
 - `tests/Integration/` — tests that exercise multiple layers working together
 
-Guidelines:
+The test suite is configured via `phpunit.xml`, which defines test suites, source directories, and environment variables. By default, the `APP_ENV` variable is set to `testing` when running tests, and this can be extended to suit your needs.
+
+You can run tests using the provided Composer scripts:
+
+- Run the full test suite with `composer test`
+- Use `composer test:unit` for fast, isolated unit tests during development
+- Use `composer test:integration` to verify end-to-end behaviour across layers
+
+For consistency and maintainability:
 
 - Keep tests focused and readable
 - Prefer small, isolated test cases
