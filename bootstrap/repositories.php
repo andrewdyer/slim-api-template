@@ -6,8 +6,8 @@ use App\Domain\User\UserRepository;
 use App\Infrastructure\Persistence\User\InMemoryUserRepository;
 use DI\ContainerBuilder;
 
-return function(ContainerBuilder $containerBuilder) {
+return function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
-        UserRepository::class => new InMemoryUserRepository()
+        UserRepository::class => new InMemoryUserRepository(),
     ]);
 };
