@@ -7,7 +7,7 @@ use DI\ContainerBuilder;
 use Slim\App;
 use Slim\Factory\AppFactory;
 
-return function (): App {
+return function(): App {
     // Load environment
     require_from_root('bootstrap/environment.php')('.env');
 

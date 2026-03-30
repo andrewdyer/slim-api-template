@@ -10,9 +10,9 @@ use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
-return function (ContainerBuilder $containerBuilder): void {
+return function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
-        LoggerInterface::class => function (ContainerInterface $container) {
+        LoggerInterface::class => function(ContainerInterface $container) {
             $settings = $container->get(SettingsInterface::class);
 
             $logger = new Logger($settings->get('logger.name'));
@@ -36,6 +36,6 @@ return function (ContainerBuilder $containerBuilder): void {
             $logger->pushHandler($handler);
 
             return $logger;
-        }
+        },
     ]);
 };
