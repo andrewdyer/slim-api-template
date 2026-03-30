@@ -92,11 +92,17 @@ final readonly class UserService
     {
         $user = $this->find($dto->id);
 
-        return $this->userRepository->update(
+        $updated = $this->userRepository->update(
             id: $user->getId(),
             firstName: $dto->firstName,
             lastName: $dto->lastName,
             email: $dto->email
         );
+
+        if (null === $updated) {
+            throw new UserNotFoundException("User with ID {$dto->id} not found.");
+        }
+
+        return $updated;
     }
 }
