@@ -46,7 +46,7 @@ class CreateUserDTOTest extends TestCase
      *
      * @return array<string, array<mixed>> Named sets of invalid payloads.
      */
-    public function invalidPayloadProvider(): array
+    public static function invalidPayloadProvider(): array
     {
         return [
             'missing first name' => [[
