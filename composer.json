@@ -1,5 +1,5 @@
 {
-    "name": "andrewdyer/skeleton",
+    "name": "andrewdyer/backend-template",
     "description": "A starter structure built with the Slim PHP framework",
     "keywords": ["framework", "slim"],
     "type": "project",
