@@ -40,9 +40,9 @@
     ],
     "scripts": {
         "cs": "php-cs-fixer fix",
-        "post-root-package-install": [
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ]
+        "test": "phpunit",
+        "test:unit": "phpunit --testsuite Unit",
+        "test:integration": "phpunit --testsuite Integration"
     },
     "config": {
         "optimize-autoloader": true,

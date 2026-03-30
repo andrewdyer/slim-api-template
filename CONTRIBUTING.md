@@ -50,7 +50,9 @@ Keeping dependencies up-to-date is crucial for maintaining the security and perf
 
 Please write tests for any new features or modifications to the project.
 
-Run the full test suite with `composer test`.
+- Run the full test suite with `composer test`.
+- Use `composer test:unit` for fast, isolated unit tests during development.
+- Use `composer test:integration` to verify end-to-end behaviour across layers.
 
 Tests live under `tests/` and are organised into two suites:
 
