@@ -51,6 +51,10 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # APPLICATION SETUP
 # =============================
 
+# Set APP_ENV so the app doesn't try to load a .env file at startup.
+# All other config should be supplied at runtime via environment variables.
+ENV APP_ENV=production
+
 WORKDIR /var/www/html
 
 # Copy dependency manifests first for better caching
