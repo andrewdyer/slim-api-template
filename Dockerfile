@@ -78,11 +78,11 @@ RUN composer dump-autoload --optimize
 # PERMISSIONS
 # =============================
 
-# Ensure application files are owned by Apache user
-RUN chown -R www-data:www-data /var/www/html
+# Create logs directory before chown so it is included in ownership change
+RUN mkdir -p storage/logs
 
-# Ensure storage is writable for logs/runtime files
-RUN mkdir -p storage/logs \
+# Give Apache user ownership of all app files and write access to storage
+RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage
 
 
