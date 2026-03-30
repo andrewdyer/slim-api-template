@@ -19,9 +19,10 @@ RUN a2enmod rewrite
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
     /etc/apache2/sites-available/000-default.conf
 
-# Allow .htaccess overrides (required for Slim routing)
-RUN sed -i 's/AllowOverride None/AllowOverride All/g' \
-    /etc/apache2/apache2.conf
+# Allow .htaccess overrides only for the document root (required for Slim routing)
+RUN printf '<Directory /var/www/html/public>\n\tAllowOverride All\n</Directory>\n' \
+    > /etc/apache2/conf-available/htaccess-override.conf \
+    && a2enconf htaccess-override
 
 
 # =============================
