@@ -1,45 +1,89 @@
+# =============================
+# BASE IMAGE
+# Official PHP 8.3 image with Apache pre-installed
+# =============================
 FROM php:8.3-apache
 
-# Enable Apache mod_rewrite for Slim routing
+
+# =============================
+# APACHE CONFIGURATION
+# =============================
+
+# Enable mod_rewrite for Slim routing
 RUN a2enmod rewrite
 
-# Set Apache document root to /public
+# Optional: enable SSL if needed
+# RUN a2enmod ssl
+
+# Set document root to /public (keeps app files outside web root)
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
     /etc/apache2/sites-available/000-default.conf
 
-# Allow .htaccess overrides
+# Allow .htaccess overrides (required for Slim routing)
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' \
     /etc/apache2/apache2.conf
 
-# Install system dependencies
+
+# =============================
+# SYSTEM DEPENDENCIES
+# =============================
+
+# Required for Composer and general usage
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install additional PHP extensions as needed, for example:
+# Optional: install PHP extensions as needed
 # RUN docker-php-ext-install pdo pdo_mysql
 
-# Install Composer
+
+# =============================
+# COMPOSER
+# =============================
+
+# Copy Composer from official image (faster and reproducible)
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+
+# =============================
+# APPLICATION SETUP
+# =============================
 
 WORKDIR /var/www/html
 
-# Copy composer files first (for caching)
+# Copy dependency manifests first for better caching
 COPY composer.json composer.lock* ./
 
-RUN composer install --no-dev --no-interaction --optimize-autoloader --no-scripts
+# Install production dependencies
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --optimize-autoloader \
+    --no-scripts
 
-# Copy application
+# Copy application source
 COPY . .
 
-# Optimize autoload
+# Optimize autoloader after full source is available
 RUN composer dump-autoload --optimize
 
-# Ensure storage is writable
+
+# =============================
+# PERMISSIONS
+# =============================
+
+# Ensure application files are owned by Apache user
+RUN chown -R www-data:www-data /var/www/html
+
+# Ensure storage is writable for logs/runtime files
 RUN mkdir -p storage/logs \
-    && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage
+
+
+# =============================
+# PORT
+# =============================
 
 EXPOSE 80
