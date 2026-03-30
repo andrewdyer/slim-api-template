@@ -21,6 +21,7 @@
         "php": "^8.3",
         "andrewdyer/actions": "dev-main",
         "andrewdyer/settings": "dev-main",
+        "andrewdyer/slim-cors-response-emitter": "dev-main",
         "monolog/monolog": "^2.3",
         "php-di/php-di": "^7.1",
         "slim/psr7": "^1.8",
