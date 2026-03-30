@@ -1,6 +1,6 @@
 {
     "name": "andrewdyer/backend-template",
-    "description": "A starter structure built with the Slim PHP framework",
+    "description": "A template for building modern backend REST APIs using the Slim Framework",
     "keywords": ["framework", "slim"],
     "type": "project",
     "license": "MIT",
