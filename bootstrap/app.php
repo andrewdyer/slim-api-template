@@ -1,41 +1,44 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+declare(strict_types=1);
 
-if (!get_env('APP_ENV')) {
-    try {
-        (Dotenv\Dotenv::createImmutable(base_path()))->load();
-    } catch (Dotenv\Exception\InvalidPathException $ex) {
-        exit($ex->getMessage());
-    }
-}
+use AndrewDyer\Settings\Contracts\SettingsInterface;
+use DI\ContainerBuilder;
+use Slim\App;
+use Slim\Factory\AppFactory;
 
-$app = new Slim\App([
-    'settings' => [
-        'displayErrorDetails' => (bool) get_env('APP_DEBUG', false),
-        'app' => [
-            'name' => get_env('APP_NAME', 'Skeleton'),
-            'env' => get_env('APP_ENV', 'production'),
-            'key' => get_env('APP_KEY'),
-            'url' => get_env('APP_URL', 'https://localhost:8888'),
-        ],
-        'logger' => [
-            'name' => get_env('LOGGER_NAME'),
-            'formatter' => [
-                'format' => get_env('LOGGER_FORMAT'),
-                'dateFormat' => get_env('LOGGER_DATE_FORMAT'),
-                'allowInlineLineBreaks' => get_env('LOGGER_ALLOW_INLINE_LINE_BREAKS'),
-                'ignoreEmptyContextAndExtra' => get_env('LOGGER_IGNORE_EMPTY_CONTEXT_AND_EXTRA'),
-            ],
-            'handler' => [
-                'level' => Monolog\Logger::DEBUG,
-            ],
-        ],
-        'view' => [
-            'cache' => get_env('VIEW_CACHE_DISABLED') ? false : base_path('storage/views'),
-        ],
-    ],
-]);
+return function(): App {
+    // Load environment
+    require_from_root('bootstrap/environment.php')('.env');
 
-require_once base_path('bootstrap/container.php');
-require_once base_path('routes/web.php');
+    // Build container
+    $containerBuilder = new ContainerBuilder();
+
+    require_from_root('bootstrap/settings.php')($containerBuilder);
+    require_from_root('bootstrap/dependencies.php')($containerBuilder);
+    require_from_root('bootstrap/repositories.php')($containerBuilder);
+
+    $container = $containerBuilder->build();
+
+    // Create app
+    AppFactory::setContainer($container);
+    $app = AppFactory::create();
+
+    // Middleware
+    $app->addBodyParsingMiddleware();
+
+    $app->addRoutingMiddleware();
+
+    $settings = $container->get(SettingsInterface::class);
+
+    $app->addErrorMiddleware(
+        $settings->get('displayErrorDetails'),
+        $settings->get('logError'),
+        $settings->get('logErrorDetails')
+    );
+
+    // Routes
+    require_from_root('bootstrap/routes.php')($app);
+
+    return $app;
+};

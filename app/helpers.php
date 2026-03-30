@@ -1,13 +1,32 @@
 <?php
 
-if (!function_exists('base_path')) {
-    function base_path($path = ''): string
+if (!function_exists('root_path')) {
+    /**
+     * Returns the absolute path to the project root, optionally suffixed with the given path.
+     *
+     * @param string $path Relative path to append to the root.
+     */
+    function root_path($path = ''): string
     {
-        return __DIR__ . '/..//' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        $base = __DIR__ . DIRECTORY_SEPARATOR . '..';
+
+        if ($path) {
+            $path = ltrim($path, '/\\');
+
+            return $base . DIRECTORY_SEPARATOR . $path;
+        }
+
+        return $base;
     }
 }
 
 if (!function_exists('get_env')) {
+    /**
+     * Retrieves an environment variable, casting "true" and "false" strings to booleans.
+     *
+     * @param mixed $default Value to return when the key is not set.
+     * @return mixed
+     */
     function get_env($key, $default = null)
     {
         if (isset($_ENV[$key])) {
@@ -26,5 +45,24 @@ if (!function_exists('get_env')) {
         }
 
         return $default;
+    }
+}
+
+if (!function_exists('require_from_root')) {
+    /**
+     * Requires a file relative to the project root.
+     *
+     * @throws \RuntimeException if the file does not exist
+     * @return mixed
+     */
+    function require_from_root(string $path)
+    {
+        $full = root_path($path);
+
+        if (!file_exists($full)) {
+            throw new RuntimeException("File {$full} not found");
+        }
+
+        return require $full;
     }
 }

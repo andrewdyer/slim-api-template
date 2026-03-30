@@ -1,38 +1,83 @@
-# Skeleton
+# Backend Template
 
-<p align="center">
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/require/php" alt="PHP Version Require"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/v" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/downloads" alt="Total Downloads"></a>
-    <a href="https://packagist.org/packages/andrewdyer/skeleton"><img src="http://poser.pugx.org/andrewdyer/skeleton/license" alt="License"></a>
-</p>
+A template for building modern backend REST APIs using the [Slim Framework](https://www.slimframework.com/).
 
-A starter structure built with the [Slim PHP framework](https://www.slimframework.com/docs/v3/).
+## ✨ Introduction
 
-## License
-Licensed under the [MIT license](https://opensource.org/licenses/MIT). Totally free for private or commercial projects.
+This template provides a clean, opinionated foundation for building REST APIs with Slim Framework 4. It follows an Action--Domain--Responder (ADR) style architecture, separating Application, Domain, and Infrastructure concerns to promote maintainability, scalability, and clear boundaries between layers, while still remaining flexible enough to adapt to your own preferred structure and development approach.
 
-## Get Started
-### Introduction
-I created this bare-bones, boilerplate project for myself just to save a little time when developing my next big idea. 
+## 📋 Prerequisites
 
-### Installation
-Run the following command in terminal to create a new skeleton project:
-```text
-composer create-project andrewdyer/skeleton project_name
+- **[PHP](https://www.php.net/)**: Version 8.3 or higher is required.
+- **[Composer](https://getcomposer.org/)**: Dependency management tool for PHP.
+
+## 🏗️ Structure
+
+This project follows an ADR-style architecture, separating Application, Domain, and Infrastructure concerns. The structure is intentionally simple and flexible, allowing you to adapt or restructure it to suit your own development style.
+
+```plaintext
+repo/
+├── app/
+│   ├── Application/        # Actions, DTOs, services
+│   ├── Domain/             # Entities and interfaces
+│   ├── Infrastructure/     # Implementations (e.g. persistence)
+│   └── helpers.php
+│
+├── bootstrap/              # App wiring and configuration
+│   ├── app.php
+│   ├── dependencies.php
+│   ├── environment.php
+│   ├── repositories.php
+│   ├── routes.php
+│   └── settings.php
+│
+├── public/                 # Web entry point
+│   └── index.php
+│
+├── tests/                  # Test suites
+│
+├── composer.json
+└── .env.example
 ```
 
-### Web Server
-Once installed, you can start a localhost web server by running the following command from the project root directory in terminal:
-```text
-php -S localhost:8888 -t public public/index.php
-```
+### 👤 Example: Users Feature
 
-## Support
-If you are having general issues with this project, then please feel free to contact me on [Twitter](https://twitter.com/andyer92).
+The template includes a simple **Users** feature to demonstrate how a vertical slice of the application can be structured using the ADR approach.
 
-If you believe you have found an issue, please report it using the [issue tracker](https://github.com/andrewdyer/skeleton/issues), or better yet, fork the repository and submit a pull request.
+This example includes:
 
-Feel free to submit any minor enhancements too. Please do not contribute any big additions as the purpose of this project is to be a simple starting point.
+- an Action (HTTP entry point)
+- a Service (application logic)
+- a DTO (data transfer)
+- a Repository interface and implementation
 
-If you're using this as your starter structure, I'd love to hear your thoughts!
+Routes are versioned under `/api/v1` and follow RESTful conventions:
+
+| Method   | Path                 | Description     |
+| -------- | -------------------- | --------------- |
+| `GET`    | `/api/v1/users`      | List all users  |
+| `POST`   | `/api/v1/users`      | Create a user   |
+| `GET`    | `/api/v1/users/{id}` | Retrieve a user |
+| `PUT`    | `/api/v1/users/{id}` | Update a user   |
+| `DELETE` | `/api/v1/users/{id}` | Delete a user   |
+
+This feature is provided as a reference only and can be safely removed when starting your own project.
+
+## 🧰 Tooling
+
+Essential development tools configured for a clean and consistent developer experience, including:
+
+- [Slim Framework](https://www.slimframework.com/) as the HTTP micro-framework.
+- [PHP-DI](https://php-di.org/) for dependency injection via a PSR-11 container.
+- [Monolog](https://seldaek.github.io/monolog/) for PSR-3 compliant logging.
+- [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv) for environment variable management.
+- [PHPUnit](https://phpunit.de/) for unit and integration testing.
+- [PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) for enforcing consistent code style.
+
+## 🚀 Getting Started
+
+If you like what you've seen so far and think this setup fits your needs, you can quickly get started by clicking the **Use this template** button at the top of the repository on GitHub.
+
+## ⚖️ License
+
+Licensed under the [MIT license](https://opensource.org/licenses/MIT) and is free for private or commercial projects.

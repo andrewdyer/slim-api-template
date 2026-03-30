@@ -1,0 +1,121 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Infrastructure\Persistence\User;
+
+use App\Domain\User\User;
+use App\Domain\User\UserRepository;
+
+/**
+ * In-memory implementation of UserRepository, pre-seeded with sample data.
+ *
+ * Intended for development and testing purposes. Data does not persist between requests.
+ */
+final class InMemoryUserRepository implements UserRepository
+{
+    /**
+     * @var int Counter used to assign a unique, auto-incrementing ID to each new user.
+     */
+    private int $nextId = 1;
+
+    /**
+     * @var array<int, User> The in-memory store of User entities, keyed by user ID.
+     */
+    private array $store = [];
+
+    /**
+     * Seeds the repository with a predefined set of sample users.
+     */
+    public function __construct()
+    {
+        $this->create('Bill', 'Gates', 'billgates@example.com');
+        $this->create('Steve', 'Jobs', 'stevejobs@example.com');
+        $this->create('Mark', 'Zuckerberg', 'markzuckerberg@example.com');
+        $this->create('Evan', 'Spiegel', 'evanspiegel@example.com');
+        $this->create('Jack', 'Dorsey', 'jackdorsey@example.com');
+    }
+
+    /**
+     * Creates a new User entity, assigns it the next available ID, and stores it.
+     *
+     * @param string $firstName The user's first name.
+     * @param string $lastName The user's last name.
+     * @param string $email The user's email address.
+     * @return User The newly created and stored User entity.
+     */
+    public function create(string $firstName, string $lastName, string $email): User
+    {
+        $user = new User($this->nextId++, $firstName, $lastName, $email);
+        $this->store[$user->getId()] = $user;
+
+        return $user;
+    }
+
+    /**
+     * Removes the user with the given ID from the in-memory store.
+     *
+     * @param int $id The unique identifier of the user to delete.
+     * @return bool True if the user was found and removed, false otherwise.
+     */
+    public function delete(int $id): bool
+    {
+        if (!isset($this->store[$id])) {
+            return false;
+        }
+
+        unset($this->store[$id]);
+
+        return true;
+    }
+
+    /**
+     * Returns all users currently held in the in-memory store.
+     *
+     * @return User[] An indexed array of all stored User entities.
+     */
+    public function findAll(): array
+    {
+        return array_values($this->store);
+    }
+
+    /**
+     * Looks up a user by their ID in the in-memory store.
+     *
+     * @param int $id The unique identifier of the user to retrieve.
+     * @return User|null The matching User entity, or null if not found.
+     */
+    public function findById(int $id): ?User
+    {
+        return $this->store[$id] ?? null;
+    }
+
+    /**
+     * Replaces the stored user with a new User entity reflecting the applied changes.
+     *
+     * @param int $id The unique identifier of the user to update.
+     * @param string|null $firstName The new first name, or null to retain the existing value.
+     * @param string|null $lastName The new last name, or null to retain the existing value.
+     * @param string|null $email The new email address, or null to retain the existing value.
+     * @return User|null The updated User entity, or null if no user with that ID existed.
+     */
+    public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
+    {
+        $existing = $this->store[$id] ?? null;
+
+        if (null === $existing) {
+            return null;
+        }
+
+        $updated = new User(
+            id: $id,
+            firstName: $firstName ?? $existing->getFirstName(),
+            lastName: $lastName ?? $existing->getLastName(),
+            email: $email ?? $existing->getEmail()
+        );
+
+        $this->store[$id] = $updated;
+
+        return $updated;
+    }
+}
