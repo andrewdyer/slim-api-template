@@ -1,0 +1,113 @@
+# Contributing
+
+Thank you for your interest in contributing! We welcome improvements and suggestions to make this project even better. Please follow the guidelines below for a smooth experience.
+
+## Table of Contents
+
+- [Code of Conduct](#code-of-conduct)
+- [Development Setup](#development-setup)
+- [Environment](#environment)
+- [Upgrading Dependencies](#upgrading-dependencies)
+- [Testing](#testing)
+- [Docker](#docker)
+- [Coding Standards](#coding-standards)
+- [Issue Reporting](#issue-reporting)
+- [Commit Guidelines](#commit-guidelines)
+
+## Code of Conduct
+
+Please adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md) in all interactions. Respectful and inclusive behavior is expected from all contributors.
+
+## Development Setup
+
+To get started with contributing, set up the project by following these steps:
+
+1. Begin by cloning the repository and navigating to its directory.
+2. Ensure you have PHP 8.3 or higher installed.
+3. Copy the example environment file with `cp .env.example .env` and update the values for your local setup.
+4. Install all project dependencies with `composer install`.
+5. Start the built-in PHP development server with `php -S 127.0.0.1:8888 -t public public/index.php`.
+
+## Environment
+
+Environment configuration is managed via a `.env` file loaded at runtime using [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv). A `.env.example` file is committed to the repository as the canonical reference for all required variables — copy it to `.env` for local development.
+
+The `.env` file should **never** be committed to version control. In production, set environment variables directly in the hosting environment; when `APP_ENV` is already set, the application skips loading the `.env` file automatically.
+
+> ⚠️ **Important:** When adding a new environment variable, always add a corresponding entry to `.env.example` with a sensible placeholder or default value.
+
+## Upgrading Dependencies
+
+Keeping dependencies up-to-date is crucial for maintaining the security and performance of the project.
+
+1. Check for outdated packages with `composer outdated`.
+2. Update all dependencies to their latest allowed versions with `composer update`.
+3. Update a specific package with `composer update <vendor/package>`.
+4. Run the test suite with `composer test` to verify nothing is broken after updating.
+5. Commit both `composer.json` and `composer.lock` together with a clear message and open a pull request for review.
+
+## Testing
+
+Please write tests for any new features or modifications to the project.
+
+Run the full test suite with `composer test`.
+
+Tests live under `tests/` and are organised into two suites:
+
+- `tests/Unit/` — isolated unit tests for individual classes and methods
+- `tests/Integration/` — tests that exercise multiple layers working together
+
+Guidelines:
+
+- Keep tests focused and readable
+- Prefer small, isolated test cases
+- Use integration tests for HTTP actions where appropriate
+- Avoid unnecessary complexity in setup
+
+> 💡 **Note:** The testing setup is intentionally minimal and may evolve over time. Contributions to improve testing structure are welcome.
+
+## Docker
+
+This repository includes a Dockerfile based on the official `php:8.3-apache` image, with Apache configured to serve from the `public/` directory and `mod_rewrite` enabled for Slim's routing.
+
+Build the image with `docker build -t slim-app:local .`.
+
+Run the container with `docker run --name slim-app -p 8080:80 -d slim-app:local`.
+
+The application will be available at `http://localhost:8080`.
+
+> 💡 **Note:** When running via Docker, `APP_ENV` is typically set to `production`, so the application will not attempt to load a `.env` file. Pass any required environment variables at runtime using `-e` flags or a `--env-file`.
+
+## Coding Standards
+
+This project uses [PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) to enforce a consistent code style. Run the formatter before committing your changes with `composer cs`.
+
+- Follow modern PHP practices (typed properties, readonly where appropriate, strict types)
+- Keep code simple and consistent with the existing structure
+
+## Issue Reporting
+
+We welcome bug reports, feature requests, and questions about the project. To ensure we can help you effectively, please use the appropriate issue template when creating a new issue, including:
+
+- **🐛 Bug Report**: Report issues or unexpected behavior
+- **✨ Feature Request**: Suggest new features or improvements
+- **❓ Question**: Ask for help or clarification
+
+Before creating an issue, please:
+
+- Search existing issues to avoid duplicates
+- Check the documentation and README for answers to common questions
+- Use GitHub Discussions for general questions and community support
+
+> 💡 **Tip:** When you create a new issue, GitHub will automatically show you the available templates. Choose the one that best fits your situation for a guided experience.
+
+## Commit Guidelines
+
+When contributing changes, it's important to follow clear commit practices that help maintain project history and make collaboration easier. Use descriptive commit messages following the [Conventional Commits](https://www.conventionalcommits.org/) format, and feel free to add emojis to quickly convey the type of change using [Git Commit Emoji](https://dev.andrewdyer.rocks/git-commit-emoji) conventions.
+
+Once you've made your changes, follow these steps to submit them for review:
+
+1. Create a feature branch with `git checkout -b feature/your-feature-name`.
+2. Commit your changes following the commit guidelines.
+3. Push your branch with `git push origin feature/your-feature-name`.
+4. Open a pull request with a title and description that clearly explain your changes.
