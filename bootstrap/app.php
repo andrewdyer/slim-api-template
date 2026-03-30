@@ -25,6 +25,8 @@ return function(): App {
     $app = AppFactory::create();
 
     // Middleware
+    $app->addBodyParsingMiddleware();
+
     $app->addRoutingMiddleware();
 
     $settings = $container->get(SettingsInterface::class);
