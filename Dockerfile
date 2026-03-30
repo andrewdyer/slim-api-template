@@ -54,7 +54,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy dependency manifests first for better caching
-COPY composer.json composer.lock* ./
+COPY composer.json composer.lock ./
 
 # Install production dependencies
 RUN composer install \
