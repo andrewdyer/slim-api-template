@@ -18,7 +18,7 @@
         }
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "andrewdyer/actions": "dev-main",
         "andrewdyer/settings": "dev-main",
         "monolog/monolog": "^2.3",

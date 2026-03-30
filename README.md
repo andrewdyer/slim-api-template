@@ -8,7 +8,7 @@ This template provides a clean, opinionated foundation for building REST APIs wi
 
 ## 📋 Prerequisites
 
-- **[PHP](https://www.php.net/)**: Version 8.2 or higher is required.
+- **[PHP](https://www.php.net/)**: Version 8.3 or higher is required.
 - **[Composer](https://getcomposer.org/)**: Dependency management tool for PHP.
 
 ## 🏗️ Structure
