@@ -11,11 +11,32 @@ use PHPUnit\Framework\TestCase;
  */
 final class HelpersTest extends TestCase
 {
+    /**
+     * Backup of the original $_ENV array.
+     * @var array
+     */
+    private array $originalEnv;
+
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $_ENV = [];
+        $this->originalEnv = $_ENV;
+
+        unset($_ENV['SOME_KEY'], $_ENV['FLAG_KEY'], $_ENV['LIST_KEY'], $_ENV['MISSING_KEY']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown(): void
+    {
+        $_ENV = $this->originalEnv;
+
+        parent::tearDown();
     }
 
     /**
