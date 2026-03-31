@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use AndrewDyer\Settings\Contracts\SettingsInterface;
 use AndrewDyer\Slim\CorsResponseEmitter;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -14,6 +15,10 @@ $app = $appFactory();
 $serverRequestCreator = ServerRequestCreatorFactory::create();
 $request = $serverRequestCreator->createServerRequestFromGlobals();
 
+$container = $app->getContainer();
+
+$settings = $container->get(SettingsInterface::class);
+
 $response = $app->handle($request);
-$corsResponseEmitter = new CorsResponseEmitter();
+$corsResponseEmitter = new CorsResponseEmitter($settings->get('cors.allowedOrigins'));
 $corsResponseEmitter->emit($response);
