@@ -40,8 +40,8 @@ final readonly class UserService
     /**
      * Creates a new user from the provided DTO and persists it via the repository.
      *
-     * @param CreateUserDTO $dto The data required to create the user.
-     * @return User The newly created User entity.
+     * @param  CreateUserDTO $dto The data required to create the user.
+     * @return User          The newly created User entity.
      */
     public function create(CreateUserDTO $dto): User
     {
@@ -55,7 +55,7 @@ final readonly class UserService
     /**
      * Deletes the user with the given ID from the repository.
      *
-     * @param int $id The unique identifier of the user to delete.
+     * @param  int  $id The unique identifier of the user to delete.
      * @return bool True if the user was deleted, false if no user with that ID existed.
      */
     public function delete(int $id): bool
@@ -66,8 +66,8 @@ final readonly class UserService
     /**
      * Finds and returns the user with the given ID.
      *
-     * @param int $id The unique identifier of the user to retrieve.
-     * @return User The matching User entity.
+     * @param  int                   $id The unique identifier of the user to retrieve.
+     * @return User                  The matching User entity.
      * @throws UserNotFoundException If no user exists with the given ID.
      */
     public function find(int $id): User
@@ -84,8 +84,8 @@ final readonly class UserService
     /**
      * Updates an existing user with the fields provided in the DTO and returns the result.
      *
-     * @param UpdateUserDTO $dto The data to apply to the existing user. Null fields are left unchanged.
-     * @return User The updated User entity.
+     * @param  UpdateUserDTO         $dto The data to apply to the existing user. Null fields are left unchanged.
+     * @return User                  The updated User entity.
      * @throws UserNotFoundException If no user exists with the given ID.
      */
     public function update(UpdateUserDTO $dto): User

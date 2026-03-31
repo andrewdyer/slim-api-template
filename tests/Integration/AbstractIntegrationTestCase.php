@@ -33,10 +33,10 @@ abstract class AbstractIntegrationTestCase extends TestCase
     /**
      * Dispatches an HTTP request through the application and returns the response.
      *
-     * @param string $method The HTTP method (e.g. GET, POST, PUT, DELETE).
-     * @param string $path The request URI path.
-     * @param array<string, mixed>|null $data Optional request body data, encoded as JSON.
-     * @return ResponseInterface The HTTP response returned by the application.
+     * @param  string                    $method The HTTP method (e.g. GET, POST, PUT, DELETE).
+     * @param  string                    $path   The request URI path.
+     * @param  array<string, mixed>|null $data   Optional request body data, encoded as JSON.
+     * @return ResponseInterface         The HTTP response returned by the application.
      */
     protected function request(string $method, string $path, ?array $data = null): ResponseInterface
     {
@@ -63,7 +63,7 @@ abstract class AbstractIntegrationTestCase extends TestCase
     /**
      * Decodes the JSON body of an HTTP response into an associative array.
      *
-     * @param ResponseInterface $response The HTTP response to decode.
+     * @param  ResponseInterface    $response The HTTP response to decode.
      * @return array<string, mixed> The decoded response body, or an empty array if the body is empty.
      */
     protected function decodeJson(ResponseInterface $response): array

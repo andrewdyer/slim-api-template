@@ -15,10 +15,10 @@ final class UpdateUserDTO
     /**
      * Constructs a new UpdateUserDTO for the specified user.
      *
-     * @param int $id The unique identifier of the user to update.
+     * @param int         $id        The unique identifier of the user to update.
      * @param string|null $firstName The updated first name, or null to leave unchanged.
-     * @param string|null $lastName The updated last name, or null to leave unchanged.
-     * @param string|null $email The updated email address, or null to leave unchanged.
+     * @param string|null $lastName  The updated last name, or null to leave unchanged.
+     * @param string|null $email     The updated email address, or null to leave unchanged.
      */
     public function __construct(
         public int $id,
@@ -31,9 +31,9 @@ final class UpdateUserDTO
     /**
      * Creates an UpdateUserDTO from a raw associative array, typically sourced from a request body.
      *
-     * @param int $id The unique identifier of the user to update.
-     * @param array<string, mixed> $data The raw input data. Unset keys default to null.
-     * @return self A populated UpdateUserDTO instance.
+     * @param  int                  $id   The unique identifier of the user to update.
+     * @param  array<string, mixed> $data The raw input data. Unset keys default to null.
+     * @return self                 A populated UpdateUserDTO instance.
      */
     public static function fromArray(int $id, array $data): self
     {

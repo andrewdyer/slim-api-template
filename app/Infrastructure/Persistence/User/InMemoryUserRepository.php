@@ -39,10 +39,10 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Creates a new User entity, assigns it the next available ID, and stores it.
      *
-     * @param string $firstName The user's first name.
-     * @param string $lastName The user's last name.
-     * @param string $email The user's email address.
-     * @return User The newly created and stored User entity.
+     * @param  string $firstName The user's first name.
+     * @param  string $lastName  The user's last name.
+     * @param  string $email     The user's email address.
+     * @return User   The newly created and stored User entity.
      */
     public function create(string $firstName, string $lastName, string $email): User
     {
@@ -55,7 +55,7 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Removes the user with the given ID from the in-memory store.
      *
-     * @param int $id The unique identifier of the user to delete.
+     * @param  int  $id The unique identifier of the user to delete.
      * @return bool True if the user was found and removed, false otherwise.
      */
     public function delete(int $id): bool
@@ -82,7 +82,7 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Looks up a user by their ID in the in-memory store.
      *
-     * @param int $id The unique identifier of the user to retrieve.
+     * @param  int       $id The unique identifier of the user to retrieve.
      * @return User|null The matching User entity, or null if not found.
      */
     public function findById(int $id): ?User
@@ -93,11 +93,11 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Replaces the stored user with a new User entity reflecting the applied changes.
      *
-     * @param int $id The unique identifier of the user to update.
-     * @param string|null $firstName The new first name, or null to retain the existing value.
-     * @param string|null $lastName The new last name, or null to retain the existing value.
-     * @param string|null $email The new email address, or null to retain the existing value.
-     * @return User|null The updated User entity, or null if no user with that ID existed.
+     * @param  int         $id        The unique identifier of the user to update.
+     * @param  string|null $firstName The new first name, or null to retain the existing value.
+     * @param  string|null $lastName  The new last name, or null to retain the existing value.
+     * @param  string|null $email     The new email address, or null to retain the existing value.
+     * @return User|null   The updated User entity, or null if no user with that ID existed.
      */
     public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
     {

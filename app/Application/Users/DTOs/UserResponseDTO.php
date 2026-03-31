@@ -17,10 +17,10 @@ final class UserResponseDTO implements JsonSerializable
     /**
      * Constructs a new UserResponseDTO with the provided user details.
      *
-     * @param int $id The unique identifier of the user.
+     * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.
-     * @param string $lastName The user's last name.
-     * @param string $email The user's email address.
+     * @param string $lastName  The user's last name.
+     * @param string $email     The user's email address.
      */
     public function __construct(
         public int $id,
@@ -33,7 +33,7 @@ final class UserResponseDTO implements JsonSerializable
     /**
      * Creates a UserResponseDTO from a domain User entity.
      *
-     * @param User $user The domain user to convert.
+     * @param  User $user The domain user to convert.
      * @return self A populated UserResponseDTO instance.
      */
     public static function fromDomain(User $user): self

@@ -17,7 +17,7 @@ final class ShowUserAction extends AbstractUserAction
     /**
      * Resolves the user ID from the route, fetches the matching user, and returns it as JSON.
      *
-     * @return Response A 200 JSON response containing the requested user.
+     * @return Response              A 200 JSON response containing the requested user.
      * @throws UserNotFoundException If no user exists with the given ID.
      */
     protected function handle(): Response

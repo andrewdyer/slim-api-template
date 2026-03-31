@@ -16,10 +16,10 @@ final readonly class User implements JsonSerializable
     /**
      * Constructs a User entity with the given identity and personal details.
      *
-     * @param int $id The unique identifier of the user.
+     * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.
-     * @param string $lastName The user's last name.
-     * @param string $email The user's email address.
+     * @param string $lastName  The user's last name.
+     * @param string $email     The user's email address.
      */
     public function __construct(
         private int $id,

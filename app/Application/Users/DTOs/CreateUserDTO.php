@@ -17,8 +17,8 @@ final class CreateUserDTO
      * Constructs a new CreateUserDTO with the provided user details.
      *
      * @param string $firstName The user's first name.
-     * @param string $lastName The user's last name.
-     * @param string $email The user's email address.
+     * @param string $lastName  The user's last name.
+     * @param string $email     The user's email address.
      */
     public function __construct(
         public string $firstName,
@@ -30,8 +30,8 @@ final class CreateUserDTO
     /**
      * Creates a CreateUserDTO from a raw associative array, typically sourced from a request body.
      *
-     * @param array<string, mixed> $data The raw input data.
-     * @return self A populated CreateUserDTO instance.
+     * @param  array<string, mixed>     $data The raw input data.
+     * @return self                     A populated CreateUserDTO instance.
      * @throws InvalidArgumentException If any of the required fields (first_name, last_name, email) are missing.
      */
     public static function fromArray(array $data): self
