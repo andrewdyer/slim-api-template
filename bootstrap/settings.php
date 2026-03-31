@@ -20,6 +20,9 @@ return function(ContainerBuilder $containerBuilder): void {
                     'key' => get_env('APP_KEY'),
                     'url' => get_env('APP_URL', 'https://localhost:8888'),
                 ],
+                'cors' => [
+                    'allowedOrigins' => get_env_array('CORS_ALLOWED_ORIGINS'),
+                ],
                 'logger' => [
                     'name' => get_env('LOGGER_NAME', 'app'),
                     'handler' => [
