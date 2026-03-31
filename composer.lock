@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e685764b0d567826724712f46d4a499e",
+    "content-hash": "bcc3ee4f3c70dd9e2e6e69eee8b7c7fd",
     "packages": [
         {
             "name": "andrewdyer/actions",
-            "version": "0.1.0",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdyer/actions.git",
-                "reference": "e692c568438a40be0b71896c8c0574b9bfe35737"
+                "reference": "33b4c46962f0c0f622c4ca69e4e1c7c5a074538b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/actions/zipball/e692c568438a40be0b71896c8c0574b9bfe35737",
-                "reference": "e692c568438a40be0b71896c8c0574b9bfe35737",
+                "url": "https://api.github.com/repos/andrewdyer/actions/zipball/33b4c46962f0c0f622c4ca69e4e1c7c5a074538b",
+                "reference": "33b4c46962f0c0f622c4ca69e4e1c7c5a074538b",
                 "shasum": ""
             },
             "require": {
@@ -44,12 +44,20 @@
             "license": [
                 "MIT"
             ],
-            "description": "Framework-agnostic action utilities for building structured and predictable JSON API endpoints",
+            "description": "A framework-agnostic PHP library for building structured and predictable JSON API endpoints with standardised request and response handling",
+            "keywords": [
+                "JSON-API",
+                "actions",
+                "api",
+                "framework-agnostic",
+                "php",
+                "psr-7"
+            ],
             "support": {
                 "issues": "https://github.com/andrewdyer/actions/issues",
-                "source": "https://github.com/andrewdyer/actions/tree/0.1.0"
+                "source": "https://github.com/andrewdyer/actions/tree/0.1.2"
             },
-            "time": "2026-03-31T09:53:12+00:00"
+            "time": "2026-03-31T16:06:07+00:00"
         },
         {
             "name": "andrewdyer/settings",
@@ -57,12 +65,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdyer/settings.git",
-                "reference": "eee8f5f2c5937b632d0d3a1fd93faad567415f43"
+                "reference": "282647bf85f132a7c139692295fc3095af00bcab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/settings/zipball/eee8f5f2c5937b632d0d3a1fd93faad567415f43",
-                "reference": "eee8f5f2c5937b632d0d3a1fd93faad567415f43",
+                "url": "https://api.github.com/repos/andrewdyer/settings/zipball/282647bf85f132a7c139692295fc3095af00bcab",
+                "reference": "282647bf85f132a7c139692295fc3095af00bcab",
                 "shasum": ""
             },
             "require": {
@@ -83,25 +91,32 @@
             "license": [
                 "MIT"
             ],
-            "description": "A lightweight, framework-agnostic settings container for managing configuration in PHP applications",
+            "description": "A framework-agnostic PHP settings library for managing application configuration in a consistent and structured way",
+            "keywords": [
+                "Settings",
+                "config",
+                "configuration",
+                "framework-agnostic",
+                "php"
+            ],
             "support": {
                 "issues": "https://github.com/andrewdyer/settings/issues",
                 "source": "https://github.com/andrewdyer/settings/tree/main"
             },
-            "time": "2026-03-26T22:43:03+00:00"
+            "time": "2026-03-31T16:02:17+00:00"
         },
         {
             "name": "andrewdyer/slim-cors-response-emitter",
-            "version": "dev-main",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdyer/slim-cors-response-emitter.git",
-                "reference": "f560d8bd1cbf5b3c59fa987a2e0ed0740b05bc36"
+                "reference": "e6fba292823b6b78bfb4b4d87291b8d390aea2d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/slim-cors-response-emitter/zipball/f560d8bd1cbf5b3c59fa987a2e0ed0740b05bc36",
-                "reference": "f560d8bd1cbf5b3c59fa987a2e0ed0740b05bc36",
+                "url": "https://api.github.com/repos/andrewdyer/slim-cors-response-emitter/zipball/e6fba292823b6b78bfb4b4d87291b8d390aea2d4",
+                "reference": "e6fba292823b6b78bfb4b4d87291b8d390aea2d4",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +128,6 @@
                 "friendsofphp/php-cs-fixer": "^3.75",
                 "phpunit/phpunit": "^10.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -124,12 +138,20 @@
             "license": [
                 "MIT"
             ],
-            "description": "A CORS-aware response emitter for Slim applications.",
+            "description": "A CORS-aware response emitter for Slim PHP applications, designed to ensure consistent and secure HTTP responses",
+            "keywords": [
+                "cors",
+                "http",
+                "middleware",
+                "php",
+                "psr-7",
+                "slim"
+            ],
             "support": {
                 "issues": "https://github.com/andrewdyer/slim-cors-response-emitter/issues",
-                "source": "https://github.com/andrewdyer/slim-cors-response-emitter/tree/main"
+                "source": "https://github.com/andrewdyer/slim-cors-response-emitter/tree/0.1.0"
             },
-            "time": "2026-03-22T23:25:43+00:00"
+            "time": "2026-03-31T21:18:00+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -5588,8 +5610,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "andrewdyer/settings": 20,
-        "andrewdyer/slim-cors-response-emitter": 20
+        "andrewdyer/settings": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
