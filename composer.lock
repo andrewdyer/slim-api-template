@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25593dd4513649970969e104097a0c1d",
+    "content-hash": "31f854e5d99c318221113b8034c3280c",
     "packages": [
         {
             "name": "andrewdyer/actions",
@@ -90,6 +90,47 @@
                 "source": "https://github.com/andrewdyer/settings/tree/main"
             },
             "time": "2026-03-26T22:43:03+00:00"
+        },
+        {
+            "name": "andrewdyer/slim-cors-response-emitter",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andrewdyer/slim-cors-response-emitter.git",
+                "reference": "f560d8bd1cbf5b3c59fa987a2e0ed0740b05bc36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andrewdyer/slim-cors-response-emitter/zipball/f560d8bd1cbf5b3c59fa987a2e0ed0740b05bc36",
+                "reference": "f560d8bd1cbf5b3c59fa987a2e0ed0740b05bc36",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3",
+                "slim/psr7": "^1.8",
+                "slim/slim": "^4.12"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "phpunit/phpunit": "^10.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AndrewDyer\\Slim\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A CORS-aware response emitter for Slim applications.",
+            "support": {
+                "issues": "https://github.com/andrewdyer/slim-cors-response-emitter/issues",
+                "source": "https://github.com/andrewdyer/slim-cors-response-emitter/tree/main"
+            },
+            "time": "2026-03-22T23:25:43+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -5637,7 +5678,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "andrewdyer/actions": 20,
-        "andrewdyer/settings": 20
+        "andrewdyer/settings": 20,
+        "andrewdyer/slim-cors-response-emitter": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
