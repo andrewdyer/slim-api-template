@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31f854e5d99c318221113b8034c3280c",
+    "content-hash": "b9d912e6fe3248e0b029a06850975665",
     "packages": [
         {
             "name": "andrewdyer/actions",
-            "version": "dev-main",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdyer/actions.git",
-                "reference": "459b3ad682b1c70694ab04439891e27e5b58bc1b"
+                "reference": "e692c568438a40be0b71896c8c0574b9bfe35737"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/actions/zipball/459b3ad682b1c70694ab04439891e27e5b58bc1b",
-                "reference": "459b3ad682b1c70694ab04439891e27e5b58bc1b",
+                "url": "https://api.github.com/repos/andrewdyer/actions/zipball/e692c568438a40be0b71896c8c0574b9bfe35737",
+                "reference": "e692c568438a40be0b71896c8c0574b9bfe35737",
                 "shasum": ""
             },
             "require": {
@@ -34,7 +34,6 @@
                 "slim/psr7": "Install a Slim-compatible PSR-7 implementation for HTTP message handling.",
                 "slim/slim": "Install to use Slim framework integrations with this library."
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -48,9 +47,9 @@
             "description": "Framework-agnostic action utilities for building structured and predictable JSON API endpoints",
             "support": {
                 "issues": "https://github.com/andrewdyer/actions/issues",
-                "source": "https://github.com/andrewdyer/actions/tree/main"
+                "source": "https://github.com/andrewdyer/actions/tree/0.1.0"
             },
-            "time": "2026-03-26T22:50:37+00:00"
+            "time": "2026-03-31T09:53:12+00:00"
         },
         {
             "name": "andrewdyer/settings",
@@ -5677,7 +5676,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "andrewdyer/actions": 20,
         "andrewdyer/settings": 20,
         "andrewdyer/slim-cors-response-emitter": 20
     },
