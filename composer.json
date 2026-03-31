@@ -1,5 +1,5 @@
 {
-    "name": "andrewdyer/backend-template",
+    "name": "andrewdyer/slim-api-template",
     "description": "A template for building modern backend REST APIs using the Slim Framework",
     "keywords": ["framework", "slim"],
     "type": "project",
