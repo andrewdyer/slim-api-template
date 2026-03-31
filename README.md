@@ -1,4 +1,4 @@
-# Backend Template
+# Slim API Template
 
 A template for building modern backend REST APIs using the [Slim Framework](https://www.slimframework.com/).
 
