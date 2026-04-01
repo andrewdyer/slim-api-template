@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
 use Slim\App;
 use Slim\Factory\AppFactory;
@@ -25,17 +24,7 @@ return function(): App {
     $app = AppFactory::create();
 
     // Middleware
-    $app->addBodyParsingMiddleware();
-
-    $app->addRoutingMiddleware();
-
-    $settings = $container->get(SettingsInterface::class);
-
-    $app->addErrorMiddleware(
-        $settings->get('displayErrorDetails'),
-        $settings->get('logError'),
-        $settings->get('logErrorDetails')
-    );
+    require_from_root('bootstrap/middleware.php')($app);
 
     // Routes
     require_from_root('bootstrap/routes.php')($app);
