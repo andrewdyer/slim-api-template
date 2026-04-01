@@ -12,7 +12,7 @@ Before you begin, ensure you have met the following requirements:
 
 - **[PHP](https://www.php.net/)**: Version 8.3 or higher is required.
 - **[Composer](https://getcomposer.org/)**: Dependency management tool for PHP.
-- **[Docker](https://www.docker.com/)** (optional): For containerised the application.
+- **[Docker](https://www.docker.com/)** (optional): For running the application in a containerised environment.
 
 ## 🏗️ Structure
 
