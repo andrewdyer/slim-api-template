@@ -1,10 +1,10 @@
 # Slim API Template
 
-A [Slim Framework](https://www.slimframework.com/) PHP template for building structured and maintainable REST APIs using an ADR architecture and clear separation of concerns.
+A [Slim Framework](https://www.slimframework.com/) PHP template for building structured, maintainable, and scalable REST APIs using ADR architecture and clear separation of concerns.
 
 ## ✨ Introduction
 
-This template offers a clean, modern foundation for building REST APIs with Slim Framework 4. It uses an Action–Domain–Responder (ADR) architecture, clearly separating Application, Domain, and Infrastructure layers for maintainability and scalability. The setup is ready for modern tooling, testing, and optional containerization, and includes a complete feature example to help you get started or use as a reference for your own design.
+This template provides a clean and well-structured foundation for building REST APIs with Slim Framework 4. It follows an Action–Domain–Responder (ADR) architecture, separating Application, Domain, and Infrastructure layers to support maintainability and scalability. The setup includes modern tooling, testing, and optional containerisation, along with a complete feature example for reference or extension..
 
 ## 📋 Prerequisites
 
@@ -12,7 +12,7 @@ Before you begin, ensure you have met the following requirements:
 
 - **[PHP](https://www.php.net/)**: Version 8.3 or higher is required.
 - **[Composer](https://getcomposer.org/)**: Dependency management tool for PHP.
-- **[Docker](https://www.docker.com/)** (optional): For containerizing the application.
+- **[Docker](https://www.docker.com/)** (optional): For containerised the application.
 
 ## 🏗️ Structure
 
@@ -22,13 +22,13 @@ This project follows an ADR-style architecture, organising code by responsibilit
 - **Domain**: Core business logic and contracts
 - **Infrastructure**: External integrations and implementations
 
-The structure is intentionally simple and slice-friendly, allowing features to grow vertically without blurring boundaries between layers.
+The structure is intentionally simple and feature-oriented, allowing features to grow vertically without blurring boundaries between layers.
 
 ```plaintext
 repo/
 ├── app/                         # PSR-4 Autoloaded logic
 │   ├── Application/             # Request handling & orchestration
-│   ├── Domain/                  # Business logic & Interface contracts
+│   ├── Domain/                  # Business logic & interface contracts
 │   ├── Infrastructure/          # Database & third-party implementations
 │   └── helpers.php              # Global utility functions
 │
@@ -57,7 +57,7 @@ repo/
 └── phpunit.xml
 ```
 
-The template includes a simple **Users** feature to demonstrate how a vertical slice can be structured using the ADR approach. This example shows how a single feature can be organized across all layers:
+The template includes a simple **Users** feature to demonstrate how a vertical slice can be structured using the ADR approach. This example shows how a single feature can be organised across all layers:
 
 - **Actions**: Create, delete, list, show and update HTTP entry points.
 - **DTOs**: Data transfer objects for input and output.
@@ -75,7 +75,7 @@ Routes are versioned under `/api/v1` and follow RESTful conventions:
 | `PUT`    | `/api/v1/users/{id}` | Update a user   |
 | `DELETE` | `/api/v1/users/{id}` | Delete a user   |
 
-This feature is provided as a reference and starting point—you can use it as a template for your own features, or remove it entirely when beginning your project.
+This feature is provided as a reference and starting point. It may be used as a template for additional features, or removed entirely when initialising a new project.
 
 ## 📦 Dependencies
 
@@ -90,13 +90,13 @@ See [composer.json](./composer.json) for the full list.
 
 ## 🧰 Tooling
 
-Development tooling is included for a consistent and reliable workflow, including:
+Development tooling is included for a consistent and reliable workflow:
 
 - **[PHPUnit](https://phpunit.de/)** for unit and integration testing.
 - **[PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)** for automated code style enforcement.
 - **[Docker](https://www.docker.com/)** for containerised development and deployment environments.
 
-These tools help ensure code quality, reproducibility, and smooth collaboration.
+These tools ensure code quality, reproducibility, and smooth collaboration.
 
 ## 🚀 Getting Started
 
