@@ -13,4 +13,4 @@ jobs:
     name: PHP test
     uses: andrewdyer/github-workflows/.github/workflows/php-test.yml@main
     with:
-      php-version: 8.3
+      php-version: "8.3"
