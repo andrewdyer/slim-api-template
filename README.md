@@ -60,10 +60,10 @@ repo/
 
 The template includes a simple **Users** feature to demonstrate how a vertical slice can be structured using the ADR approach. This example shows how a single feature can be organised across all layers:
 
-- **Actions**: Create, delete, list, show and update HTTP entry points.
+- **Actions**: HTTP entry points for creating, retrieving, listing, updating, and deleting users.
 - **DTOs**: Data transfer objects for input and output.
 - **Service**: Application logic orchestrated in a dedicated service class.
-- **Domain**: Entity and repository contract define the business model and persistence interface.
+- **Domain**: Entity and repository contracts define the business model and persistence interface.
 - **Infrastructure**: In-memory repository implementation for demonstration purposes.
 
 Routes are versioned under `/api/v1` and follow RESTful conventions:
