@@ -52,9 +52,9 @@ repo/
 │
 ├── workbench/                   # Scratchpad for local experimentation
 │
-├── composer.json
-├── Dockerfile
-├── phpunit.xml
+├── composer.json               # Project dependencies and scripts
+├── Dockerfile                  # Container build instructions
+├── phpunit.xml                 # PHPUnit configuration
 └── .env.example                # Example environment variables file
 ```
 
