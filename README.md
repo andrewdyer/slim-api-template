@@ -4,7 +4,7 @@ A template for building modern backend REST APIs using the [Slim Framework](http
 
 ## ✨ Introduction
 
-This template provides a clean, opinionated foundation for building REST APIs with Slim Framework 4. It follows an Action--Domain--Responder (ADR) style architecture, separating Application, Domain, and Infrastructure concerns to promote maintainability, scalability, and clear boundaries between layers, while still remaining flexible enough to adapt to your own preferred structure and development approach.
+This template offers a clean, modern foundation for building REST APIs with Slim Framework 4. It uses an Action–Domain–Responder (ADR) architecture, clearly separating Application, Domain, and Infrastructure layers for maintainability and scalability. The setup is ready for modern tooling, testing, and optional containerization, and includes a complete feature example to help you get started or use as a reference for your own design.
 
 ## 📋 Prerequisites
 
