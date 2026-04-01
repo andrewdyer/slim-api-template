@@ -4,7 +4,7 @@ A [Slim Framework](https://www.slimframework.com/) PHP template for building str
 
 ## ✨ Introduction
 
-This template provides a clean and well-structured foundation for building REST APIs with Slim Framework 4. It follows an Action–Domain–Responder (ADR) architecture, separating Application, Domain, and Infrastructure layers to support maintainability and scalability. The setup includes modern tooling, testing, and optional containerisation, along with a complete feature example for reference or extension..
+This template provides a clean and well-structured foundation for building REST APIs with Slim Framework 4. It follows an Action–Domain–Responder (ADR) architecture, separating Application, Domain, and Infrastructure layers to support maintainability and scalability. The setup includes modern tooling, testing, and optional containerisation, along with a complete feature example for reference or extension.
 
 ## 📋 Prerequisites
 
