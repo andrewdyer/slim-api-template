@@ -35,9 +35,10 @@ repo/
 │   └── helpers.php              # Global utility functions
 │
 ├── bootstrap/                   # Dependency Injection & Wiring
-│   ├── app.php                  # App factory and middleware pipeline
+│   ├── app.php                  # App factory and application bootstrap
 │   ├── dependencies.php         # Container service registrations
 │   ├── environment.php          # ENV loading logic
+│   ├── middleware.php           # HTTP middleware pipeline configuration
 │   ├── repositories.php         # Interface → Implementation bindings
 │   ├── routes.php               # Slim route definitions
 │   └── settings.php             # Configuration arrays
