@@ -98,6 +98,7 @@ Development tooling is included for a consistent and reliable workflow:
 - **[PHPUnit](https://phpunit.de/)** for unit and integration testing.
 - **[PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)** for automated code style enforcement.
 - **[Docker](https://www.docker.com/)** for containerised development and deployment environments.
+- **[GitHub Actions](https://github.com/features/actions)** CI (Continuous Integration) workflow that runs on pushes to main and pull requests, executing unit and integration tests.
 
 These tools ensure code quality, reproducibility, and smooth collaboration.
 
