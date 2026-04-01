@@ -1,6 +1,6 @@
 # Slim API Template
 
-A template for building modern backend REST APIs using the [Slim Framework](https://www.slimframework.com/).
+A [Slim Framework](https://www.slimframework.com/) PHP template for building structured and maintainable REST APIs using an ADR architecture and clear separation of concerns.
 
 ## ✨ Introduction
 
