@@ -1,3 +1,5 @@
+![Slim API Template](https://public-assets.andrewdyer.rocks/images/covers/slim-api-template.png)
+
 # Slim API Template
 
 A [Slim Framework](https://www.slimframework.com/) PHP template for building structured, maintainable, and scalable REST APIs using ADR architecture and clear separation of concerns.
