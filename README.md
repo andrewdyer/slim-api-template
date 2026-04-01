@@ -13,43 +13,54 @@ This template provides a clean, opinionated foundation for building REST APIs wi
 
 ## 🏗️ Structure
 
-This project follows an ADR-style architecture, separating Application, Domain, and Infrastructure concerns. The structure is intentionally simple and flexible, allowing you to adapt or restructure it to suit your own development style.
+This project follows an ADR-style architecture, organising code by responsibility:
+
+- **Application**: HTTP layer and use-case coordination
+- **Domain**: Core business logic and contracts
+- **Infrastructure**: External integrations and implementations
+
+The structure is intentionally simple and slice-friendly, allowing features to grow vertically without blurring boundaries between layers.
 
 ```plaintext
 repo/
-├── app/
-│   ├── Application/        # Actions, DTOs, services
-│   ├── Domain/             # Entities and interfaces
-│   ├── Infrastructure/     # Implementations (e.g. persistence)
-│   └── helpers.php
+├── app/                         # PSR-4 Autoloaded logic
+│   ├── Application/             # Request handling & orchestration
+│   ├── Domain/                  # Business logic & Interface contracts
+│   ├── Infrastructure/          # Database & third-party implementations
+│   └── helpers.php              # Global utility functions
 │
-├── bootstrap/              # App wiring and configuration
-│   ├── app.php
-│   ├── dependencies.php
-│   ├── environment.php
-│   ├── repositories.php
-│   ├── routes.php
-│   └── settings.php
+├── bootstrap/                   # Dependency Injection & Wiring
+│   ├── app.php                  # App factory and middleware pipeline
+│   ├── dependencies.php         # Container service registrations
+│   ├── environment.php          # ENV loading logic
+│   ├── repositories.php         # Interface → Implementation bindings
+│   ├── routes.php               # Slim route definitions
+│   └── settings.php             # Configuration arrays
 │
-├── public/                 # Web entry point
-│   └── index.php
+├── public/                      # Web server document root
+│   └── index.php                # HTTP entry point
 │
-├── tests/                  # Test suites
+├── storage/                     # File-based storage
+│   └── logs/                    # Monolog output
+│
+├── tests/                       # PHPUnit Test Suite
+│   ├── Integration/             # Tests covering the full HTTP stack
+│   └── Unit/                    # Isolated logic tests
+│
+├── workbench/                   # Scratchpad for local experimentation
 │
 ├── composer.json
-└── .env.example
+├── Dockerfile
+└── phpunit.xml
 ```
 
-### 👤 Example: Users Feature
+The template includes a simple **Users** feature to demonstrate how a vertical slice can be structured using the ADR approach. This example shows how a single feature can be organized across all layers:
 
-The template includes a simple **Users** feature to demonstrate how a vertical slice of the application can be structured using the ADR approach.
-
-This example includes:
-
-- an Action (HTTP entry point)
-- a Service (application logic)
-- a DTO (data transfer)
-- a Repository interface and implementation
+- **Actions**: Create, delete, list, show and update HTTP entry points.
+- **DTOs**: Data transfer objects for input and output.
+- **Service**: Application logic orchestrated in a dedicated service class.
+- **Domain**: Entity and repository contract define the business model and persistence interface.
+- **Infrastructure**: In-memory repository implementation for demonstration purposes.
 
 Routes are versioned under `/api/v1` and follow RESTful conventions:
 
@@ -61,7 +72,7 @@ Routes are versioned under `/api/v1` and follow RESTful conventions:
 | `PUT`    | `/api/v1/users/{id}` | Update a user   |
 | `DELETE` | `/api/v1/users/{id}` | Delete a user   |
 
-This feature is provided as a reference only and can be safely removed when starting your own project.
+This feature is provided as a reference and starting point—you can use it as a template for your own features, or remove it entirely when beginning your project.
 
 ## 🧰 Tooling
 
