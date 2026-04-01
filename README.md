@@ -10,6 +10,7 @@ This template provides a clean, opinionated foundation for building REST APIs wi
 
 - **[PHP](https://www.php.net/)**: Version 8.3 or higher is required.
 - **[Composer](https://getcomposer.org/)**: Dependency management tool for PHP.
+- **[Docker](https://www.docker.com/)** (optional): For containerizing the application.
 
 ## 🏗️ Structure
 
