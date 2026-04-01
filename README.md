@@ -54,7 +54,8 @@ repo/
 │
 ├── composer.json
 ├── Dockerfile
-└── phpunit.xml
+├── phpunit.xml
+└── .env.example                # Example environment variables file
 ```
 
 The template includes a simple **Users** feature to demonstrate how a vertical slice can be structured using the ADR approach. This example shows how a single feature can be organised across all layers:
