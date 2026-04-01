@@ -77,16 +77,26 @@ Routes are versioned under `/api/v1` and follow RESTful conventions:
 
 This feature is provided as a reference and starting point—you can use it as a template for your own features, or remove it entirely when beginning your project.
 
+## 📦 Dependencies
+
+Key runtime packages are managed via Composer, including:
+
+- **[Slim PSR-7](https://github.com/slimphp/Slim-Psr7)** for handling HTTP requests and responses via a PSR-7 implementation.
+- **[PHP-DI](https://php-di.org/)** for dependency injection and service container management.
+- **[Monolog](https://seldaek.github.io/monolog/)** for structured application logging.
+- **[phpdotenv](https://github.com/vlucas/phpdotenv)** for loading environment-based configuration.
+
+See [composer.json](./composer.json) for the full list.
+
 ## 🧰 Tooling
 
-Essential development tools configured for a clean and consistent developer experience, including:
+Development tooling is included for a consistent and reliable workflow, including:
 
-- [Slim Framework](https://www.slimframework.com/) as the HTTP micro-framework.
-- [PHP-DI](https://php-di.org/) for dependency injection via a PSR-11 container.
-- [Monolog](https://seldaek.github.io/monolog/) for PSR-3 compliant logging.
-- [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv) for environment variable management.
-- [PHPUnit](https://phpunit.de/) for unit and integration testing.
-- [PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) for enforcing consistent code style.
+- **[PHPUnit](https://phpunit.de/)** for unit and integration testing.
+- **[PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)** for automated code style enforcement.
+- **[Docker](https://www.docker.com/)** for containerised development and deployment environments.
+
+These tools help ensure code quality, reproducibility, and smooth collaboration.
 
 ## 🚀 Getting Started
 
