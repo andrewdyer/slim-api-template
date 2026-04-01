@@ -26,7 +26,7 @@ To get started with contributing, set up the project by following these steps:
 2. Ensure you have PHP 8.3 or higher installed.
 3. Copy the example environment file with `cp .env.example .env` and update the values for your local setup.
 4. Install all project dependencies with `composer install`.
-5. Start the built-in PHP development server with `php -S 127.0.0.1:8888 -t public public/index.php`.
+5. Start the built-in PHP development server with `composer start`.
 
 ## Environment
 
