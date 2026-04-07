@@ -85,6 +85,7 @@ This feature is provided as a reference and starting point. It may be used as a 
 
 Key runtime packages are managed via Composer, including:
 
+- **[Slim Framework](https://www.slimframework.com/)** (v4) for routing, middleware composition, and HTTP application flow.
 - **[Slim PSR-7](https://github.com/slimphp/Slim-Psr7)** for handling HTTP requests and responses via a PSR-7 implementation.
 - **[PHP-DI](https://php-di.org/)** for dependency injection and service container management.
 - **[Monolog](https://seldaek.github.io/monolog/)** for structured application logging.
