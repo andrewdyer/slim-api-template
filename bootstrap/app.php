@@ -5,6 +5,7 @@ declare(strict_types=1);
 use DI\ContainerBuilder;
 use Slim\App;
 use Slim\Factory\AppFactory;
+use Slim\Factory\ServerRequestCreatorFactory;
 
 return function(): App {
     // Load environment
@@ -22,6 +23,12 @@ return function(): App {
     // Create app
     AppFactory::setContainer($container);
     $app = AppFactory::create();
+
+    // Create Request object from globals
+    $serverRequestCreator = ServerRequestCreatorFactory::create();
+    $request = $serverRequestCreator->createServerRequestFromGlobals();
+
+    require_from_root('bootstrap/errors.php')($app, $request);
 
     // Middleware
     require_from_root('bootstrap/middleware.php')($app);
