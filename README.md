@@ -38,6 +38,7 @@ repo/
 │   ├── app.php                  # App factory and application bootstrap
 │   ├── dependencies.php         # Container service registrations
 │   ├── environment.php          # ENV loading logic
+│   ├── errors.php               # Shutdown and fatal error handling setup
 │   ├── middleware.php           # HTTP middleware pipeline configuration
 │   ├── repositories.php         # Interface → Implementation bindings
 │   ├── routes.php               # Slim route definitions
