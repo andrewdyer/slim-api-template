@@ -20,8 +20,9 @@
     "require": {
         "php": "^8.3",
         "andrewdyer/actions": "^0.1",
-        "andrewdyer/settings": "^0.1",
         "andrewdyer/cors-response-emitter": "^0.1",
+        "andrewdyer/settings": "^0.1",
+        "andrewdyer/shutdown-handler": "^0.1.0",
         "monolog/monolog": "^3.10",
         "php-di/php-di": "^7.1",
         "slim/psr7": "^1.8",
