@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use AndrewDyer\CorsResponseEmitter\CorsResponseEmitter;
-use AndrewDyer\Settings\Contracts\SettingsInterface;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -17,8 +16,6 @@ $request = $serverRequestCreator->createServerRequestFromGlobals();
 
 $container = $app->getContainer();
 
-$settings = $container->get(SettingsInterface::class);
-
 $response = $app->handle($request);
-$corsResponseEmitter = new CorsResponseEmitter($settings->get('cors.allowedOrigins'));
+$corsResponseEmitter = $container->get(CorsResponseEmitter::class);
 $corsResponseEmitter->emit($response);
