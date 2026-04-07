@@ -2,11 +2,11 @@
 
 # Slim API Template
 
-A [Slim Framework](https://www.slimframework.com/) PHP template for building structured, maintainable, and scalable REST APIs using ADR architecture and clear separation of concerns.
+A template for building structured, maintainable, and scalable REST APIs in [Slim Framework](https://www.slimframework.com/) applications, following ADR architecture and clear separation of concerns.
 
 ## ✨ Introduction
 
-This template provides a clean and well-structured foundation for building REST APIs with Slim Framework 4. It follows an Action–Domain–Responder (ADR) architecture, separating Application, Domain, and Infrastructure layers to support maintainability and scalability. The setup includes modern tooling, testing, and optional containerisation, along with a complete feature example for reference or extension.
+This template provides a foundation for building structured, maintainable, and scalable REST APIs in Slim Framework applications, following Action–Domain–Responder (ADR) architecture and clear separation of concerns. It includes a shutdown handler for consistent error responses, a dedicated CORS response emitter, structured logging via Monolog, and environment configuration through PHP dotenv. Working alongside Slim’s error middleware, these components ensure uniform behaviour, consistent error payloads, and seamless integration of cross-cutting concerns. The setup also includes modern tooling, testing, and optional containerisation, along with a complete feature example for reference or extension.
 
 ## 📋 Prerequisites
 
