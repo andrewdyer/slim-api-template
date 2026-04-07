@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use AndrewDyer\CorsResponseEmitter\CorsResponseEmitter;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
-use AndrewDyer\Slim\CorsResponseEmitter;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';

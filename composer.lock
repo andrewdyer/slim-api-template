@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "181d9e5bcffedaeb55c1a475cc37fc8e",
+    "content-hash": "5b5ff5a27928045eb49d388d4bf3c1a3",
     "packages": [
         {
             "name": "andrewdyer/actions",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdyer/actions.git",
-                "reference": "33b4c46962f0c0f622c4ca69e4e1c7c5a074538b"
+                "reference": "447564e405f6a533a9d28cb6ecdf0e42656432b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/actions/zipball/33b4c46962f0c0f622c4ca69e4e1c7c5a074538b",
-                "reference": "33b4c46962f0c0f622c4ca69e4e1c7c5a074538b",
+                "url": "https://api.github.com/repos/andrewdyer/actions/zipball/447564e405f6a533a9d28cb6ecdf0e42656432b7",
+                "reference": "447564e405f6a533a9d28cb6ecdf0e42656432b7",
                 "shasum": ""
             },
             "require": {
@@ -55,22 +55,70 @@
             ],
             "support": {
                 "issues": "https://github.com/andrewdyer/actions/issues",
-                "source": "https://github.com/andrewdyer/actions/tree/0.1.2"
+                "source": "https://github.com/andrewdyer/actions/tree/0.1.3"
             },
-            "time": "2026-03-31T16:06:07+00:00"
+            "time": "2026-04-01T22:43:58+00:00"
         },
         {
-            "name": "andrewdyer/settings",
-            "version": "0.1.2",
+            "name": "andrewdyer/cors-response-emitter",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/andrewdyer/settings.git",
-                "reference": "282647bf85f132a7c139692295fc3095af00bcab"
+                "url": "https://github.com/andrewdyer/cors-response-emitter.git",
+                "reference": "c7b41031d45a0181eaa6f8f620343a993e912c4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/settings/zipball/282647bf85f132a7c139692295fc3095af00bcab",
-                "reference": "282647bf85f132a7c139692295fc3095af00bcab",
+                "url": "https://api.github.com/repos/andrewdyer/cors-response-emitter/zipball/c7b41031d45a0181eaa6f8f620343a993e912c4e",
+                "reference": "c7b41031d45a0181eaa6f8f620343a993e912c4e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3",
+                "slim/psr7": "^1.8",
+                "slim/slim": "^4.12"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AndrewDyer\\CorsResponseEmitter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A CORS-aware response emitter for Slim Framework applications, designed to ensure consistent and secure HTTP responses",
+            "keywords": [
+                "cors",
+                "http",
+                "middleware",
+                "php",
+                "psr-7",
+                "slim"
+            ],
+            "support": {
+                "issues": "https://github.com/andrewdyer/cors-response-emitter/issues",
+                "source": "https://github.com/andrewdyer/cors-response-emitter/tree/0.1.0"
+            },
+            "time": "2026-04-07T09:05:17+00:00"
+        },
+        {
+            "name": "andrewdyer/settings",
+            "version": "0.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andrewdyer/settings.git",
+                "reference": "604f9d99eab410eec96bad0c0df1478054cd612d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andrewdyer/settings/zipball/604f9d99eab410eec96bad0c0df1478054cd612d",
+                "reference": "604f9d99eab410eec96bad0c0df1478054cd612d",
                 "shasum": ""
             },
             "require": {
@@ -100,57 +148,9 @@
             ],
             "support": {
                 "issues": "https://github.com/andrewdyer/settings/issues",
-                "source": "https://github.com/andrewdyer/settings/tree/0.1.2"
+                "source": "https://github.com/andrewdyer/settings/tree/0.1.3"
             },
-            "time": "2026-03-31T16:02:17+00:00"
-        },
-        {
-            "name": "andrewdyer/slim-cors-response-emitter",
-            "version": "0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/andrewdyer/slim-cors-response-emitter.git",
-                "reference": "e6fba292823b6b78bfb4b4d87291b8d390aea2d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/slim-cors-response-emitter/zipball/e6fba292823b6b78bfb4b4d87291b8d390aea2d4",
-                "reference": "e6fba292823b6b78bfb4b4d87291b8d390aea2d4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.3",
-                "slim/psr7": "^1.8",
-                "slim/slim": "^4.12"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.75",
-                "phpunit/phpunit": "^10.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "AndrewDyer\\Slim\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A CORS-aware response emitter for Slim PHP applications, designed to ensure consistent and secure HTTP responses",
-            "keywords": [
-                "cors",
-                "http",
-                "middleware",
-                "php",
-                "psr-7",
-                "slim"
-            ],
-            "support": {
-                "issues": "https://github.com/andrewdyer/slim-cors-response-emitter/issues",
-                "source": "https://github.com/andrewdyer/slim-cors-response-emitter/tree/0.1.0"
-            },
-            "time": "2026-03-31T21:18:00+00:00"
+            "time": "2026-04-01T22:42:53+00:00"
         },
         {
             "name": "fig/http-message-util",
