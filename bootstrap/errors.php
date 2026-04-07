@@ -8,8 +8,8 @@ use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;
 use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;
 use AndrewDyer\ShutdownHandler\ShutdownHandler;
 use App\Application\Handlers\HttpErrorHandler;
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Slim\App;
 
 /*
@@ -27,12 +27,18 @@ return function(App $app, ServerRequestInterface $request): void {
     $settings = $container->get(SettingsInterface::class);
 
     $displayErrorDetails = $settings->get('displayErrorDetails');
+    $logError = $settings->get('logError');
+    $logErrorDetails = $settings->get('logErrorDetails');
 
     $callableResolver = $app->getCallableResolver();
 
     $responseFactory = $app->getResponseFactory();
 
-    $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
+    $logger = $container->has(LoggerInterface::class)
+        ? $container->get(LoggerInterface::class)
+        : null;
+
+    $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory, $logger);
 
     $corsResponseEmitter = $container->get(CorsResponseEmitter::class);
 
@@ -41,8 +47,8 @@ return function(App $app, ServerRequestInterface $request): void {
             $request,
             $exception,
             $displayErrorDetails,
-            false,
-            false
+            $logError,
+            $logErrorDetails
         )
     );
 
