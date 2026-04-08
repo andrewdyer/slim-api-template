@@ -47,6 +47,9 @@ repo/
 ├── public/                      # Web server document root
 │   └── index.php                # HTTP entry point
 │
+├── resources/                   # Development & documentation assets
+│   └── http/                    # HTTP request/response examples
+│
 ├── storage/                     # File-based storage
 │   └── logs/                    # Monolog output
 │
