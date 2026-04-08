@@ -1,6 +1,5 @@
 @baseUrl = http://localhost:8888
 @userId = 1
-
 ###
 
 ### ==================================================
@@ -19,9 +18,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "first_name": "Elon",
-    "last_name": "Musk",
-    "email": "elonmusk@example.com"
+    "first_name": "Emily",
+    "last_name": "Johnson",
+    "email": "emily.johnson@example.com"
 }
 
 ###
@@ -42,9 +41,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "first_name": "Larry",
-  "last_name": "Page",
-  "email": "larrypage@example.com"
+  "first_name": "Michael",
+  "last_name": "Brown",
+  "email": "michael.brown@example.com"
 }
 
 ###
