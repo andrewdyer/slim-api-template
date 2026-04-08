@@ -29,7 +29,7 @@ final class InMemoryUserRepository implements UserRepository
      */
     public function __construct()
     {
-        $this->create('Oliver', 'Taylor', 'oliver.taylor@example.com');
+        $this->create('Oliver', 'French', 'oliver.french@example.com');
         $this->create('Charlotte', 'Anderson', 'charlotte.anderson@example.com');
         $this->create('Henry', 'Thomas', 'henry.thomas@example.com');
         $this->create('Amelia', 'Moore', 'amelia.moore@example.com');

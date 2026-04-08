@@ -43,8 +43,8 @@ class ListUsersActionTest extends AbstractIntegrationTestCase
         $this->assertArrayHasKey('email', $first);
 
         $this->assertSame(1, $first['id']);
-        $this->assertSame('Bill', $first['firstName']);
-        $this->assertSame('Gates', $first['lastName']);
-        $this->assertSame('billgates@example.com', $first['email']);
+        $this->assertSame('Oliver', $first['firstName']);
+        $this->assertSame('French', $first['lastName']);
+        $this->assertSame('oliver.french@example.com', $first['email']);
     }
 }

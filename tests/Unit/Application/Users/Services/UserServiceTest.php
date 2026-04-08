@@ -38,8 +38,8 @@ class UserServiceTest extends TestCase
 
         $this->assertIsArray($users);
         $this->assertCount(5, $users);
-        $this->assertSame('Bill', $users[0]->getFirstName());
-        $this->assertSame('Gates', $users[0]->getLastName());
+        $this->assertSame('Oliver', $users[0]->getFirstName());
+        $this->assertSame('French', $users[0]->getLastName());
     }
 
     /**
@@ -69,9 +69,9 @@ class UserServiceTest extends TestCase
         $user = $this->userService->find(1);
 
         $this->assertSame(1, $user->getId());
-        $this->assertSame('Bill', $user->getFirstName());
-        $this->assertSame('Gates', $user->getLastName());
-        $this->assertSame('billgates@example.com', $user->getEmail());
+        $this->assertSame('Oliver', $user->getFirstName());
+        $this->assertSame('French', $user->getLastName());
+        $this->assertSame('oliver.french@example.com', $user->getEmail());
     }
 
     /**
@@ -93,7 +93,7 @@ class UserServiceTest extends TestCase
         $dto = new UpdateUserDTO(
             id: 1,
             firstName: 'William',
-            lastName: 'Gates III',
+            lastName: 'French III',
             email: 'william.gates@example.com'
         );
 
@@ -101,7 +101,7 @@ class UserServiceTest extends TestCase
 
         $this->assertSame(1, $user->getId());
         $this->assertSame('William', $user->getFirstName());
-        $this->assertSame('Gates III', $user->getLastName());
+        $this->assertSame('French III', $user->getLastName());
         $this->assertSame('william.gates@example.com', $user->getEmail());
     }
 
@@ -119,8 +119,8 @@ class UserServiceTest extends TestCase
 
         $this->assertSame(2, $user->getId());
         $this->assertSame('Stephen', $user->getFirstName());
-        $this->assertSame('Jobs', $user->getLastName());
-        $this->assertSame('stevejobs@example.com', $user->getEmail());
+        $this->assertSame('Anderson', $user->getLastName());
+        $this->assertSame('charlotte.anderson@example.com', $user->getEmail());
     }
 
     /**
