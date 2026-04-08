@@ -26,9 +26,9 @@ class ShowUserActionTest extends AbstractIntegrationTestCase
 
         $user = $body['data'];
         $this->assertSame(1, $user['id']);
-        $this->assertSame('Bill', $user['firstName']);
-        $this->assertSame('Gates', $user['lastName']);
-        $this->assertSame('billgates@example.com', $user['email']);
+        $this->assertSame('Oliver', $user['firstName']);
+        $this->assertSame('French', $user['lastName']);
+        $this->assertSame('oliver.french@example.com', $user['email']);
     }
 
     /**

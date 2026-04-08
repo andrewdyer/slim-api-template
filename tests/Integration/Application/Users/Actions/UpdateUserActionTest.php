@@ -17,9 +17,9 @@ class UpdateUserActionTest extends AbstractIntegrationTestCase
     public function testReturns200WithUpdatedUserWhenUserExists(): void
     {
         $response = $this->request('PUT', '/api/v1/users/1', [
-            'first_name' => 'William',
-            'last_name' => 'Gates III',
-            'email' => 'william.gates@example.com',
+            'first_name' => 'Ollie',
+            'last_name' => 'Frenchie',
+            'email' => 'ollie.frenchie@example.com',
         ]);
 
         $this->assertSame(200, $response->getStatusCode());
@@ -30,9 +30,9 @@ class UpdateUserActionTest extends AbstractIntegrationTestCase
 
         $user = $body['data'];
         $this->assertSame(1, $user['id']);
-        $this->assertSame('William', $user['firstName']);
-        $this->assertSame('Gates III', $user['lastName']);
-        $this->assertSame('william.gates@example.com', $user['email']);
+        $this->assertSame('Ollie', $user['firstName']);
+        $this->assertSame('Frenchie', $user['lastName']);
+        $this->assertSame('ollie.frenchie@example.com', $user['email']);
     }
 
     /**

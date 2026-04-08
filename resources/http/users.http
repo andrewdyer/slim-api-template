@@ -1,0 +1,71 @@
+@baseUrl = http://localhost:8888
+@userId = 1
+###
+
+### ==================================================
+### USERS: LIST (INITIAL STATE)
+### ==================================================
+GET {{baseUrl}}/api/v1/users
+Accept: application/json
+
+###
+
+### ==================================================
+### USERS: CREATE
+### ==================================================
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "first_name": "Emily",
+  "last_name": "Johnson",
+  "email": "emily.johnson@example.com"
+}
+
+###
+
+### ==================================================
+### USERS: SHOW
+### ==================================================
+GET {{baseUrl}}/api/v1/users/{{userId}}
+Accept: application/json
+
+###
+
+### ==================================================
+### USERS: UPDATE
+### ==================================================
+PUT {{baseUrl}}/api/v1/users/{{userId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "first_name": "Michael",
+  "last_name": "Brown",
+  "email": "michael.brown@example.com"
+}
+
+###
+
+### ==================================================
+### USERS: LIST (AFTER UPDATE)
+### ==================================================
+GET {{baseUrl}}/api/v1/users
+Accept: application/json
+
+###
+
+### ==================================================
+### USERS: DELETE
+### ==================================================
+DELETE {{baseUrl}}/api/v1/users/{{userId}}
+Accept: application/json
+
+###
+
+### ==================================================
+### USERS: LIST (FINAL STATE)
+### ==================================================
+GET {{baseUrl}}/api/v1/users
+Accept: application/json
