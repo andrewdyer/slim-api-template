@@ -18,9 +18,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "first_name": "Emily",
-    "last_name": "Johnson",
-    "email": "emily.johnson@example.com"
+  "first_name": "Emily",
+  "last_name": "Johnson",
+  "email": "emily.johnson@example.com"
 }
 
 ###
