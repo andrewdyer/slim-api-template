@@ -3,13 +3,12 @@
 declare(strict_types=1);
 
 use AndrewDyer\CorsResponseEmitter\CorsResponseEmitter;
+use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;
 use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;
 use AndrewDyer\ShutdownHandler\ShutdownHandler;
-use App\Application\Handlers\HttpErrorHandler;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Log\LoggerInterface;
 use Slim\App;
 
 /*
@@ -30,15 +29,7 @@ return function(App $app, ServerRequestInterface $request): void {
     $logError = $settings->get('logError');
     $logErrorDetails = $settings->get('logErrorDetails');
 
-    $callableResolver = $app->getCallableResolver();
-
-    $responseFactory = $app->getResponseFactory();
-
-    $logger = $container->has(LoggerInterface::class)
-        ? $container->get(LoggerInterface::class)
-        : null;
-
-    $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory, $logger);
+    $errorHandler = $container->get(JsonErrorHandler::class);
 
     $corsResponseEmitter = $container->get(CorsResponseEmitter::class);
 

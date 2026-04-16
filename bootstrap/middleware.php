@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
+use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
-use App\Application\Handlers\HttpErrorHandler;
-use Psr\Log\LoggerInterface;
 use Slim\App;
 
 /*
@@ -30,15 +29,5 @@ return function(App $app): void {
         $settings->get('logErrorDetails')
     );
 
-    $logger = $container->has(LoggerInterface::class)
-        ? $container->get(LoggerInterface::class)
-        : null;
-
-    $errorHandler = new HttpErrorHandler(
-        $app->getCallableResolver(),
-        $app->getResponseFactory(),
-        $logger
-    );
-
-    $errorMiddleware->setDefaultErrorHandler($errorHandler);
+    $errorMiddleware->setDefaultErrorHandler($container->get(JsonErrorHandler::class));
 };
