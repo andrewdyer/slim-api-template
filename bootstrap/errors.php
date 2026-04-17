@@ -16,6 +16,7 @@ use Slim\Interfaces\ErrorHandlerInterface;
  *
  * @param App $app Indicates the Slim application instance.
  * @param ServerRequestInterface $request Indicates the server request instance.
+ * @param ErrorHandlerInterface $errorHandler The error handler used to generate responses for shutdown errors.
  * @return void Returns after error handling configuration is complete.
  * @throws ContainerExceptionInterface When the container cannot resolve required entries.
  * @internal
