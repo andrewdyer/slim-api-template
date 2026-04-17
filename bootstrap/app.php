@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
+use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use DI\ContainerBuilder;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 
-return function(): App {
+return function(ServerRequestInterface $request): App {
     // Load environment
     require_from_root('bootstrap/environment.php')('.env');
 
@@ -22,8 +25,19 @@ return function(): App {
     AppFactory::setContainer($container);
     $app = AppFactory::create();
 
+    // Register app-dependent services
+    $logger = $container->has(LoggerInterface::class)
+        ? $container->get(LoggerInterface::class)
+        : null;
+
+    $errorHandler = new JsonErrorHandler($app->getCallableResolver(), $app->getResponseFactory(), $logger);
+    $container->set(JsonErrorHandler::class, $errorHandler);
+
     // Middleware
-    require_from_root('bootstrap/middleware.php')($app);
+    require_from_root('bootstrap/middleware.php')($app, $errorHandler);
+
+    // Errors
+    require_from_root('bootstrap/errors.php')($app, $request, $errorHandler);
 
     // Routes
     require_from_root('bootstrap/routes.php')($app);

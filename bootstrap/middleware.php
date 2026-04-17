@@ -3,19 +3,19 @@
 declare(strict_types=1);
 
 use AndrewDyer\Settings\Contracts\SettingsInterface;
-use App\Application\Handlers\HttpErrorHandler;
-use Psr\Log\LoggerInterface;
 use Slim\App;
+use Slim\Interfaces\ErrorHandlerInterface;
 
 /*
  * Builds application middleware and default error handling configuration.
  *
  * @param App $app Indicates the Slim application instance to configure.
+ * @param ErrorHandlerInterface $errorHandler The error handler to register as the default handler for the error middleware.
  * @return void Returns after middleware configuration is complete.
  * @throws \Psr\Container\ContainerExceptionInterface When the container cannot resolve required entries.
  * @internal
  */
-return function(App $app): void {
+return function(App $app, ErrorHandlerInterface $errorHandler): void {
     $app->addBodyParsingMiddleware();
 
     $app->addRoutingMiddleware();
@@ -28,16 +28,6 @@ return function(App $app): void {
         $settings->get('displayErrorDetails'),
         $settings->get('logError'),
         $settings->get('logErrorDetails')
-    );
-
-    $logger = $container->has(LoggerInterface::class)
-        ? $container->get(LoggerInterface::class)
-        : null;
-
-    $errorHandler = new HttpErrorHandler(
-        $app->getCallableResolver(),
-        $app->getResponseFactory(),
-        $logger
     );
 
     $errorMiddleware->setDefaultErrorHandler($errorHandler);

@@ -94,6 +94,7 @@ Key runtime packages are managed via Composer, including:
 - **[PHP-DI](https://php-di.org/)** for dependency injection and service container management.
 - **[Monolog](https://seldaek.github.io/monolog/)** for structured application logging.
 - **[CORS Response Emitter](https://github.com/andrewdyer/cors-response-emitter)** for CORS-aware response emission.
+- **[JSON Error Handler](https://github.com/andrewdyer/json-error-handler)** for consistent JSON-formatted error responses.
 - **[Shutdown Handler](https://github.com/andrewdyer/shutdown-handler)** for consistent shutdown and fatal error handling.
 - **[phpdotenv](https://github.com/vlucas/phpdotenv)** for loading environment-based configuration.
 
