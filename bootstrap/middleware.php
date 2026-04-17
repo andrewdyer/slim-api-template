@@ -10,6 +10,7 @@ use Slim\Interfaces\ErrorHandlerInterface;
  * Builds application middleware and default error handling configuration.
  *
  * @param App $app Indicates the Slim application instance to configure.
+ * @param ErrorHandlerInterface $errorHandler The error handler to register as the default handler for the error middleware.
  * @return void Returns after middleware configuration is complete.
  * @throws \Psr\Container\ContainerExceptionInterface When the container cannot resolve required entries.
  * @internal
