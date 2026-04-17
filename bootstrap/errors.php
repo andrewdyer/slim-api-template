@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 use AndrewDyer\CorsResponseEmitter\CorsResponseEmitter;
-use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;
 use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;
 use AndrewDyer\ShutdownHandler\ShutdownHandler;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
+use Slim\Interfaces\ErrorHandlerInterface;
 
 /*
  * Builds application error handling, including shutdown error handling.
@@ -20,7 +20,7 @@ use Slim\App;
  * @throws ContainerExceptionInterface When the container cannot resolve required entries.
  * @internal
  */
-return function(App $app, ServerRequestInterface $request): void {
+return function(App $app, ServerRequestInterface $request, ErrorHandlerInterface $errorHandler): void {
     $container = $app->getContainer();
 
     $settings = $container->get(SettingsInterface::class);
@@ -28,8 +28,6 @@ return function(App $app, ServerRequestInterface $request): void {
     $displayErrorDetails = $settings->get('displayErrorDetails');
     $logError = $settings->get('logError');
     $logErrorDetails = $settings->get('logErrorDetails');
-
-    $errorHandler = $container->get(JsonErrorHandler::class);
 
     $corsResponseEmitter = $container->get(CorsResponseEmitter::class);
 

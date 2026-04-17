@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use Slim\App;
+use Slim\Interfaces\ErrorHandlerInterface;
 
 /*
  * Builds application middleware and default error handling configuration.
@@ -14,7 +14,7 @@ use Slim\App;
  * @throws \Psr\Container\ContainerExceptionInterface When the container cannot resolve required entries.
  * @internal
  */
-return function(App $app): void {
+return function(App $app, ErrorHandlerInterface $errorHandler): void {
     $app->addBodyParsingMiddleware();
 
     $app->addRoutingMiddleware();
@@ -29,5 +29,5 @@ return function(App $app): void {
         $settings->get('logErrorDetails')
     );
 
-    $errorMiddleware->setDefaultErrorHandler($container->get(JsonErrorHandler::class));
+    $errorMiddleware->setDefaultErrorHandler($errorHandler);
 };

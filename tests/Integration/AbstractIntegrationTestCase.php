@@ -27,7 +27,9 @@ abstract class AbstractIntegrationTestCase extends TestCase
     {
         $factory = require root_path('bootstrap/app.php');
 
-        return $factory();
+        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
+
+        return $factory($request);
     }
 
     /**
