@@ -19,9 +19,9 @@
     },
     "require": {
         "php": "^8.3",
-        "andrewdyer/actions": "^0.1",
+        "andrewdyer/actions": "^0.2",
         "andrewdyer/cors-response-emitter": "^0.1",
-        "andrewdyer/json-error-handler": "^0.1",
+        "andrewdyer/json-error-handler": "^0.2",
         "andrewdyer/settings": "^0.1",
         "andrewdyer/shutdown-handler": "^0.1",
         "monolog/monolog": "^3.10",
