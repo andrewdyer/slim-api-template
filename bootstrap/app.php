@@ -9,14 +9,22 @@ use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;
 use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;
 use AndrewDyer\ShutdownHandler\ShutdownHandler;
 use DI\ContainerBuilder;
+use Dotenv\Dotenv;
+use Dotenv\Exception\InvalidPathException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 
 return function(ServerRequestInterface $request): App {
-    // Load environment
-    require_from_root('bootstrap/environment.php')('.env');
+    // Load environment variables from .env unless already set (e.g. in production)
+    if (!get_env('APP_ENV')) {
+        try {
+            Dotenv::createImmutable(root_path('/'))->load();
+        } catch (InvalidPathException $ex) {
+            exit($ex->getMessage());
+        }
+    }
 
     // Build container
     $containerBuilder = new ContainerBuilder();
