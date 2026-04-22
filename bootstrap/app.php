@@ -10,6 +10,7 @@ use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;
 use AndrewDyer\ShutdownHandler\ShutdownHandler;
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
+use Dotenv\Exception\InvalidPathException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Slim\App;
@@ -17,7 +18,11 @@ use Slim\Factory\AppFactory;
 
 return function(ServerRequestInterface $request): App {
     if (!get_env('APP_ENV')) {
-        Dotenv::createImmutable(root_path('/'))->load();
+        try {
+            Dotenv::createImmutable(root_path('/'))->load();
+        } catch (InvalidPathException $ex) {
+            exit($ex->getMessage());
+        }
     }
 
     $containerBuilder = new ContainerBuilder();
