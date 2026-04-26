@@ -7,6 +7,7 @@ Thank you for your interest in contributing! We welcome improvements and suggest
 - [Code of Conduct](#code-of-conduct)
 - [Development Setup](#development-setup)
 - [Environment](#environment)
+- [Configuration](#configuration)
 - [Upgrading Dependencies](#upgrading-dependencies)
 - [Testing](#testing)
 - [Docker](#docker)
@@ -35,6 +36,48 @@ Environment configuration is managed via a `.env` file loaded at runtime using [
 The `.env` file should **never** be committed to version control. In production, set environment variables directly in the hosting environment; when `APP_ENV` is already set, the application skips loading the `.env` file automatically.
 
 > ⚠️ **Important:** When adding a new environment variable, always add a corresponding entry to `.env.example` with a sensible placeholder or default value.
+
+## Configuration
+
+Application configuration is organised inside the `bootstrap/` directory and is loaded during application creation. Each file contributes a specific part of the application wiring without containing runtime or domain logic.
+
+### Settings
+
+Application configuration values and environment mappings are defined in `settings.php`, which provides the base configuration used throughout the application.
+
+This file is typically used for environment-specific configuration values, feature toggles, and structured configuration arrays consumed across the system.
+
+### Dependencies
+
+Service registrations for the dependency injection container are defined in `dependencies.php`, which controls how infrastructure services are constructed and resolved at runtime.
+
+This includes factory closures, external library wiring, and shared service definitions.
+
+### Repositories
+
+Interface to implementation bindings are defined in `repositories.php`, which maps domain contracts to infrastructure implementations.
+
+This ensures the Domain layer remains independent of persistence or external systems.
+
+### Middleware
+
+Custom middleware is registered in `middleware.php`, which applies global and feature-level middleware to the Slim application instance.
+
+Middleware is executed in LIFO order and is responsible for cross-cutting concerns such as authentication and request transformation. Note that error handling middleware is added automatically by the application factory and does not need to be registered here.
+
+### Routes
+
+Slim route definitions are registered in `routes.php`, which attaches HTTP endpoints to their corresponding application actions.
+
+Routes follow RESTful conventions and are typically grouped by feature or domain area. The standard set of routes for a resource is:
+
+| Method   | Path             | Description         |
+| -------- | ---------------- | ------------------- |
+| `GET`    | `/resource`      | List all records    |
+| `POST`   | `/resource`      | Create a new record |
+| `GET`    | `/resource/{id}` | Retrieve a record   |
+| `PUT`    | `/resource/{id}` | Update a record     |
+| `DELETE` | `/resource/{id}` | Delete a record     |
 
 ## Upgrading Dependencies
 
