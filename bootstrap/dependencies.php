@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use AndrewDyer\CorsResponseEmitter\CorsResponseEmitter;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
 use Monolog\Formatter\LineFormatter;
@@ -13,11 +12,6 @@ use Psr\Log\LoggerInterface;
 
 return function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
-        CorsResponseEmitter::class => function(ContainerInterface $container) {
-            $settings = $container->get(SettingsInterface::class);
-
-            return new CorsResponseEmitter($settings->get('cors.allowedOrigins'));
-        },
         LoggerInterface::class => function(ContainerInterface $container) {
             $settings = $container->get(SettingsInterface::class);
 
