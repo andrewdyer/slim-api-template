@@ -221,6 +221,8 @@ final class ApplicationFactory
         $app->addBodyParsingMiddleware();
         $app->addRoutingMiddleware();
 
+        require_from_root('bootstrap/middleware.php')($app);
+
         $errorMiddleware = $app->addErrorMiddleware(
             $displayErrorDetails,
             $logError,
@@ -228,8 +230,6 @@ final class ApplicationFactory
         );
 
         $errorMiddleware->setDefaultErrorHandler($errorHandler);
-
-        require_from_root('bootstrap/middleware.php')($app);
     }
 
     /**
