@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Application\Users\DTOs;
 
 use App\Application\Users\DTOs\UpdateUserDTO;
