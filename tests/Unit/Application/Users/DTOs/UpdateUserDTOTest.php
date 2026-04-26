@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Unit tests for UpdateUserDTO.
  */
-class UpdateUserDTOTest extends TestCase
+final class UpdateUserDTOTest extends TestCase
 {
     /**
      * Asserts that all fields are correctly mapped when a complete input array is provided.

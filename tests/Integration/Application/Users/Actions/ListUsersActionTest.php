@@ -9,7 +9,7 @@ use Tests\Integration\AbstractIntegrationTestCase;
 /**
  * Integration tests for ListUsersAction.
  */
-class ListUsersActionTest extends AbstractIntegrationTestCase
+final class ListUsersActionTest extends AbstractIntegrationTestCase
 {
     /**
      * Asserts that a 200 response containing all seeded users is returned.

@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Unit tests for CreateUserDTO.
  */
-class CreateUserDTOTest extends TestCase
+final class CreateUserDTOTest extends TestCase
 {
     /**
      * Asserts that a DTO is successfully created when all required fields are present in the input array.

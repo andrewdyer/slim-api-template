@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Unit tests for UserResponseDTO.
  */
-class UserResponseDTOTest extends TestCase
+final class UserResponseDTOTest extends TestCase
 {
     /**
      * Asserts that the DTO is correctly populated from a domain User entity.

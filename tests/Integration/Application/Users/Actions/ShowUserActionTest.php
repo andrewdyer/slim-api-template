@@ -9,7 +9,7 @@ use Tests\Integration\AbstractIntegrationTestCase;
 /**
  * Integration tests for ShowUserAction.
  */
-class ShowUserActionTest extends AbstractIntegrationTestCase
+final class ShowUserActionTest extends AbstractIntegrationTestCase
 {
     /**
      * Asserts that a 200 response containing the requested user is returned when the user exists.

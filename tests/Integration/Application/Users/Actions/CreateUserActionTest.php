@@ -9,7 +9,7 @@ use Tests\Integration\AbstractIntegrationTestCase;
 /**
  * Integration tests for CreateUserAction.
  */
-class CreateUserActionTest extends AbstractIntegrationTestCase
+final class CreateUserActionTest extends AbstractIntegrationTestCase
 {
     /**
      * Asserts that a 201 response with the created user data is returned when valid input is provided.

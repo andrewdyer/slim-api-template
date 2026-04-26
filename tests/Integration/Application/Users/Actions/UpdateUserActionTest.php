@@ -9,7 +9,7 @@ use Tests\Integration\AbstractIntegrationTestCase;
 /**
  * Integration tests for UpdateUserAction.
  */
-class UpdateUserActionTest extends AbstractIntegrationTestCase
+final class UpdateUserActionTest extends AbstractIntegrationTestCase
 {
     /**
      * Asserts that a 200 response containing the updated user data is returned when the user exists.
