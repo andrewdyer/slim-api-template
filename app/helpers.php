@@ -33,10 +33,10 @@ if (!function_exists('get_env')) {
             $value = $_ENV[$key];
 
             switch (strtolower($value)) {
-                case 'true' === $value:
+                case 'true':
                     return true;
 
-                case 'false' === $value:
+                case 'false':
                     return false;
 
                 default:
