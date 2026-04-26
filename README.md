@@ -31,14 +31,14 @@ repo/
 ├── app/                         # PSR-4 Autoloaded logic
 │   ├── Application/             # Request handling & orchestration
 │   ├── Domain/                  # Business logic & interface contracts
-│   ├── Infrastructure/          # Database & third-party implementations
+│   ├── Infrastructure/          # External integrations & implementations
+│   │   └── Factory/             # Application bootstrapping factories
 │   └── helpers.php              # Global utility functions
 │
-├── bootstrap/                   # Dependency Injection & Wiring
-│   ├── app.php                  # App factory and application bootstrap
+├── bootstrap/                   # Application configuration layer
 │   ├── dependencies.php         # Container service registrations
 │   ├── middleware.php           # HTTP middleware pipeline configuration
-│   ├── repositories.php         # Interface → Implementation bindings
+│   ├── repositories.php         # Interface → implementation bindings
 │   ├── routes.php               # Slim route definitions
 │   └── settings.php             # Configuration arrays
 │
@@ -52,7 +52,7 @@ repo/
 │   └── logs/                    # Monolog output
 │
 ├── tests/                       # PHPUnit Test Suite
-│   ├── Integration/             # Tests covering the full HTTP stack
+│   ├── Integration/             # Full HTTP stack tests
 │   └── Unit/                    # Isolated logic tests
 │
 ├── workbench/                   # Scratchpad for local experimentation
@@ -82,6 +82,16 @@ Routes are versioned under `/api/v1` and follow RESTful conventions:
 | `DELETE` | `/api/v1/users/{id}` | Delete a user   |
 
 This feature is provided as a reference and starting point. It may be used as a template for additional features, or removed entirely when initialising a new project.
+
+## Bootstrapping
+
+A dedicated factory class is responsible for assembling and configuring a runnable application instance.
+
+Serving as the composition root, it wires together configuration, dependencies, middleware, and runtime behaviour.
+
+In HTTP requests, `public/index.php` delegates to the `ApplicationFactory`. From there, the factory builds and configures the Slim application and returns a runtime-ready application wrapper.
+
+This approach keeps bootstrapping explicit, testable, and separated from both framework entry points and domain code.
 
 ## Dependencies
 
