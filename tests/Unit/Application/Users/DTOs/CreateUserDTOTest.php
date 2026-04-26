@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Users\DTOs;
 
 use App\Application\Users\DTOs\CreateUserDTO;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,6 +36,7 @@ final class CreateUserDTOTest extends TestCase
      *
      * @dataProvider invalidPayloadProvider
      */
+    #[DataProvider('invalidPayloadProvider')]
     public function testThrowsInvalidArgumentExceptionWhenRequiredFieldsAreMissing(array $payload): void
     {
         $this->expectException(\InvalidArgumentException::class);
