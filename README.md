@@ -31,16 +31,14 @@ repo/
 ├── app/                         # PSR-4 Autoloaded logic
 │   ├── Application/             # Request handling & orchestration
 │   ├── Domain/                  # Business logic & interface contracts
-│   ├── Infrastructure/          # Database & third-party implementations
+│   ├── Infrastructure/          # External integrations & implementations
+│   │   └── Factory/             # Application bootstrapping factories
 │   └── helpers.php              # Global utility functions
 │
-├── bootstrap/                   # Dependency Injection & Wiring
-│   ├── app.php                  # App factory and application bootstrap
+├── bootstrap/                   # Application configuration layer
 │   ├── dependencies.php         # Container service registrations
-│   ├── environment.php          # ENV loading logic
-│   ├── errors.php               # Shutdown and fatal error handling setup
 │   ├── middleware.php           # HTTP middleware pipeline configuration
-│   ├── repositories.php         # Interface → Implementation bindings
+│   ├── repositories.php         # Interface → implementation bindings
 │   ├── routes.php               # Slim route definitions
 │   └── settings.php             # Configuration arrays
 │
@@ -54,7 +52,7 @@ repo/
 │   └── logs/                    # Monolog output
 │
 ├── tests/                       # PHPUnit Test Suite
-│   ├── Integration/             # Tests covering the full HTTP stack
+│   ├── Integration/             # Full HTTP stack tests
 │   └── Unit/                    # Isolated logic tests
 │
 ├── workbench/                   # Scratchpad for local experimentation
@@ -84,6 +82,34 @@ Routes are versioned under `/api/v1` and follow RESTful conventions:
 | `DELETE` | `/api/v1/users/{id}` | Delete a user   |
 
 This feature is provided as a reference and starting point. It may be used as a template for additional features, or removed entirely when initialising a new project.
+
+## Bootstrapping
+
+Bootstrapping is split across two distinct areas: a factory class that assembles the application, and a set of configuration files used to customise behaviour.
+
+### Application Factory
+
+The `ApplicationFactory` class acts as the composition root of the system, responsible for assembling and configuring a runnable application instance.
+
+It wires together configuration, dependencies, middleware, and runtime behaviour into a single bootstrapped application.
+
+For HTTP requests, `public/index.php` delegates to the factory. The factory then builds the Slim application and returns a runtime-ready application wrapper.
+
+This design keeps bootstrapping explicit, testable, and separate from both framework entry points and domain logic.
+
+### Configuration Files
+
+Application configuration is organised inside the `bootstrap/` directory and is loaded during application creation. Each file defines a specific part of the application wiring without containing runtime or domain logic.
+
+Configuration values and environment mappings are defined in `settings.php`, which provides the base configuration used throughout the application.
+
+Service registrations for the dependency injection container are defined in `dependencies.php`, which controls how infrastructure services are constructed.
+
+Interface to implementation bindings are defined in `repositories.php`, which maps domain contracts to concrete implementations.
+
+The HTTP middleware pipeline is configured in `middleware.php`, which defines how incoming requests are processed.
+
+Slim route definitions are defined in `routes.php`, which maps HTTP endpoints to application actions.
 
 ## Dependencies
 

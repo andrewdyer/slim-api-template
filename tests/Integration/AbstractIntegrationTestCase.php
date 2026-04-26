@@ -2,53 +2,54 @@
 
 namespace Tests\Integration;
 
+use App\Infrastructure\Application;
+use App\Infrastructure\Factory\ApplicationFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Slim\App;
 use Slim\Psr7\Factory\ServerRequestFactory;
-use Slim\Psr7\Headers;
 use Slim\Psr7\Stream;
 use Slim\Psr7\Uri;
 
 /**
- * Base class providing HTTP request helpers for integration tests.
- *
- * Bootstraps a real application instance and exposes convenience methods for
- * dispatching requests and decoding JSON responses.
+ * Base class for integration tests using the full application stack.
  */
 abstract class AbstractIntegrationTestCase extends TestCase
 {
     /**
-     * Bootstraps and returns a new Slim application instance.
-     *
-     * @return App A fully configured Slim application.
+     * The application instance under test.
      */
-    protected function createApp(): App
+    protected Application $application;
+
+    /**
+     * Sets up the application before each test.
+     *
+     * @return void
+     */
+    protected function setUp(): void
     {
-        $factory = require root_path('bootstrap/app.php');
+        $request = (new ServerRequestFactory())
+            ->createServerRequest('GET', '/');
 
-        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
-
-        return $factory($request);
+        $this->application = ApplicationFactory::create($request);
     }
 
     /**
-     * Dispatches an HTTP request through the application and returns the response.
+     * Processes an HTTP request through the application.
      *
-     * @param  string                    $method The HTTP method (e.g. GET, POST, PUT, DELETE).
+     * @param  string                    $method The HTTP method.
      * @param  string                    $path   The request URI path.
-     * @param  array<string, mixed>|null $data   Optional request body data, encoded as JSON.
-     * @return ResponseInterface         The HTTP response returned by the application.
+     * @param  array<string, mixed>|null $data   Optional JSON request body.
+     * @return ResponseInterface         Returns the application response.
      */
     protected function request(string $method, string $path, ?array $data = null): ResponseInterface
     {
         $uri = new Uri('', '', 80, $path);
-        $headers = new Headers();
+
         $serverRequest = (new ServerRequestFactory())
             ->createServerRequest($method, $uri)
             ->withHeader('Accept', 'application/json');
 
-        if (null !== $data) {
+        if ($data !== null) {
             $stream = fopen('php://temp', 'wb+');
             fwrite($stream, json_encode($data, JSON_THROW_ON_ERROR));
             rewind($stream);
@@ -59,14 +60,14 @@ abstract class AbstractIntegrationTestCase extends TestCase
                 ->withParsedBody($data);
         }
 
-        return $this->createApp()->handle($serverRequest);
+        return $this->application->handle($serverRequest);
     }
 
     /**
-     * Decodes the JSON body of an HTTP response into an associative array.
+     * Returns the decoded JSON response body.
      *
-     * @param  ResponseInterface    $response The HTTP response to decode.
-     * @return array<string, mixed> The decoded response body, or an empty array if the body is empty.
+     * @param  ResponseInterface    $response The HTTP response.
+     * @return array<string, mixed> Returns the decoded response data.
      */
     protected function decodeJson(ResponseInterface $response): array
     {
