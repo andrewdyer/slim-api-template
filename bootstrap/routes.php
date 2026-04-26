@@ -16,9 +16,9 @@ return function(App $app): void {
             $v1->group('/users', function(Group $users) {
                 $users->get('', ListUsersAction::class);
                 $users->post('', CreateUserAction::class);
-                $users->delete('/{id}', DeleteUserAction::class);
                 $users->get('/{id}', ShowUserAction::class);
                 $users->put('/{id}', UpdateUserAction::class);
+                $users->delete('/{id}', DeleteUserAction::class);
             });
         });
     });

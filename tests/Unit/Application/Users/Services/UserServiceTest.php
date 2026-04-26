@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Application\Users\Services;
 
 use App\Application\Users\DTOs\CreateUserDTO;
@@ -12,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Unit tests for UserService.
  */
-class UserServiceTest extends TestCase
+final class UserServiceTest extends TestCase
 {
     /**
      * @var UserService The service under test, backed by an in-memory repository.

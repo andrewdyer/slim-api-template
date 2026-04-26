@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Application\Users\DTOs;
 
 use App\Application\Users\DTOs\CreateUserDTO;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Unit tests for CreateUserDTO.
  */
-class CreateUserDTOTest extends TestCase
+final class CreateUserDTOTest extends TestCase
 {
     /**
      * Asserts that a DTO is successfully created when all required fields are present in the input array.
@@ -30,9 +33,8 @@ class CreateUserDTOTest extends TestCase
 
     /**
      * Asserts that an InvalidArgumentException is thrown when one or more required fields are absent.
-     *
-     * @dataProvider invalidPayloadProvider
      */
+    #[DataProvider('invalidPayloadProvider')]
     public function testThrowsInvalidArgumentExceptionWhenRequiredFieldsAreMissing(array $payload): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -44,7 +46,7 @@ class CreateUserDTOTest extends TestCase
     /**
      * Provides input arrays with one or more missing required fields.
      *
-     * @return array<string, array<mixed>> Named sets of invalid payloads.
+     * @return array<string, array> Named sets of invalid payloads.
      */
     public static function invalidPayloadProvider(): array
     {

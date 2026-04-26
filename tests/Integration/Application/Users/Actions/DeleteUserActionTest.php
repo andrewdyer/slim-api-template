@@ -9,7 +9,7 @@ use Tests\Integration\AbstractIntegrationTestCase;
 /**
  * Integration tests for DeleteUserAction.
  */
-class DeleteUserActionTest extends AbstractIntegrationTestCase
+final class DeleteUserActionTest extends AbstractIntegrationTestCase
 {
     /**
      * Asserts that a 204 response with an empty body is returned when the user exists.

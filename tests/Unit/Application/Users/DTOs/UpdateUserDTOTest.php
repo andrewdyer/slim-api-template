@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Application\Users\DTOs;
 
 use App\Application\Users\DTOs\UpdateUserDTO;
@@ -8,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Unit tests for UpdateUserDTO.
  */
-class UpdateUserDTOTest extends TestCase
+final class UpdateUserDTOTest extends TestCase
 {
     /**
      * Asserts that all fields are correctly mapped when a complete input array is provided.
