@@ -78,6 +78,46 @@ final class HelpersTest extends TestCase
     }
 
     /**
+     * Asserts that "TRUE" (uppercase) is cast to a boolean true.
+     */
+    public function testGetEnvCastsTrueUppercase(): void
+    {
+        $_ENV['FLAG_KEY'] = 'TRUE';
+
+        $this->assertTrue(get_env('FLAG_KEY'));
+    }
+
+    /**
+     * Asserts that "FALSE" (uppercase) is cast to a boolean false.
+     */
+    public function testGetEnvCastsFalseUppercase(): void
+    {
+        $_ENV['FLAG_KEY'] = 'FALSE';
+
+        $this->assertFalse(get_env('FLAG_KEY'));
+    }
+
+    /**
+     * Asserts that "True" (mixed-case) is cast to a boolean true.
+     */
+    public function testGetEnvCastsTrueMixedCase(): void
+    {
+        $_ENV['FLAG_KEY'] = 'True';
+
+        $this->assertTrue(get_env('FLAG_KEY'));
+    }
+
+    /**
+     * Asserts that "False" (mixed-case) is cast to a boolean false.
+     */
+    public function testGetEnvCastsFalseMixedCase(): void
+    {
+        $_ENV['FLAG_KEY'] = 'False';
+
+        $this->assertFalse(get_env('FLAG_KEY'));
+    }
+
+    /**
      * Asserts that an empty array is returned when the key is missing.
      */
     public function testGetEnvArrayReturnsEmptyWhenMissing(): void
