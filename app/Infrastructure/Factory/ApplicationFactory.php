@@ -73,6 +73,8 @@ final class ApplicationFactory
 
         $this->registerMiddleware($app, $settings, $errorHandler);
 
+        $this->registerDatabase($app);
+
         $this->registerRoutes($app);
 
         return new Application($app, $emitter);
@@ -230,6 +232,17 @@ final class ApplicationFactory
         );
 
         $errorMiddleware->setDefaultErrorHandler($errorHandler);
+    }
+
+    /**
+     * Registers database configuration on the Slim application.
+     *
+     * @param  App  $app The Slim application.
+     * @return void Returns after database is configured.
+     */
+    private function registerDatabase(App $app): void
+    {
+        require_from_root('bootstrap/database.php')($app);
     }
 
     /**
