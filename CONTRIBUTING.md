@@ -59,6 +59,12 @@ Interface to implementation bindings are defined in `repositories.php`, which ma
 
 This ensures the Domain layer remains independent of persistence or external systems.
 
+### Database
+
+Database initialisation is configured in `database.php`, which provides a hook for setting up database-related concerns at the appropriate point in the application lifecycle.
+
+This file is intentionally flexible and can be used for establishing connections (PDO, MySQLi), booting ORMs (Eloquent, Doctrine), initialising query builders, running migrations, or any other database setup. The application factory calls this file after the container is built and before routes are registered, giving you access to resolved dependencies while keeping the factory decoupled from specific implementations.
+
 ### Middleware
 
 Custom middleware is registered in `middleware.php`, which applies global and feature-level middleware to the Slim application instance.

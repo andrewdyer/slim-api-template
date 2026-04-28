@@ -36,6 +36,7 @@ repo/
 │   └── helpers.php              # Global utility functions
 │
 ├── bootstrap/                   # Application configuration layer
+│   ├── database.php             # Database initialisation
 │   ├── dependencies.php         # Container service registrations
 │   ├── middleware.php           # HTTP middleware pipeline configuration
 │   ├── repositories.php         # Interface → implementation bindings
@@ -106,6 +107,8 @@ Configuration values and environment mappings are defined in `settings.php`, whi
 Service registrations for the dependency injection container are defined in `dependencies.php`, which controls how infrastructure services are constructed.
 
 Interface to implementation bindings are defined in `repositories.php`, which maps domain contracts to concrete implementations.
+
+Database initialisation is configured in `database.php`, which provides a hook for setting up database connections, booting ORMs (Eloquent, Doctrine), configuring raw PDO connections, or running migrations.
 
 The HTTP middleware pipeline is configured in `middleware.php`, which defines how incoming requests are processed.
 
