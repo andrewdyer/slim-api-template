@@ -32,12 +32,12 @@ final class ShowUserActionTest extends AbstractIntegrationTestCase
     }
 
     /**
-     * Asserts that a 500 response is returned when no user exists with the given ID.
+     * Asserts that a 404 response is returned when no user exists with the given ID.
      */
-    public function testReturns500WhenUserNotFound(): void
+    public function testReturns404WhenUserNotFound(): void
     {
         $response = $this->request('GET', '/api/v1/users/999');
 
-        $this->assertSame(500, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
     }
 }
