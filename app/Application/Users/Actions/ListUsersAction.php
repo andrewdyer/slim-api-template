@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Application\Users\Actions;
 
-use AndrewDyer\Actions\Payloads\ActionPayload;
 use App\Application\Users\DTOs\UserResponseDTO;
 use App\Domain\User\User;
+use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -17,7 +17,8 @@ final class ListUsersAction extends AbstractUserAction
     /**
      * Retrieves all users from the service and returns them as a JSON collection.
      *
-     * @return Response A 200 JSON response containing an array of all users.
+     * @return Response      A 200 JSON response containing an array of all users.
+     * @throws JsonException If the request body contains invalid JSON.
      */
     protected function handle(): Response
     {
@@ -28,8 +29,6 @@ final class ListUsersAction extends AbstractUserAction
             $users
         );
 
-        $payload = ActionPayload::success($responseData);
-
-        return $this->respondWithJson($payload);
+        return $this->ok($responseData);
     }
 }

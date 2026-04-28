@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Application\Users\Actions;
 
-use AndrewDyer\Actions\Payloads\ActionPayload;
 use App\Application\Users\DTOs\UserResponseDTO;
 use App\Application\Users\Exceptions\UserNotFoundException;
+use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -19,6 +19,7 @@ final class ShowUserAction extends AbstractUserAction
      *
      * @return Response              A 200 JSON response containing the requested user.
      * @throws UserNotFoundException If no user exists with the given ID.
+     * @throws JsonException         If the request body contains invalid JSON.
      */
     protected function handle(): Response
     {
@@ -28,8 +29,6 @@ final class ShowUserAction extends AbstractUserAction
 
         $responseDto = UserResponseDTO::fromDomain($user);
 
-        $payload = ActionPayload::success($responseDto);
-
-        return $this->respondWithJson($payload);
+        return $this->ok($responseDto);
     }
 }
