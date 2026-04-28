@@ -85,6 +85,29 @@ Routes follow RESTful conventions and are typically grouped by feature or domain
 | `PUT`    | `/resource/{id}` | Update a record     |
 | `DELETE` | `/resource/{id}` | Delete a record     |
 
+### Adding Custom Bootstrap Files
+
+The bootstrap system is extensible — you can add additional files when your application requires setup for concerns not covered by the standard files.
+
+Consider adding a custom bootstrap file when you need to:
+
+- Register event listeners or subscribers
+- Configure command-line commands or scheduled tasks
+- Set up queue workers or job handlers
+- Initialize third-party services with complex setup
+- Configure observability tools (metrics, tracing)
+
+To add a custom bootstrap file:
+
+1. Create a new file in `bootstrap/` (e.g., `events.php`) that returns a closure accepting the `App` instance
+2. Add a corresponding method to `ApplicationFactory` (e.g., `registerEvents()`)
+3. Call the method at the appropriate point in the `build()` lifecycle
+4. Update documentation to reflect the new bootstrap file
+
+The closure should follow the same pattern as existing files — accepting `App $app` and having a `void` return type. Access the container via `$app->getContainer()` when needed.
+
+Avoid creating new bootstrap files for simple configuration — prefer using existing files when possible to maintain clarity and consistency.
+
 ## Upgrading Dependencies
 
 Keeping dependencies up-to-date is crucial for maintaining the security and performance of the project.
