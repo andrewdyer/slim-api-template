@@ -39,7 +39,7 @@ The `.env` file should **never** be committed to version control. In production,
 
 ## Configuration
 
-Application configuration is organised inside the `bootstrap/` directory and is loaded during application creation. Each file contributes a specific part of the application wiring without containing runtime or domain logic.
+Application configuration is organised inside the `bootstrap/` directory and is loaded during application bootstrapping. Each file contributes a specific part of the application setup and does not contain runtime or domain logic.
 
 ### Settings
 
@@ -55,7 +55,7 @@ This includes factory closures, external library wiring, and shared service defi
 
 ### Repositories
 
-Interface to implementation bindings are defined in `repositories.php`, which maps domain contracts to infrastructure implementations.
+Interface to implementation bindings are defined in `repositories.php`, which maps domain interfaces to infrastructure implementations.
 
 This ensures the Domain layer remains independent of persistence or external systems.
 
@@ -63,7 +63,9 @@ This ensures the Domain layer remains independent of persistence or external sys
 
 Custom middleware is registered in `middleware.php`, which applies global and feature-level middleware to the Slim application instance.
 
-Middleware is executed in LIFO order and is responsible for cross-cutting concerns such as authentication and request transformation. Note that error handling middleware is added automatically by the application factory and does not need to be registered here.
+Middleware is executed in LIFO order and is responsible for cross-cutting concerns such as authentication and request transformation.
+
+Error handling middleware is registered in `public/index.php` and does not need to be configured here.
 
 ### Routes
 

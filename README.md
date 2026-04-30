@@ -84,7 +84,7 @@ This feature is provided as a reference and starting point. It may be used as a 
 
 ## Configuration
 
-Application configuration is organised inside the `bootstrap/` directory. Each file is responsible for a specific part of the application setup.
+Application configuration is organised inside the `bootstrap/` directory. Each file is responsible for a specific part of the application setup and does not contain runtime or domain logic.
 
 - **settings.php**: Defines application configuration values such as environment mappings, error handling behaviour, logging settings, and CORS configuration.
 - **dependencies.php**: Registers services in the dependency injection container, including infrastructure services and shared application components.
