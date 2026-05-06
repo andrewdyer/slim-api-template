@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -26,11 +27,13 @@ return function (ContainerInterface $container): App {
         $settings->get('logErrorDetails')
     );
 
-    $logger = $container->has(LoggerInterface::class)
-        ? $container->get(LoggerInterface::class)
-        : null;
-
-    $errorHandler = require_from_root('runtime/error-handler.php')($app, $logger);
+    $errorHandler = new JsonErrorHandler(
+        callableResolver: $app->getCallableResolver(),
+        responseFactory: $app->getResponseFactory(),
+        logger: $container->has(LoggerInterface::class)
+            ? $container->get(LoggerInterface::class)
+            : null
+    );
 
     $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
