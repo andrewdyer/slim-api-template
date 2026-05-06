@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -13,16 +12,6 @@ return function (ContainerInterface $container): App {
     AppFactory::setContainer($container);
 
     $app = AppFactory::create();
-
-    $logger = $container->has(LoggerInterface::class)
-        ? $container->get(LoggerInterface::class)
-        : null;
-
-    $errorHandler = new JsonErrorHandler(
-        $app->getCallableResolver(),
-        $app->getResponseFactory(),
-        $logger
-    );
 
     $app->addBodyParsingMiddleware();
     $app->addRoutingMiddleware();
@@ -36,6 +25,12 @@ return function (ContainerInterface $container): App {
         $settings->get('logError'),
         $settings->get('logErrorDetails')
     );
+
+    $logger = $container->has(LoggerInterface::class)
+        ? $container->get(LoggerInterface::class)
+        : null;
+
+    $errorHandler = require_from_root('runtime/error-handler.php')($app, $logger);
 
     $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
