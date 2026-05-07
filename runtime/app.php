@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 
-return function (ContainerInterface $container): App {
+return function(ContainerInterface $container): App {
     AppFactory::setContainer($container);
 
     $app = AppFactory::create();
