@@ -13,9 +13,6 @@ use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// Load environment configuration
-require_from_root('runtime/environment.php')();
-
 // Create configured Slim application
 $app = require_from_root('bootstrap/app.php')();
 

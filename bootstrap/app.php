@@ -5,11 +5,16 @@ declare(strict_types=1);
 use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
+use Dotenv\Dotenv;
 use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 
 return function(): App {
+    if (!get_env('APP_ENV')) {
+        Dotenv::createImmutable(root_path('/'))->load();
+    }
+
     $containerBuilder = new ContainerBuilder();
 
     require_from_root('bootstrap/settings.php')($containerBuilder);

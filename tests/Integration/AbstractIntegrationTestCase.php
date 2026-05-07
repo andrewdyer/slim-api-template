@@ -29,8 +29,6 @@ abstract class AbstractIntegrationTestCase extends TestCase
      */
     protected function setUp(): void
     {
-        require_from_root('runtime/environment.php')();
-
         $this->app = require_from_root('bootstrap/app.php')();
     }
 
