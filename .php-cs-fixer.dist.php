@@ -4,6 +4,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/app')
     ->in(__DIR__ . '/bootstrap')
     ->in(__DIR__ . '/public')
+    ->in(__DIR__ . '/runtime')
     ->in(__DIR__ . '/tests')
     ->in(__DIR__ . '/workbench');
 
