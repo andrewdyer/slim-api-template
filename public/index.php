@@ -8,101 +8,79 @@ use AndrewDyer\Settings\Contracts\SettingsInterface;
 use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;
 use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;
 use AndrewDyer\ShutdownHandler\ShutdownHandler;
-use DI\ContainerBuilder;
-use Dotenv\Dotenv;
 use Psr\Log\LoggerInterface;
-use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// Load environment variables (if not already loaded)
-if (!get_env('APP_ENV')) {
-    Dotenv::createImmutable(root_path('/'))->load();
-}
+// Load environment configuration
+require_from_root('runtime/environment.php')();
 
 // Build dependency injection container
-$containerBuilder = new ContainerBuilder();
+$container = require_from_root('runtime/container.php')();
 
-require_from_root('bootstrap/settings.php')($containerBuilder);
-require_from_root('bootstrap/dependencies.php')($containerBuilder);
-require_from_root('bootstrap/repositories.php')($containerBuilder);
+// Create configured Slim application
+$app = require_from_root('runtime/app.php')($container);
 
-$container = $containerBuilder->build();
-
-// Create Slim application
-AppFactory::setContainer($container);
-$app = AppFactory::create();
-
-// Create server request (PSR-7 from globals)
+// Create PSR-7 request from PHP globals
 $request = ServerRequestCreatorFactory::create()
     ->createServerRequestFromGlobals();
 
-// Resolve application services and config
+// Resolve application settings
 $settings = $container->get(SettingsInterface::class);
-
-$logger = $container->has(LoggerInterface::class)
-    ? $container->get(LoggerInterface::class)
-    : null;
 
 $displayErrorDetails = $settings->get('displayErrorDetails');
 $logError = $settings->get('logError');
 $logErrorDetails = $settings->get('logErrorDetails');
 
-// Create error handler (JSON responses)
-$errorHandler = new JsonErrorHandler(
-    $app->getCallableResolver(),
-    $app->getResponseFactory(),
-    $logger
-);
-
 // Create response emitter (adds CORS headers)
 $responseEmitter = new CorsResponseEmitter(
-    $settings->get('cors.allowedOrigins')
+    allowedOrigins: $settings->get('cors.allowedOrigins')
+);
+
+// Create JSON error handler
+$errorHandler = new JsonErrorHandler(
+    callableResolver: $app->getCallableResolver(),
+    responseFactory: $app->getResponseFactory(),
+    logger: $container->has(LoggerInterface::class)
+        ? $container->get(LoggerInterface::class)
+        : null
 );
 
 // Register shutdown handler for fatal errors
 $shutdownHandler = new ShutdownHandler(
-    $request,
-    new CallableErrorResponder(
-        static function ($request, $exception, bool $display) use ($errorHandler, $logError, $logErrorDetails) {
+    request: $request,
+    errorResponder: new CallableErrorResponder(
+        static function(
+            $request,
+            $exception,
+            bool $displayErrorDetails
+        ) use (
+            $errorHandler,
+            $logError,
+            $logErrorDetails
+        ) {
             return $errorHandler(
-                $request,
-                $exception,
-                $display,
-                $logError,
-                $logErrorDetails
+                request: $request,
+                exception: $exception,
+                displayErrorDetails: $displayErrorDetails,
+                logErrors: $logError,
+                logErrorDetails: $logErrorDetails
             );
         }
     ),
-    new CallableResponseEmitter(
-        static function ($response) use ($responseEmitter): void {
+    responseEmitter: new CallableResponseEmitter(
+        static function($response) use ($responseEmitter): void {
             $responseEmitter->emit($response);
         }
     ),
-    $displayErrorDetails
+    displayErrorDetails: $displayErrorDetails
 );
 
 register_shutdown_function($shutdownHandler);
 
-// Register middleware
-$app->addBodyParsingMiddleware();
-$app->addRoutingMiddleware();
-
-require_from_root('bootstrap/middleware.php')($app);
-
-// Register error middleware
-$errorMiddleware = $app->addErrorMiddleware(
-    $displayErrorDetails,
-    $logError,
-    $logErrorDetails
-);
-
-$errorMiddleware->setDefaultErrorHandler($errorHandler);
-
-// Register routes
-require_from_root('bootstrap/routes.php')($app);
-
-// Handle request and emit response
+// Handle HTTP request
 $response = $app->handle($request);
+
+// Emit HTTP response
 $responseEmitter->emit($response);
