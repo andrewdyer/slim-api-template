@@ -16,11 +16,11 @@ require __DIR__ . '/../vendor/autoload.php';
 // Load environment configuration
 require_from_root('runtime/environment.php')();
 
-// Build dependency injection container
-$container = require_from_root('runtime/container.php')();
-
 // Create configured Slim application
-$app = require_from_root('bootstrap/app.php')($container);
+$app = require_from_root('bootstrap/app.php')();
+
+// Get dependency injection container
+$container = $app->getContainer();
 
 // Create PSR-7 request from PHP globals
 $request = ServerRequestCreatorFactory::create()

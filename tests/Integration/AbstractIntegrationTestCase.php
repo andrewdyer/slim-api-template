@@ -31,9 +31,7 @@ abstract class AbstractIntegrationTestCase extends TestCase
     {
         require_from_root('runtime/environment.php')();
 
-        $container = require_from_root('runtime/container.php')();
-
-        $this->app = require_from_root('runtime/app.php')($container);
+        $this->app = require_from_root('bootstrap/app.php')();
     }
 
     /**

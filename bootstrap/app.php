@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
-use Psr\Container\ContainerInterface;
+use DI\ContainerBuilder;
 use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 
-return function(ContainerInterface $container): App {
+return function(): App {
+    $containerBuilder = new ContainerBuilder();
+
+    require_from_root('bootstrap/settings.php')($containerBuilder);
+    require_from_root('bootstrap/dependencies.php')($containerBuilder);
+    require_from_root('bootstrap/repositories.php')($containerBuilder);
+
+    $container = $containerBuilder->build();
+
     AppFactory::setContainer($container);
 
     $app = AppFactory::create();
