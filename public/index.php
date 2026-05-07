@@ -20,7 +20,7 @@ require_from_root('runtime/environment.php')();
 $container = require_from_root('runtime/container.php')();
 
 // Create configured Slim application
-$app = require_from_root('runtime/app.php')($container);
+$app = require_from_root('bootstrap/app.php')($container);
 
 // Create PSR-7 request from PHP globals
 $request = ServerRequestCreatorFactory::create()
