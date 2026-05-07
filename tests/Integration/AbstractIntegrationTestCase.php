@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Infrastructure\Application;
-use App\Infrastructure\Factory\ApplicationFactory;
+use JsonException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Slim\App;
 use Slim\Psr7\Factory\ServerRequestFactory;
 use Slim\Psr7\Stream;
 use Slim\Psr7\Uri;
@@ -20,7 +20,7 @@ abstract class AbstractIntegrationTestCase extends TestCase
     /**
      * The application instance under test.
      */
-    protected Application $application;
+    protected App $app;
 
     /**
      * Sets up the application before each test.
@@ -29,10 +29,11 @@ abstract class AbstractIntegrationTestCase extends TestCase
      */
     protected function setUp(): void
     {
-        $request = (new ServerRequestFactory())
-            ->createServerRequest('GET', '/');
+        require_from_root('runtime/environment.php')();
 
-        $this->application = ApplicationFactory::create($request);
+        $container = require_from_root('runtime/container.php')();
+
+        $this->app = require_from_root('runtime/app.php')($container);
     }
 
     /**
@@ -42,10 +43,16 @@ abstract class AbstractIntegrationTestCase extends TestCase
      * @param  string                    $path   The request URI path.
      * @param  array<string, mixed>|null $data   Optional JSON request body.
      * @return ResponseInterface         Returns the application response.
+     * @throws JsonException
      */
     protected function request(string $method, string $path, ?array $data = null): ResponseInterface
     {
-        $uri = new Uri('', '', 80, $path);
+        $uri = new Uri(
+            scheme: '',
+            host: '',
+            port: 80,
+            path: $path
+        );
 
         $serverRequest = (new ServerRequestFactory())
             ->createServerRequest($method, $uri)
@@ -62,7 +69,7 @@ abstract class AbstractIntegrationTestCase extends TestCase
                 ->withParsedBody($data);
         }
 
-        return $this->application->handle($serverRequest);
+        return $this->app->handle($serverRequest);
     }
 
     /**
@@ -70,6 +77,7 @@ abstract class AbstractIntegrationTestCase extends TestCase
      *
      * @param  ResponseInterface    $response The HTTP response.
      * @return array<string, mixed> Returns the decoded response data.
+     * @throws JsonException
      */
     protected function decodeJson(ResponseInterface $response): array
     {
