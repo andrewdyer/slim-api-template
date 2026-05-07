@@ -22,9 +22,9 @@ return function (ContainerInterface $container): App {
     $settings = $container->get(SettingsInterface::class);
 
     $errorMiddleware = $app->addErrorMiddleware(
-        $settings->get('displayErrorDetails'),
-        $settings->get('logError'),
-        $settings->get('logErrorDetails')
+        displayErrorDetails: $settings->get('displayErrorDetails'),
+        logErrors: $settings->get('logError'),
+        logErrorDetails: $settings->get('logErrorDetails')
     );
 
     $errorHandler = new JsonErrorHandler(
