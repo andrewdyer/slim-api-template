@@ -67,8 +67,6 @@ Custom middleware is registered in `middleware.php`, which applies global and fe
 
 Middleware is executed in LIFO order and is responsible for cross-cutting concerns such as authentication and request transformation.
 
-Error handling middleware is registered in `public/index.php` and does not need to be configured here.
-
 ### Routes
 
 Slim route definitions are registered in `routes.php`, which attaches HTTP endpoints to their corresponding application actions.
