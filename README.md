@@ -32,10 +32,10 @@ repo/
 │   ├── Application/             # Request handling & orchestration
 │   ├── Domain/                  # Business logic & interface contracts
 │   ├── Infrastructure/          # External integrations & implementations
-│   │   └── Factory/             # Application bootstrapping factories
 │   └── helpers.php              # Global utility functions
 │
 ├── bootstrap/                   # Application configuration layer
+│   ├── app.php                  # Application bootstrap & initialization
 │   ├── dependencies.php         # Container service registrations
 │   ├── middleware.php           # HTTP middleware pipeline configuration
 │   ├── repositories.php         # Interface → implementation bindings
@@ -83,33 +83,16 @@ Routes are versioned under `/api/v1` and follow RESTful conventions:
 
 This feature is provided as a reference and starting point. It may be used as a template for additional features, or removed entirely when initialising a new project.
 
-## Bootstrapping
+## Configuration
 
-Bootstrapping is split across two distinct areas: a factory class that assembles the application, and a set of configuration files used to customise behaviour.
+Application configuration and bootstrapping are organised inside the `bootstrap/` directory. Each file is responsible for a specific part of the application setup.
 
-### Application Factory
-
-The `ApplicationFactory` class acts as the composition root of the system, responsible for assembling and configuring a runnable application instance.
-
-It wires together configuration, dependencies, middleware, and runtime behaviour into a single bootstrapped application.
-
-For HTTP requests, `public/index.php` delegates to the factory. The factory then builds the Slim application and returns a runtime-ready application wrapper.
-
-This design keeps bootstrapping explicit, testable, and separate from both framework entry points and domain logic.
-
-### Configuration Files
-
-Application configuration is organised inside the `bootstrap/` directory and is loaded during application creation. Each file defines a specific part of the application wiring without containing runtime or domain logic.
-
-Configuration values and environment mappings are defined in `settings.php`, which provides the base configuration used throughout the application.
-
-Service registrations for the dependency injection container are defined in `dependencies.php`, which controls how infrastructure services are constructed.
-
-Interface to implementation bindings are defined in `repositories.php`, which maps domain contracts to concrete implementations.
-
-The HTTP middleware pipeline is configured in `middleware.php`, which defines how incoming requests are processed.
-
-Slim route definitions are defined in `routes.php`, which maps HTTP endpoints to application actions.
+- **app.php**: Creates and configures the Slim application instance, including environment loading, container setup, middleware registration, error handling, and route registration.
+- **settings.php**: Defines application configuration values such as environment mappings, error handling behaviour, logging settings, and CORS configuration.
+- **dependencies.php**: Registers services in the dependency injection container, including infrastructure services and shared application components.
+- **repositories.php**: Maps domain interfaces to their concrete implementations, keeping the domain layer decoupled from infrastructure.
+- **middleware.php**: Configures the HTTP middleware pipeline, including cross-cutting concerns applied to incoming requests.
+- **routes.php**: Defines HTTP routes and maps them to application actions, typically grouped and versioned.
 
 ## Dependencies
 

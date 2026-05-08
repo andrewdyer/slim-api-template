@@ -18,17 +18,17 @@ return function(ContainerBuilder $containerBuilder): void {
             $logger = new Logger($settings->get('logger.name'));
 
             $handler = new RotatingFileHandler(
-                root_path('storage/logs/app.log'),
-                $settings->get('logger.handler.maxFiles'),
-                $settings->get('logger.handler.level')
+                filename: root_path('storage/logs/app.log'),
+                maxFiles: $settings->get('logger.handler.maxFiles'),
+                level: $settings->get('logger.handler.level')
             );
 
             $formatter = new LineFormatter(
-                $settings->get('logger.formatter.format'),
-                $settings->get('logger.formatter.dateFormat'),
-                $settings->get('logger.formatter.allowInlineLineBreaks'),
-                $settings->get('logger.formatter.ignoreEmptyContextAndExtra'),
-                $settings->get('logger.formatter.includeStackTraces')
+                format: $settings->get('logger.formatter.format'),
+                dateFormat: $settings->get('logger.formatter.dateFormat'),
+                allowInlineLineBreaks: $settings->get('logger.formatter.allowInlineLineBreaks'),
+                ignoreEmptyContextAndExtra: $settings->get('logger.formatter.ignoreEmptyContextAndExtra'),
+                includeStacktraces: $settings->get('logger.formatter.includeStackTraces')
             );
 
             $handler->setFormatter($formatter);
