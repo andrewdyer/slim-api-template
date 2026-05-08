@@ -39,7 +39,9 @@ The `.env` file should **never** be committed to version control. In production,
 
 ## Configuration
 
-Application configuration is organised inside the `bootstrap/` directory and is loaded during application bootstrapping. Each file contributes a specific part of the application setup and does not contain runtime or domain logic.
+Application configuration and bootstrapping is organised inside the `bootstrap/` directory. These files define the application configuration, dependency bindings, middleware pipeline, route definitions, and HTTP application setup.
+
+The `app.php` file is responsible for creating and configuring the Slim application instance used by HTTP entry points such as `public/index.php` and the integration test suite. It loads environment variables, builds the dependency injection container, registers middleware and routes, configures error handling, and returns a fully configured application ready to handle requests.
 
 ### Settings
 

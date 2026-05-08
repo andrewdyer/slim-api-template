@@ -35,6 +35,7 @@ repo/
 │   └── helpers.php              # Global utility functions
 │
 ├── bootstrap/                   # Application configuration layer
+│   ├── app.php                  # Application bootstrap & initialization
 │   ├── dependencies.php         # Container service registrations
 │   ├── middleware.php           # HTTP middleware pipeline configuration
 │   ├── repositories.php         # Interface → implementation bindings
@@ -84,8 +85,9 @@ This feature is provided as a reference and starting point. It may be used as a 
 
 ## Configuration
 
-Application configuration is organised inside the `bootstrap/` directory. Each file is responsible for a specific part of the application setup and does not contain runtime or domain logic.
+Application configuration and bootstrapping is organised inside the `bootstrap/` directory. Each file is responsible for a specific part of the application setup.
 
+- **app.php**: Creates and configures the Slim application instance, including environment loading, container setup, middleware registration, error handling, and route registration.
 - **settings.php**: Defines application configuration values such as environment mappings, error handling behaviour, logging settings, and CORS configuration.
 - **dependencies.php**: Registers services in the dependency injection container, including infrastructure services and shared application components.
 - **repositories.php**: Maps domain interfaces to their concrete implementations, keeping the domain layer decoupled from infrastructure.
