@@ -85,7 +85,7 @@ This feature is provided as a reference and starting point. It may be used as a 
 
 ## Configuration
 
-Application configuration and bootstrapping is organised inside the `bootstrap/` directory. Each file is responsible for a specific part of the application setup.
+Application configuration and bootstrapping are organised inside the `bootstrap/` directory. Each file is responsible for a specific part of the application setup.
 
 - **app.php**: Creates and configures the Slim application instance, including environment loading, container setup, middleware registration, error handling, and route registration.
 - **settings.php**: Defines application configuration values such as environment mappings, error handling behaviour, logging settings, and CORS configuration.
