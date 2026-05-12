@@ -21,10 +21,10 @@ return function(): App {
 
     // Register application settings
     require_from_root('bootstrap/settings.php')($containerBuilder);
-    
+
     // Register service dependencies
     require_from_root('bootstrap/dependencies.php')($containerBuilder);
-    
+
     // Register repository implementations
     require_from_root('bootstrap/repositories.php')($containerBuilder);
 
@@ -39,7 +39,7 @@ return function(): App {
 
     // Add body parsing middleware
     $app->addBodyParsingMiddleware();
-    
+
     // Add routing middleware
     $app->addRoutingMiddleware();
 
