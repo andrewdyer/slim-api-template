@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
+use Faker\Factory as FakerFactory;
+use Faker\Generator;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -23,6 +25,11 @@ abstract class AbstractIntegrationTestCase extends TestCase
     protected App $app;
 
     /**
+     * The Faker generator instance.
+     */
+    protected Generator $faker;
+
+    /**
      * Sets up the application before each test.
      *
      * @return void
@@ -30,6 +37,7 @@ abstract class AbstractIntegrationTestCase extends TestCase
     protected function setUp(): void
     {
         $this->app = require_from_root('bootstrap/app.php')();
+        $this->faker = FakerFactory::create();
     }
 
     /**
