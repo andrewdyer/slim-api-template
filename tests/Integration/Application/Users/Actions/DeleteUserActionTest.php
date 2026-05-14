@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Users\Actions;
 
+use App\Domain\User\UserRepository;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Tests\Integration\AbstractIntegrationTestCase;
+use Tests\Support\Factories\UserFactory;
 
 /**
  * Integration tests for DeleteUserAction.
@@ -12,11 +16,48 @@ use Tests\Integration\AbstractIntegrationTestCase;
 final class DeleteUserActionTest extends AbstractIntegrationTestCase
 {
     /**
+     * The user repository instance.
+     */
+    private UserRepository $users;
+
+    /**
+     * The user factory instance.
+     */
+    private UserFactory $user;
+
+    /**
+     * Sets up the test dependencies before each test.
+     *
+     * @return void
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->users = $this->app
+            ->getContainer()
+            ->get(UserRepository::class);
+
+        $this->user = new UserFactory(
+            $this->users,
+            $this->faker
+        );
+    }
+
+    /**
      * Asserts that a 204 response with an empty body is returned when the user exists.
      */
     public function testReturns204WhenUserExists(): void
     {
-        $response = $this->request('DELETE', '/api/v1/users/1');
+        $user = $this->user->create([
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->safeEmail(),
+        ]);
+
+        $response = $this->request('DELETE', '/api/v1/users/' . $user->getId());
 
         $this->assertSame(204, $response->getStatusCode());
         $this->assertSame([], $this->decodeJson($response));
@@ -27,9 +68,15 @@ final class DeleteUserActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns204WhenUserDoesNotExist(): void
     {
-        // DeleteUserAction does not throw on a missing ID — the repository
-        // returns false silently and the action always responds 204.
-        $response = $this->request('DELETE', '/api/v1/users/999');
+        $user = $this->user->create([
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->safeEmail(),
+        ]);
+
+        $this->users->delete($user->getId());
+
+        $response = $this->request('DELETE', '/api/v1/users/' . $user->getId());
 
         $this->assertSame(204, $response->getStatusCode());
     }
