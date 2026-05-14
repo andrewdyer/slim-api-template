@@ -32,11 +32,11 @@ final class CreateUserActionTest extends AbstractIntegrationTestCase
 
         $this->assertArrayHasKey('data', $body);
 
-        $user = $body['data'];
-        $this->assertIsInt($user['id']);
-        $this->assertSame($firstName, $user['firstName']);
-        $this->assertSame($lastName, $user['lastName']);
-        $this->assertSame($email, $user['email']);
+        $data = $body['data'];
+        $this->assertIsInt($data['id']);
+        $this->assertSame($firstName, $data['firstName']);
+        $this->assertSame($lastName, $data['lastName']);
+        $this->assertSame($email, $data['email']);
     }
 
     /**
