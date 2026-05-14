@@ -51,11 +51,7 @@ final class DeleteUserActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns204WhenUserExists(): void
     {
-        $user = $this->user->create([
-            'firstName' => $this->faker->firstName(),
-            'lastName' => $this->faker->lastName(),
-            'email' => $this->faker->unique()->safeEmail(),
-        ]);
+        $user = $this->user->create();
 
         $response = $this->request('DELETE', '/api/v1/users/' . $user->getId());
 
@@ -68,11 +64,7 @@ final class DeleteUserActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns204WhenUserDoesNotExist(): void
     {
-        $user = $this->user->create([
-            'firstName' => $this->faker->firstName(),
-            'lastName' => $this->faker->lastName(),
-            'email' => $this->faker->unique()->safeEmail(),
-        ]);
+        $user = $this->user->create();
 
         $this->users->delete($user->getId());
 
