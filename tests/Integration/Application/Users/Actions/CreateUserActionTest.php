@@ -16,10 +16,14 @@ final class CreateUserActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns201WhenDataIsValid(): void
     {
+        $firstName = $this->faker->firstName();
+        $lastName = $this->faker->lastName();
+        $email = $this->faker->unique()->safeEmail();
+
         $response = $this->request('POST', '/api/v1/users', [
-            'first_name' => 'Jane',
-            'last_name' => 'Doe',
-            'email' => 'jane@example.com',
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $email,
         ]);
 
         $this->assertSame(201, $response->getStatusCode());
@@ -30,9 +34,9 @@ final class CreateUserActionTest extends AbstractIntegrationTestCase
 
         $user = $body['data'];
         $this->assertIsInt($user['id']);
-        $this->assertSame('Jane', $user['firstName']);
-        $this->assertSame('Doe', $user['lastName']);
-        $this->assertSame('jane@example.com', $user['email']);
+        $this->assertSame($firstName, $user['firstName']);
+        $this->assertSame($lastName, $user['lastName']);
+        $this->assertSame($email, $user['email']);
     }
 
     /**
