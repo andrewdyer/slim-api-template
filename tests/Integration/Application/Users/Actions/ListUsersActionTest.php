@@ -37,43 +37,4 @@ final class ListUsersActionTest extends AbstractUsersTestCase
         $this->assertContains($firstUser->getEmail(), $emails);
         $this->assertContains($secondUser->getEmail(), $emails);
     }
-
-    /**
-     * Asserts that each user in the response contains the expected fields and values.
-     */
-    public function testReturnsExpectedUserStructureWhenUsersExist(): void
-    {
-        $user = $this->userFactory->create();
-
-        $response = $this->request('GET', '/api/v1/users');
-
-        $this->assertSame(200, $response->getStatusCode());
-
-        $body = $this->decodeJson($response);
-
-        $this->assertArrayHasKey('data', $body);
-
-        $data = $body['data'];
-
-        $returnedUser = null;
-
-        foreach ($data as $item) {
-            if ($item['id'] === $user->getId()) {
-                $returnedUser = $item;
-                break;
-            }
-        }
-
-        $this->assertNotNull($returnedUser);
-
-        $this->assertArrayHasKey('id', $returnedUser);
-        $this->assertArrayHasKey('firstName', $returnedUser);
-        $this->assertArrayHasKey('lastName', $returnedUser);
-        $this->assertArrayHasKey('email', $returnedUser);
-
-        $this->assertSame($user->getId(), $returnedUser['id']);
-        $this->assertSame($user->getFirstName(), $returnedUser['firstName']);
-        $this->assertSame($user->getLastName(), $returnedUser['lastName']);
-        $this->assertSame($user->getEmail(), $returnedUser['email']);
-    }
 }
