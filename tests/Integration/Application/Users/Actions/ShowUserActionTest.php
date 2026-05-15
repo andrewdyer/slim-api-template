@@ -11,7 +11,6 @@ use Tests\Integration\Application\Users\AbstractUsersTestCase;
  */
 final class ShowUserActionTest extends AbstractUsersTestCase
 {
-
     /**
      * Asserts that a 200 response containing the requested user is returned when the user exists.
      */
