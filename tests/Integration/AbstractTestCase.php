@@ -17,7 +17,7 @@ use Slim\Psr7\Uri;
 /**
  * Base class for integration tests using the full application stack.
  */
-abstract class AbstractIntegrationTestCase extends TestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
      * The application instance under test.

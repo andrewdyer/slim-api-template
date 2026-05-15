@@ -7,7 +7,7 @@ namespace Tests\Integration\Application\Users;
 use App\Domain\User\UserRepository;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Tests\Integration\AbstractIntegrationTestCase;
+use Tests\Integration\AbstractTestCase;
 use Tests\Support\Factories\UserFactory;
 
 /**
@@ -15,7 +15,7 @@ use Tests\Support\Factories\UserFactory;
  *
  * Provides shared setup for UserRepository and UserFactory.
  */
-abstract class AbstractUsersTestCase extends AbstractIntegrationTestCase
+abstract class AbstractUsersTestCase extends AbstractTestCase
 {
     /**
      * The user repository instance.
