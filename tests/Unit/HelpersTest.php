@@ -12,8 +12,7 @@ use PHPUnit\Framework\TestCase;
 final class HelpersTest extends TestCase
 {
     /**
-     * Backup of the original $_ENV array.
-     * @var array
+     * Backup of the original environment variables array.
      */
     private array $originalEnv;
 

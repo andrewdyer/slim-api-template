@@ -31,8 +31,6 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * Sets up the application before each test.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -80,8 +78,8 @@ abstract class AbstractTestCase extends TestCase
      * Returns the decoded JSON response body.
      *
      * @param  ResponseInterface    $response The HTTP response.
-     * @return array<string, mixed> Returns the decoded response data.
-     * @throws JsonException
+     * @return array<string, mixed> The decoded response data.
+     * @throws JsonException        If JSON decoding fails.
      */
     protected function decodeJson(ResponseInterface $response): array
     {
