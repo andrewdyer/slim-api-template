@@ -29,10 +29,7 @@ final class ListUsersActionTest extends AbstractUsersTestCase
 
         $data = $body['data'];
 
-        $emails = [];
-        foreach ($data as $user) {
-            $emails[] = $user['email'];
-        }
+        $emails = array_column($data, 'email');
 
         $this->assertContains($firstUser->getEmail(), $emails);
         $this->assertContains($secondUser->getEmail(), $emails);
