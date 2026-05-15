@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Integration\Application\Users;
+
+use App\Domain\User\UserRepository;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Tests\Integration\AbstractIntegrationTestCase;
+use Tests\Support\Factories\UserFactory;
+
+/**
+ * Base class for User-related integration tests.
+ *
+ * Provides shared setup for UserRepository and UserFactory.
+ */
+abstract class AbstractUsersTestCase extends AbstractIntegrationTestCase
+{
+    /**
+     * The user repository instance.
+     */
+    protected UserRepository $userRepository;
+
+    /**
+     * The user factory instance.
+     */
+    protected UserFactory $userFactory;
+
+    /**
+     * Sets up the test dependencies before each test.
+     *
+     * @return void
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->userRepository = $this->app
+            ->getContainer()
+            ->get(UserRepository::class);
+
+        $this->userFactory = new UserFactory(
+            $this->userRepository,
+            $this->faker
+        );
+    }
+}

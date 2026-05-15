@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Users\Actions;
 
-use Tests\Integration\AbstractIntegrationTestCase;
+use Tests\Integration\Application\Users\AbstractUsersTestCase;
 
 /**
  * Integration tests for CreateUserAction.
  */
-final class CreateUserActionTest extends AbstractIntegrationTestCase
+final class CreateUserActionTest extends AbstractUsersTestCase
 {
     /**
      * Asserts that a 201 response with the created user data is returned when valid input is provided.
