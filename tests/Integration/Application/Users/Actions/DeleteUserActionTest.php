@@ -13,7 +13,7 @@ final class DeleteUserActionTest extends AbstractUsersTestCase
 {
 
     /**
-     * Asserts that a 204 response with an empty body is returned when the user exists.
+     * Asserts that a 204 response is returned when the user exists.
      */
     public function testReturns204WhenUserExists(): void
     {
