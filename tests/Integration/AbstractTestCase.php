@@ -46,8 +46,8 @@ abstract class AbstractTestCase extends TestCase
      * @param  string                    $method The HTTP method.
      * @param  string                    $path   The request URI path.
      * @param  array<string, mixed>|null $data   Optional JSON request body.
-     * @return ResponseInterface         Returns the application response.
-     * @throws JsonException
+     * @return ResponseInterface         The application response.
+     * @throws JsonException             If JSON encoding fails.
      */
     protected function request(string $method, string $path, ?array $data = null): ResponseInterface
     {
