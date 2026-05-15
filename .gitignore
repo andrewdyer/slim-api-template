@@ -12,7 +12,8 @@
 
 # Ignore environment files
 .env
-.env.backup
+.env.*
+!.env.example
 
 # Ignore generated files
 .php-cs-fixer.cache

@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Users\Actions;
 
-use Tests\Integration\AbstractIntegrationTestCase;
+use Tests\Integration\Application\Users\AbstractUsersTestCase;
 
 /**
  * Integration tests for ListUsersAction.
  */
-final class ListUsersActionTest extends AbstractIntegrationTestCase
+final class ListUsersActionTest extends AbstractUsersTestCase
 {
     /**
      * Asserts that a 200 response containing all seeded users is returned.
      */
     public function testReturns200WithAllUsersWhenRequested(): void
     {
+        $firstUser = $this->userFactory->create();
+        $secondUser = $this->userFactory->create();
+
         $response = $this->request('GET', '/api/v1/users');
 
         $this->assertSame(200, $response->getStatusCode());
@@ -23,28 +26,12 @@ final class ListUsersActionTest extends AbstractIntegrationTestCase
         $body = $this->decodeJson($response);
 
         $this->assertArrayHasKey('data', $body);
-        $this->assertIsArray($body['data']);
-        $this->assertCount(5, $body['data']);
-    }
 
-    /**
-     * Asserts that each user in the response contains the expected fields and values.
-     */
-    public function testReturnsExpectedUserStructureWhenUsersExist(): void
-    {
-        $response = $this->request('GET', '/api/v1/users');
-        $body = $this->decodeJson($response);
+        $data = $body['data'];
 
-        $first = $body['data'][0];
+        $emails = array_column($data, 'email');
 
-        $this->assertArrayHasKey('id', $first);
-        $this->assertArrayHasKey('firstName', $first);
-        $this->assertArrayHasKey('lastName', $first);
-        $this->assertArrayHasKey('email', $first);
-
-        $this->assertSame(1, $first['id']);
-        $this->assertSame('Oliver', $first['firstName']);
-        $this->assertSame('French', $first['lastName']);
-        $this->assertSame('oliver.french@example.com', $first['email']);
+        $this->assertContains($firstUser->getEmail(), $emails);
+        $this->assertContains($secondUser->getEmail(), $emails);
     }
 }

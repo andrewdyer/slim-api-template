@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Users\Actions;
 
-use Tests\Integration\AbstractIntegrationTestCase;
+use Tests\Integration\Application\Users\AbstractUsersTestCase;
 
 /**
  * Integration tests for CreateUserAction.
  */
-final class CreateUserActionTest extends AbstractIntegrationTestCase
+final class CreateUserActionTest extends AbstractUsersTestCase
 {
     /**
      * Asserts that a 201 response with the created user data is returned when valid input is provided.
      */
     public function testReturns201WhenDataIsValid(): void
     {
+        $firstName = $this->faker->firstName();
+        $lastName = $this->faker->lastName();
+        $email = $this->faker->unique()->safeEmail();
+
         $response = $this->request('POST', '/api/v1/users', [
-            'first_name' => 'Jane',
-            'last_name' => 'Doe',
-            'email' => 'jane@example.com',
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $email,
         ]);
 
         $this->assertSame(201, $response->getStatusCode());
@@ -28,11 +32,11 @@ final class CreateUserActionTest extends AbstractIntegrationTestCase
 
         $this->assertArrayHasKey('data', $body);
 
-        $user = $body['data'];
-        $this->assertIsInt($user['id']);
-        $this->assertSame('Jane', $user['firstName']);
-        $this->assertSame('Doe', $user['lastName']);
-        $this->assertSame('jane@example.com', $user['email']);
+        $data = $body['data'];
+        $this->assertIsInt($data['id']);
+        $this->assertSame($firstName, $data['firstName']);
+        $this->assertSame($lastName, $data['lastName']);
+        $this->assertSame($email, $data['email']);
     }
 
     /**

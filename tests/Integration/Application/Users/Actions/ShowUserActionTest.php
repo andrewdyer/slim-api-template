@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Users\Actions;
 
-use Tests\Integration\AbstractIntegrationTestCase;
+use Tests\Integration\Application\Users\AbstractUsersTestCase;
 
 /**
  * Integration tests for ShowUserAction.
  */
-final class ShowUserActionTest extends AbstractIntegrationTestCase
+final class ShowUserActionTest extends AbstractUsersTestCase
 {
     /**
      * Asserts that a 200 response containing the requested user is returned when the user exists.
      */
     public function testReturns200WithUserWhenUserExists(): void
     {
-        $response = $this->request('GET', '/api/v1/users/1');
+        $user = $this->userFactory->create();
+
+        $response = $this->request('GET', '/api/v1/users/' . $user->getId());
 
         $this->assertSame(200, $response->getStatusCode());
 
@@ -24,11 +26,11 @@ final class ShowUserActionTest extends AbstractIntegrationTestCase
 
         $this->assertArrayHasKey('data', $body);
 
-        $user = $body['data'];
-        $this->assertSame(1, $user['id']);
-        $this->assertSame('Oliver', $user['firstName']);
-        $this->assertSame('French', $user['lastName']);
-        $this->assertSame('oliver.french@example.com', $user['email']);
+        $data = $body['data'];
+        $this->assertSame($user->getId(), $data['id']);
+        $this->assertSame($user->getFirstName(), $data['firstName']);
+        $this->assertSame($user->getLastName(), $data['lastName']);
+        $this->assertSame($user->getEmail(), $data['email']);
     }
 
     /**
@@ -36,7 +38,11 @@ final class ShowUserActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns404WhenUserNotFound(): void
     {
-        $response = $this->request('GET', '/api/v1/users/999');
+        $user = $this->userFactory->create();
+
+        $this->userRepository->delete($user->getId());
+
+        $response = $this->request('GET', '/api/v1/users/' . $user->getId());
 
         $this->assertSame(404, $response->getStatusCode());
     }

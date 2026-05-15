@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
+use Faker\Factory as FakerFactory;
+use Faker\Generator;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -15,7 +17,7 @@ use Slim\Psr7\Uri;
 /**
  * Base class for integration tests using the full application stack.
  */
-abstract class AbstractIntegrationTestCase extends TestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
      * The application instance under test.
@@ -23,13 +25,17 @@ abstract class AbstractIntegrationTestCase extends TestCase
     protected App $app;
 
     /**
+     * The Faker generator instance.
+     */
+    protected Generator $faker;
+
+    /**
      * Sets up the application before each test.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
         $this->app = require_from_root('bootstrap/app.php')();
+        $this->faker = FakerFactory::create();
     }
 
     /**
@@ -38,8 +44,8 @@ abstract class AbstractIntegrationTestCase extends TestCase
      * @param  string                    $method The HTTP method.
      * @param  string                    $path   The request URI path.
      * @param  array<string, mixed>|null $data   Optional JSON request body.
-     * @return ResponseInterface         Returns the application response.
-     * @throws JsonException
+     * @return ResponseInterface         The application response.
+     * @throws JsonException             If JSON encoding fails.
      */
     protected function request(string $method, string $path, ?array $data = null): ResponseInterface
     {
@@ -72,8 +78,8 @@ abstract class AbstractIntegrationTestCase extends TestCase
      * Returns the decoded JSON response body.
      *
      * @param  ResponseInterface    $response The HTTP response.
-     * @return array<string, mixed> Returns the decoded response data.
-     * @throws JsonException
+     * @return array<string, mixed> The decoded response data.
+     * @throws JsonException        If JSON decoding fails.
      */
     protected function decodeJson(ResponseInterface $response): array
     {

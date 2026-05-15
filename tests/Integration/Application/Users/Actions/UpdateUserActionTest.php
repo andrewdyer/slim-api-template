@@ -4,22 +4,28 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Users\Actions;
 
-use Tests\Integration\AbstractIntegrationTestCase;
+use Tests\Integration\Application\Users\AbstractUsersTestCase;
 
 /**
  * Integration tests for UpdateUserAction.
  */
-final class UpdateUserActionTest extends AbstractIntegrationTestCase
+final class UpdateUserActionTest extends AbstractUsersTestCase
 {
     /**
      * Asserts that a 200 response containing the updated user data is returned when the user exists.
      */
     public function testReturns200WithUpdatedUserWhenUserExists(): void
     {
-        $response = $this->request('PUT', '/api/v1/users/1', [
-            'first_name' => 'Ollie',
-            'last_name' => 'Frenchie',
-            'email' => 'ollie.frenchie@example.com',
+        $user = $this->userFactory->create();
+
+        $updatedFirstName = $this->faker->firstName();
+        $updatedLastName = $this->faker->lastName();
+        $updatedEmail = $this->faker->unique()->safeEmail();
+
+        $response = $this->request('PUT', '/api/v1/users/' . $user->getId(), [
+            'first_name' => $updatedFirstName,
+            'last_name' => $updatedLastName,
+            'email' => $updatedEmail,
         ]);
 
         $this->assertSame(200, $response->getStatusCode());
@@ -28,11 +34,11 @@ final class UpdateUserActionTest extends AbstractIntegrationTestCase
 
         $this->assertArrayHasKey('data', $body);
 
-        $user = $body['data'];
-        $this->assertSame(1, $user['id']);
-        $this->assertSame('Ollie', $user['firstName']);
-        $this->assertSame('Frenchie', $user['lastName']);
-        $this->assertSame('ollie.frenchie@example.com', $user['email']);
+        $data = $body['data'];
+        $this->assertSame($user->getId(), $data['id']);
+        $this->assertSame($updatedFirstName, $data['firstName']);
+        $this->assertSame($updatedLastName, $data['lastName']);
+        $this->assertSame($updatedEmail, $data['email']);
     }
 
     /**
@@ -40,7 +46,11 @@ final class UpdateUserActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns404WhenUserNotFound(): void
     {
-        $response = $this->request('PUT', '/api/v1/users/999', [
+        $user = $this->userFactory->create();
+
+        $this->userRepository->delete($user->getId());
+
+        $response = $this->request('PUT', '/api/v1/users/' . $user->getId(), [
             'first_name' => 'Ghost',
         ]);
 
