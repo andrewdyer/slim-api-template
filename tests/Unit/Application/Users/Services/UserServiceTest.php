@@ -22,7 +22,7 @@ final class UserServiceTest extends TestCase
     private UserService $userService;
 
     /**
-     * Initialises a fresh UserService instance backed by an in-memory repository before each test.
+     * Initializes a fresh UserService instance backed by an in-memory repository before each test.
      */
     protected function setUp(): void
     {
