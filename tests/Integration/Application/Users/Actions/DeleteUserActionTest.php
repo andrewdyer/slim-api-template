@@ -23,7 +23,7 @@ final class DeleteUserActionTest extends AbstractIntegrationTestCase
     /**
      * The user factory instance.
      */
-    private UserFactory $user;
+    private UserFactory $userFactory;
 
     /**
      * Sets up the test dependencies before each test.
@@ -40,7 +40,7 @@ final class DeleteUserActionTest extends AbstractIntegrationTestCase
             ->getContainer()
             ->get(UserRepository::class);
 
-        $this->user = new UserFactory(
+        $this->userFactory = new UserFactory(
             $this->users,
             $this->faker
         );
@@ -51,7 +51,7 @@ final class DeleteUserActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns204WhenUserExists(): void
     {
-        $user = $this->user->create();
+        $user = $this->userFactory->create();
 
         $response = $this->request('DELETE', '/api/v1/users/' . $user->getId());
 
@@ -64,7 +64,7 @@ final class DeleteUserActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns204WhenUserDoesNotExist(): void
     {
-        $user = $this->user->create();
+        $user = $this->userFactory->create();
 
         $this->users->delete($user->getId());
 

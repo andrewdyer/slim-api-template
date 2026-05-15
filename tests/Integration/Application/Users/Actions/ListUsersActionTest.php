@@ -23,7 +23,7 @@ final class ListUsersActionTest extends AbstractIntegrationTestCase
     /**
      * The user factory instance.
      */
-    private UserFactory $user;
+    private UserFactory $userFactory;
 
     /**
      * Sets up the test dependencies before each test.
@@ -40,7 +40,7 @@ final class ListUsersActionTest extends AbstractIntegrationTestCase
             ->getContainer()
             ->get(UserRepository::class);
 
-        $this->user = new UserFactory(
+        $this->userFactory = new UserFactory(
             $this->users,
             $this->faker
         );
@@ -51,8 +51,8 @@ final class ListUsersActionTest extends AbstractIntegrationTestCase
      */
     public function testReturns200WithAllUsersWhenRequested(): void
     {
-        $firstUser = $this->user->create();
-        $secondUser = $this->user->create();
+        $firstUser = $this->userFactory->create();
+        $secondUser = $this->userFactory->create();
 
         $response = $this->request('GET', '/api/v1/users');
 
@@ -78,7 +78,7 @@ final class ListUsersActionTest extends AbstractIntegrationTestCase
      */
     public function testReturnsExpectedUserStructureWhenUsersExist(): void
     {
-        $user = $this->user->create();
+        $user = $this->userFactory->create();
 
         $response = $this->request('GET', '/api/v1/users');
 
