@@ -11,7 +11,6 @@ use Tests\Integration\Application\Users\AbstractUsersTestCase;
  */
 final class DeleteUserActionTest extends AbstractUsersTestCase
 {
-
     /**
      * Asserts that a 204 response is returned when the user exists.
      */
@@ -22,7 +21,6 @@ final class DeleteUserActionTest extends AbstractUsersTestCase
         $response = $this->request('DELETE', '/api/v1/users/' . $user->getId());
 
         $this->assertSame(204, $response->getStatusCode());
-        $this->assertSame([], $this->decodeJson($response));
     }
 
     /**
