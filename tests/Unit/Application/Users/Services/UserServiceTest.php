@@ -45,6 +45,70 @@ final class UserServiceTest extends TestCase
     }
 
     /**
+     * Asserts that paginated results contain the correct number of users.
+     */
+    public function testReturnsPaginatedUsersWithCorrectCount(): void
+    {
+        $result = $this->userService->paginated(1, 2);
+
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('users', $result);
+        $this->assertArrayHasKey('total', $result);
+        $this->assertCount(2, $result['users']);
+        $this->assertSame(5, $result['total']);
+    }
+
+    /**
+     * Asserts that the second page of paginated results contains different users.
+     */
+    public function testReturnsCorrectUsersForSecondPage(): void
+    {
+        $firstPageResult = $this->userService->paginated(1, 2);
+        $secondPageResult = $this->userService->paginated(2, 2);
+
+        $this->assertCount(2, $secondPageResult['users']);
+        $this->assertNotSame(
+            $firstPageResult['users'][0]->getId(),
+            $secondPageResult['users'][0]->getId()
+        );
+    }
+
+    /**
+     * Asserts that paginated results respect the perPage parameter.
+     */
+    public function testRespectsPerPageParameter(): void
+    {
+        $result = $this->userService->paginated(1, 3);
+
+        $this->assertCount(3, $result['users']);
+        $this->assertSame(5, $result['total']);
+    }
+
+    /**
+     * Asserts that an empty array is returned when requesting a page beyond available data.
+     */
+    public function testReturnsEmptyArrayWhenPageExceedsTotalPages(): void
+    {
+        $result = $this->userService->paginated(10, 10);
+
+        $this->assertEmpty($result['users']);
+        $this->assertSame(5, $result['total']);
+    }
+
+    /**
+     * Asserts that the final page returns the remaining partial set of users.
+     */
+    public function testReturnsPartialFinalPage(): void
+    {
+        $result = $this->userService->paginated(2, 3);
+
+        $this->assertCount(2, $result['users']);
+        $this->assertSame(5, $result['total']);
+        $this->assertSame(4, $result['users'][0]->getId());
+        $this->assertSame(5, $result['users'][1]->getId());
+    }
+
+    /**
      * Asserts that a User entity with the correct data is returned after a successful creation.
      */
     public function testCreatesUserWhenValidDataIsProvided(): void

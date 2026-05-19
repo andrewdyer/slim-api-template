@@ -82,6 +82,18 @@ final readonly class UserService
     }
 
     /**
+     * Retrieves a paginated list of users from the repository.
+     *
+     * @param  int                              $page    The page number to retrieve (1-indexed).
+     * @param  int                              $perPage The number of users per page.
+     * @return array{users: User[], total: int} An array containing the users for the requested page and the total count.
+     */
+    public function paginated(int $page, int $perPage): array
+    {
+        return $this->userRepository->findPaginated($page, $perPage);
+    }
+
+    /**
      * Updates an existing user with the fields provided in the DTO and returns the result.
      *
      * @param  UpdateUserDTO         $dto The data to apply to the existing user. Null fields are left unchanged.
