@@ -61,4 +61,58 @@ final class ListUsersActionTest extends AbstractUsersTestCase
             $meta['totalPages']
         );
     }
+
+    /**
+     * Asserts that an invalid page parameter is clamped to a valid value.
+     *
+     * @dataProvider invalidPageProvider
+     */
+    public function testInvalidPageIsClamped(string $query, int $expectedPage): void
+    {
+        $response = $this->request('GET', "/api/v1/users?{$query}");
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame($expectedPage, $this->decodeJson($response)['data']['meta']['page']);
+    }
+
+    /**
+     * Provides invalid page query strings and their expected clamped values.
+     *
+     * @return array<string, array{string, int}>
+     */
+    public static function invalidPageProvider(): array
+    {
+        return [
+            'zero page' => ['page=0&perPage=10', 1],
+            'negative page' => ['page=-5&perPage=10', 1],
+            'non-numeric' => ['page=abc&perPage=10', 1],
+        ];
+    }
+
+    /**
+     * Asserts that an invalid perPage parameter is clamped to a valid value.
+     *
+     * @dataProvider invalidPerPageProvider
+     */
+    public function testInvalidPerPageIsClamped(string $query, int $expectedPerPage): void
+    {
+        $response = $this->request('GET', "/api/v1/users?{$query}");
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame($expectedPerPage, $this->decodeJson($response)['data']['meta']['perPage']);
+    }
+
+    /**
+     * Provides invalid perPage query strings and their expected clamped values.
+     *
+     * @return array<string, array{string, int}>
+     */
+    public static function invalidPerPageProvider(): array
+    {
+        return [
+            'zero perPage' => ['page=1&perPage=0', 1],
+            'negative perPage' => ['page=1&perPage=-10', 1],
+            'exceeds maximum' => ['page=1&perPage=999', 100],
+        ];
+    }
 }
