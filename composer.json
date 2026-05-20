@@ -19,7 +19,7 @@
     },
     "require": {
         "php": "^8.3",
-        "andrewdyer/actions": "^0.6",
+        "andrewdyer/actions": "^1.0",
         "andrewdyer/cors-response-emitter": "^0.1",
         "andrewdyer/json-error-handler": "^0.2",
         "andrewdyer/settings": "^0.1",
