@@ -24,6 +24,6 @@ final class DeleteUserAction extends AbstractUserAction
 
         $this->userService->delete($userId);
 
-        return $this->ok(null, 204);
+        return $this->ok(null, null, 204);
     }
 }
