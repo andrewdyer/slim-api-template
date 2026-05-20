@@ -24,9 +24,11 @@ final class ListUsersActionTest extends AbstractUsersTestCase
         // This ensures the assertion holds whether the backing store is empty
         // (in-memory) or already contains data (e.g. Eloquent against a seeded DB).
         $countResponse = $this->request('GET', '/api/v1/users');
+        $this->assertSame(200, $countResponse->getStatusCode());
         $total = $this->decodeJson($countResponse)['data']['meta']['total'];
 
         $response = $this->request('GET', "/api/v1/users?page=1&perPage={$total}");
+        $this->assertSame(200, $response->getStatusCode());
         $body = $this->decodeJson($response);
         $users = $body['data']['data'];
 
