@@ -37,6 +37,15 @@ interface UserRepository
     public function findAll(): array;
 
     /**
+     * Returns a paginated subset of users.
+     *
+     * @param  int                              $page    The page number to retrieve (1-indexed).
+     * @param  int                              $perPage The number of users per page.
+     * @return array{users: User[], total: int} An array containing the users for the requested page and the total count.
+     */
+    public function findPaginated(int $page, int $perPage): array;
+
+    /**
      * Finds a user by their unique identifier.
      *
      * @param  int       $id The unique identifier of the user to retrieve.

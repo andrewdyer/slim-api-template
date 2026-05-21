@@ -15,20 +15,36 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class ListUsersAction extends AbstractUserAction
 {
     /**
-     * Retrieves all users from the service and returns them as a JSON collection.
+     * Retrieves paginated users from the service and returns them with pagination metadata.
      *
-     * @return Response      A 200 JSON response containing an array of all users.
+     * Invalid page or perPage values are silently clamped to their nearest valid boundary
+     * rather than rejected with a 400. This keeps the API forgiving for UI consumers where
+     * stale or out-of-range params are common. To enforce strict validation instead, replace
+     * the clamping with a 400 error response.
+     *
+     * @return Response      A 200 JSON response containing paginated users and metadata.
      * @throws JsonException If the request body contains invalid JSON.
      */
     protected function handle(): Response
     {
-        $users = $this->userService->all();
+        $page = max(1, (int)$this->resolveQueryParam('page', 1));
+        $perPage = max(1, min(100, (int)$this->resolveQueryParam('perPage', 10)));
 
-        $responseData = array_map(
+        ['users' => $users, 'total' => $total] = $this->userService->paginated($page, $perPage);
+
+        $userData = array_map(
             fn (User $user) => UserResponseDTO::fromDomain($user),
             $users
         );
 
-        return $this->ok($responseData);
+        return $this->ok(
+            $userData,
+            [
+                'total' => $total,
+                'page' => $page,
+                'perPage' => $perPage,
+                'totalPages' => (int)ceil($total / $perPage),
+            ]
+        );
     }
 }

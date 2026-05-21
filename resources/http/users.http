@@ -1,11 +1,26 @@
 @baseUrl = http://localhost:8888
 @userId = 1
+
+### ==================================================
+### USERS: LIST
+### ==================================================
+GET {{baseUrl}}/api/v1/users
+Accept: application/json
+
 ###
 
 ### ==================================================
-### USERS: LIST (INITIAL STATE)
+### USERS: LIST (PAGINATED - FIRST PAGE)
 ### ==================================================
-GET {{baseUrl}}/api/v1/users
+GET {{baseUrl}}/api/v1/users?page=1&perPage=3
+Accept: application/json
+
+###
+
+### ==================================================
+### USERS: LIST (PAGINATED - SECOND PAGE)
+### ==================================================
+GET {{baseUrl}}/api/v1/users?page=2&perPage=3
 Accept: application/json
 
 ###
@@ -49,23 +64,7 @@ Accept: application/json
 ###
 
 ### ==================================================
-### USERS: LIST (AFTER UPDATE)
-### ==================================================
-GET {{baseUrl}}/api/v1/users
-Accept: application/json
-
-###
-
-### ==================================================
 ### USERS: DELETE
 ### ==================================================
 DELETE {{baseUrl}}/api/v1/users/{{userId}}
-Accept: application/json
-
-###
-
-### ==================================================
-### USERS: LIST (FINAL STATE)
-### ==================================================
-GET {{baseUrl}}/api/v1/users
 Accept: application/json

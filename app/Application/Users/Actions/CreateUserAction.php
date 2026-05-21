@@ -30,6 +30,6 @@ final class CreateUserAction extends AbstractUserAction
 
         $responseDto = UserResponseDTO::fromDomain($user);
 
-        return $this->ok($responseDto, 201);
+        return $this->ok($responseDto, null, 201);
     }
 }

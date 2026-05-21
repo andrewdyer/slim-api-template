@@ -42,18 +42,23 @@ abstract class AbstractTestCase extends TestCase
      * Processes an HTTP request through the application.
      *
      * @param  string                    $method The HTTP method.
-     * @param  string                    $path   The request URI path.
+     * @param  string                    $path   The request URI path (may include query string).
      * @param  array<string, mixed>|null $data   Optional JSON request body.
      * @return ResponseInterface         The application response.
      * @throws JsonException             If JSON encoding fails.
      */
     protected function request(string $method, string $path, ?array $data = null): ResponseInterface
     {
+        $urlParts = is_array($parsed = parse_url($path)) ? $parsed : [];
+        $uriPath = $urlParts['path'] ?? $path;
+        $queryString = $urlParts['query'] ?? '';
+
         $uri = new Uri(
             scheme: '',
             host: '',
             port: 80,
-            path: $path
+            path: $uriPath,
+            query: $queryString
         );
 
         $serverRequest = (new ServerRequestFactory())

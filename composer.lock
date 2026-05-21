@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92580881814a4d608d373a654ba5d9db",
+    "content-hash": "7b402d55d7437779569ac9973b72958d",
     "packages": [
         {
             "name": "andrewdyer/actions",
-            "version": "0.3.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdyer/actions.git",
-                "reference": "91c120b1a866fd02240d309884f780591c617a65"
+                "reference": "b6899fd2c96dabed4e27a8f57aac32bd1a8cce8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/actions/zipball/91c120b1a866fd02240d309884f780591c617a65",
-                "reference": "91c120b1a866fd02240d309884f780591c617a65",
+                "url": "https://api.github.com/repos/andrewdyer/actions/zipball/b6899fd2c96dabed4e27a8f57aac32bd1a8cce8a",
+                "reference": "b6899fd2c96dabed4e27a8f57aac32bd1a8cce8a",
                 "shasum": ""
             },
             "require": {
@@ -55,9 +55,9 @@
             ],
             "support": {
                 "issues": "https://github.com/andrewdyer/actions/issues",
-                "source": "https://github.com/andrewdyer/actions/tree/0.3.0"
+                "source": "https://github.com/andrewdyer/actions/tree/1.0.0"
             },
-            "time": "2026-04-28T09:38:21+00:00"
+            "time": "2026-05-20T23:27:26+00:00"
         },
         {
             "name": "andrewdyer/cors-response-emitter",
@@ -109,20 +109,20 @@
         },
         {
             "name": "andrewdyer/json-error-handler",
-            "version": "0.2.2",
+            "version": "0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdyer/json-error-handler.git",
-                "reference": "13b537ec623128492bb6bb6d74974b55904c2668"
+                "reference": "f85ead433f8c7f508c9ced00df5cd45645f647b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/json-error-handler/zipball/13b537ec623128492bb6bb6d74974b55904c2668",
-                "reference": "13b537ec623128492bb6bb6d74974b55904c2668",
+                "url": "https://api.github.com/repos/andrewdyer/json-error-handler/zipball/f85ead433f8c7f508c9ced00df5cd45645f647b4",
+                "reference": "f85ead433f8c7f508c9ced00df5cd45645f647b4",
                 "shasum": ""
             },
             "require": {
-                "andrewdyer/actions": "^0.3",
+                "andrewdyer/actions": "^1.0",
                 "php": "^8.3",
                 "psr/http-factory": "^1.1",
                 "psr/http-message": "^1.1 || ^2.0",
@@ -147,9 +147,9 @@
             "description": "A structured JSON error handler for Slim Framework applications that maps exceptions to typed, consistent error payloads",
             "support": {
                 "issues": "https://github.com/andrewdyer/json-error-handler/issues",
-                "source": "https://github.com/andrewdyer/json-error-handler/tree/0.2.2"
+                "source": "https://github.com/andrewdyer/json-error-handler/tree/0.2.4"
             },
-            "time": "2026-04-28T09:57:18+00:00"
+            "time": "2026-05-20T23:30:08+00:00"
         },
         {
             "name": "andrewdyer/settings",
