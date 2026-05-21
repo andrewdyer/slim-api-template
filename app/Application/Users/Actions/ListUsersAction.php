@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Users\Actions;
 
-use App\Application\Users\DTOs\PaginatedUsersDTO;
 use App\Application\Users\DTOs\UserResponseDTO;
 use App\Domain\User\User;
 use JsonException;
@@ -31,23 +30,21 @@ final class ListUsersAction extends AbstractUserAction
         $page = max(1, (int)$this->resolveQueryParam('page', 1));
         $perPage = max(1, min(100, (int)$this->resolveQueryParam('perPage', 10)));
 
-        $result = $this->userService->paginated($page, $perPage);
+        ['users' => $users, 'total' => $total] = $this->userService->paginated($page, $perPage);
 
         $userData = array_map(
             fn (User $user) => UserResponseDTO::fromDomain($user),
-            $result['users']
+            $users
         );
 
-        $totalPages = max(1, (int)ceil($result['total'] / $perPage));
-
-        $paginatedDto = new PaginatedUsersDTO(
-            data: $userData,
-            total: $result['total'],
-            page: $page,
-            perPage: $perPage,
-            totalPages: $totalPages,
+        return $this->ok(
+            $userData,
+            [
+                'total' => $total,
+                'page' => $page,
+                'perPage' => $perPage,
+                'totalPages' => max(1, (int)ceil($total / $perPage)),
+            ]
         );
-
-        return $this->ok($paginatedDto);
     }
 }

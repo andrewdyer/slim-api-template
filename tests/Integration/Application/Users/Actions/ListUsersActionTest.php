@@ -25,12 +25,12 @@ final class ListUsersActionTest extends AbstractUsersTestCase
         // (in-memory) or already contains data (e.g. Eloquent against a seeded DB).
         $countResponse = $this->request('GET', '/api/v1/users');
         $this->assertSame(200, $countResponse->getStatusCode());
-        $total = $this->decodeJson($countResponse)['data']['meta']['total'];
+        $total = $this->decodeJson($countResponse)['meta']['total'];
 
         $response = $this->request('GET', "/api/v1/users?page=1&perPage={$total}");
         $this->assertSame(200, $response->getStatusCode());
         $body = $this->decodeJson($response);
-        $users = $body['data']['data'];
+        $users = $body['data'];
 
         $emails = array_column($users, 'email');
         $this->assertContains($firstUser->getEmail(), $emails);
@@ -47,7 +47,7 @@ final class ListUsersActionTest extends AbstractUsersTestCase
 
         $this->assertSame(200, $response->getStatusCode());
 
-        $meta = $this->decodeJson($response)['data']['meta'];
+        $meta = $this->decodeJson($response)['meta'];
 
         $this->assertArrayHasKey('total', $meta);
         $this->assertArrayHasKey('page', $meta);
@@ -72,7 +72,7 @@ final class ListUsersActionTest extends AbstractUsersTestCase
         $response = $this->request('GET', "/api/v1/users?{$query}");
 
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame($expectedPage, $this->decodeJson($response)['data']['meta']['page']);
+        $this->assertSame($expectedPage, $this->decodeJson($response)['meta']['page']);
     }
 
     /**
@@ -99,7 +99,7 @@ final class ListUsersActionTest extends AbstractUsersTestCase
         $response = $this->request('GET', "/api/v1/users?{$query}");
 
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame($expectedPerPage, $this->decodeJson($response)['data']['meta']['perPage']);
+        $this->assertSame($expectedPerPage, $this->decodeJson($response)['meta']['perPage']);
     }
 
     /**
