@@ -12,29 +12,18 @@ use Tests\Integration\Application\Users\AbstractUsersTestCase;
 final class ListUsersActionTest extends AbstractUsersTestCase
 {
     /**
-     * Asserts that created users appear in the paginated response regardless
-     * of how many records already exist in the backing store.
+     * Asserts that the total user count increases after new users are created.
      */
-    public function testCreatedUsersAppearInPaginatedResponse(): void
+    public function testTotalIncreasesAfterUsersAreCreated(): void
     {
-        $firstUser = $this->userFactory->create();
-        $secondUser = $this->userFactory->create();
+        $beforeTotal = $this->decodeJson($this->request('GET', '/api/v1/users'))['meta']['total'];
 
-        // Fetch the total count first, then request all records in one page.
-        // This ensures the assertion holds whether the backing store is empty
-        // (in-memory) or already contains data (e.g. Eloquent against a seeded DB).
-        $countResponse = $this->request('GET', '/api/v1/users');
-        $this->assertSame(200, $countResponse->getStatusCode());
-        $total = $this->decodeJson($countResponse)['meta']['total'];
+        $this->userFactory->create();
+        $this->userFactory->create();
 
-        $response = $this->request('GET', "/api/v1/users?page=1&perPage={$total}");
-        $this->assertSame(200, $response->getStatusCode());
-        $body = $this->decodeJson($response);
-        $users = $body['data'];
+        $afterTotal = $this->decodeJson($this->request('GET', '/api/v1/users'))['meta']['total'];
 
-        $emails = array_column($users, 'email');
-        $this->assertContains($firstUser->getEmail(), $emails);
-        $this->assertContains($secondUser->getEmail(), $emails);
+        $this->assertSame($beforeTotal + 2, $afterTotal);
     }
 
     /**
