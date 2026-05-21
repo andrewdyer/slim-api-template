@@ -43,7 +43,7 @@ final class ListUsersAction extends AbstractUserAction
                 'total' => $total,
                 'page' => $page,
                 'perPage' => $perPage,
-                'totalPages' => max(1, (int)ceil($total / $perPage)),
+                'totalPages' => (int)ceil($total / $perPage),
             ]
         );
     }
