@@ -82,8 +82,8 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Returns a paginated subset of users from the in-memory store.
      *
-     * @param  int                              $page    The page number to retrieve (1-indexed).
-     * @param  int                              $perPage The number of users per page.
+     * @param  int                              $page    The 1-indexed page number. Must be >= 1.
+     * @param  int                              $perPage The number of users per page. Must be >= 1.
      * @return array{users: User[], total: int} An array containing the users for the requested page and the total count.
      */
     public function findPaginated(int $page, int $perPage): array
