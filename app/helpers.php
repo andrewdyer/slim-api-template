@@ -77,7 +77,7 @@ if (!function_exists('get_env_array')) {
 
 if (!function_exists('require_from_root')) {
     /**
-     * Requires a file relative to the project root.
+     * Returns the result of requiring a file relative to the project root.
      *
      * @throws \RuntimeException if the file does not exist
      * @return mixed
