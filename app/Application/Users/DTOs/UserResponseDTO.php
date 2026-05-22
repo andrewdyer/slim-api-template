@@ -45,7 +45,7 @@ final class UserResponseDTO implements JsonSerializable
     }
 
     /**
-     * Serializes the DTO to an associative array for JSON encoding.
+     * Returns an associative array representation for JSON encoding.
      *
      * @return array<string, mixed> An associative array of the DTO's public properties.
      */
