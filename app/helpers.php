@@ -79,8 +79,9 @@ if (!function_exists('require_from_root')) {
     /**
      * Returns the result of requiring a file relative to the project root.
      *
-     * @throws \RuntimeException if the file does not exist
-     * @return mixed
+     * @param  string            $path The relative path to the file.
+     * @return mixed             The return value from the required file.
+     * @throws \RuntimeException If the file does not exist.
      */
     function require_from_root(string $path): mixed
     {
