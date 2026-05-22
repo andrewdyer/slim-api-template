@@ -25,7 +25,8 @@ if (!function_exists('get_env')) {
     /**
      * Retrieves an environment variable, casting "true" and "false" strings to booleans.
      *
-     * @param  mixed $default Value to return when the key is not set.
+     * @param  string $key     The environment variable key to retrieve.
+     * @param  mixed  $default Value to return when the key is not set.
      * @return mixed
      */
     function get_env($key, $default = null)
