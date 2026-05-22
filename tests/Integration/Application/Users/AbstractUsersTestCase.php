@@ -30,7 +30,6 @@ abstract class AbstractUsersTestCase extends AbstractTestCase
     /**
      * Sets up the test dependencies before each test.
      *
-     * @return void
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
