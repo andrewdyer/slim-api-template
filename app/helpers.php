@@ -4,7 +4,8 @@ if (!function_exists('root_path')) {
     /**
      * Returns the absolute path to the project root, optionally suffixed with the given path.
      *
-     * @param string $path Relative path to append to the root.
+     * @param  string $path Relative path to append to the root.
+     * @return string The absolute path.
      */
     function root_path($path = ''): string
     {
