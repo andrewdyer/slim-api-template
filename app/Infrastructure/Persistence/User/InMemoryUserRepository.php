@@ -23,7 +23,7 @@ final class InMemoryUserRepository implements UserRepository
     private array $store = [];
 
     /**
-     * Seeds the repository with a predefined set of sample users.
+     * Creates a new repository pre-populated with sample users.
      */
     public function __construct()
     {
