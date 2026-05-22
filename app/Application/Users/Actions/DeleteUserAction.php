@@ -14,7 +14,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class DeleteUserAction extends AbstractUserAction
 {
     /**
-     * Resolves the user ID from the route, deletes the user, and returns an empty response.
+     * Handles the deletion of a user.
      *
      * @return Response              A 204 JSON response with no body content.
      * @throws UserNotFoundException If no user exists with the given ID.
