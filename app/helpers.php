@@ -82,7 +82,7 @@ if (!function_exists('require_from_root')) {
      * @throws \RuntimeException if the file does not exist
      * @return mixed
      */
-    function require_from_root(string $path)
+    function require_from_root(string $path): mixed
     {
         $full = root_path($path);
 
