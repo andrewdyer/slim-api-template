@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class ShowUserAction extends AbstractUserAction
 {
     /**
-     * Resolves the user ID from the route, fetches the matching user, and returns it as JSON.
+     * Handles the retrieval of a single user by ID.
      *
      * @return Response              A 200 JSON response containing the requested user.
      * @throws UserNotFoundException If no user exists with the given ID.
