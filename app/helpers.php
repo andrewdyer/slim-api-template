@@ -52,7 +52,7 @@ if (!function_exists('get_env')) {
 
 if (!function_exists('get_env_array')) {
     /**
-     * Retrieves an environment variable as an array, split by a delimiter.
+     * Returns an environment variable as an array, split by a delimiter.
      *
      * Empty values return an empty array.
      *
