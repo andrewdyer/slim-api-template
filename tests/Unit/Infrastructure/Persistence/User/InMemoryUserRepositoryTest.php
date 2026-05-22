@@ -12,8 +12,14 @@ use PHPUnit\Framework\TestCase;
  */
 final class InMemoryUserRepositoryTest extends TestCase
 {
+    /**
+     * The repository instance under test.
+     */
     private InMemoryUserRepository $repository;
 
+    /**
+     * Initializes a fresh repository instance before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
