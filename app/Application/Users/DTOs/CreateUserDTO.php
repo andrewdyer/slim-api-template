@@ -8,8 +8,6 @@ use InvalidArgumentException;
 
 /**
  * Carries the validated input data required to create a new user.
- *
- * Used by CreateUserAction to pass the parsed request body to UserService.
  */
 final class CreateUserDTO
 {
