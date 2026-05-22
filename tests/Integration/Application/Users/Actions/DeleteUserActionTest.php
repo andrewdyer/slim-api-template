@@ -21,6 +21,7 @@ final class DeleteUserActionTest extends AbstractUsersTestCase
         $response = $this->request('DELETE', '/api/v1/users/' . $user->getId());
 
         $this->assertSame(204, $response->getStatusCode());
+        $this->assertNull($this->userRepository->findById($user->getId()));
     }
 
     /**
