@@ -29,7 +29,7 @@ if (!function_exists('get_env')) {
      * @param  mixed  $default Value to return when the key is not set.
      * @return mixed
      */
-    function get_env($key, $default = null)
+    function get_env(string $key, mixed $default = null): mixed
     {
         if (isset($_ENV[$key])) {
             $value = $_ENV[$key];
