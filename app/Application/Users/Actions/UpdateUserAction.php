@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class UpdateUserAction extends AbstractUserAction
 {
     /**
-     * Resolves the user ID from the route, applies the requested changes, and returns the updated user.
+     * Handles the update of an existing user.
      *
      * @return Response              A 200 JSON response containing the updated user.
      * @throws UserNotFoundException If no user exists with the given ID.
