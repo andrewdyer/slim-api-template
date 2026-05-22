@@ -9,8 +9,6 @@ use App\Domain\User\UserRepository;
 
 /**
  * In-memory implementation of UserRepository, pre-seeded with sample data.
- *
- * Intended for development and testing purposes. Data does not persist between requests.
  */
 final class InMemoryUserRepository implements UserRepository
 {
@@ -53,7 +51,7 @@ final class InMemoryUserRepository implements UserRepository
     }
 
     /**
-     * Removes the user with the given ID from the in-memory store.
+     * Deletes the user with the given ID from the in-memory store.
      *
      * @param int $id The unique identifier of the user to delete.
      */
@@ -94,7 +92,7 @@ final class InMemoryUserRepository implements UserRepository
     }
 
     /**
-     * Looks up a user by their ID in the in-memory store.
+     * Returns a user by their ID from the in-memory store.
      *
      * @param  int       $id The unique identifier of the user to retrieve.
      * @return User|null The matching User entity, or null if not found.
@@ -105,7 +103,7 @@ final class InMemoryUserRepository implements UserRepository
     }
 
     /**
-     * Replaces the stored user with a new User entity reflecting the applied changes.
+     * Updates an existing user's details and returns the updated entity.
      *
      * @param  int         $id        The unique identifier of the user to update.
      * @param  string|null $firstName The new first name, or null to retain the existing value.
