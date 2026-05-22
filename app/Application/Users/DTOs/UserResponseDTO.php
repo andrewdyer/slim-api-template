@@ -13,7 +13,7 @@ use JsonSerializable;
 final class UserResponseDTO implements JsonSerializable
 {
     /**
-     * Constructs a new UserResponseDTO with the provided user details.
+     * Creates a new UserResponseDTO with the provided user details.
      *
      * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.
