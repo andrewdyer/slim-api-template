@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class ListUsersAction extends AbstractUserAction
 {
     /**
-     * Retrieves paginated users from the service and returns them with pagination metadata.
+     * Handles the retrieval of paginated users.
      *
      * Invalid page or perPage values are silently clamped to their nearest valid boundary
      * rather than rejected with a 400. This keeps the API forgiving for UI consumers where
