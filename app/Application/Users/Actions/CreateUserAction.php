@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class CreateUserAction extends AbstractUserAction
 {
     /**
-     * Handles the request body, creates a new user, and returns the created resource.
+     * Handles the creation of a new user.
      *
      * @return Response                 A 201 JSON response containing the newly created user.
      * @throws InvalidArgumentException If required fields are missing from the request body.
