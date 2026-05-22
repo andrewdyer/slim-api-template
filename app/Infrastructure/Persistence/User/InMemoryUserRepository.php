@@ -55,18 +55,11 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Removes the user with the given ID from the in-memory store.
      *
-     * @param  int  $id The unique identifier of the user to delete.
-     * @return bool True if the user was found and removed, false otherwise.
+     * @param int $id The unique identifier of the user to delete.
      */
-    public function delete(int $id): bool
+    public function delete(int $id): void
     {
-        if (!isset($this->store[$id])) {
-            return false;
-        }
-
         unset($this->store[$id]);
-
-        return true;
     }
 
     /**

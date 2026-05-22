@@ -24,9 +24,9 @@ final class DeleteUserActionTest extends AbstractUsersTestCase
     }
 
     /**
-     * Asserts that a 204 response is still returned even when the user does not exist.
+     * Asserts that a 404 response is returned when the user does not exist.
      */
-    public function testReturns204WhenUserDoesNotExist(): void
+    public function testReturns404WhenUserDoesNotExist(): void
     {
         $user = $this->userFactory->create();
 
@@ -34,6 +34,6 @@ final class DeleteUserActionTest extends AbstractUsersTestCase
 
         $response = $this->request('DELETE', '/api/v1/users/' . $user->getId());
 
-        $this->assertSame(204, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
     }
 }
