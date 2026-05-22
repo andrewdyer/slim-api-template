@@ -206,26 +206,25 @@ final class UserServiceTest extends TestCase
     }
 
     /**
-     * Asserts that the delete operation returns true and the user can no longer be found.
+     * Asserts that the user can no longer be found after a successful deletion.
      */
     public function testDeletesUserWhenUserExists(): void
     {
-        $result = $this->userService->delete(3);
-
-        $this->assertTrue($result);
+        $this->userService->delete(3);
 
         $this->expectException(UserNotFoundException::class);
         $this->userService->find(3);
     }
 
     /**
-     * Asserts that the delete operation returns false when the ID does not match any stored user.
+     * Asserts that UserNotFoundException is thrown when deleting a non-existent user.
      */
-    public function testReturnsFalseWhenUserDoesNotExist(): void
+    public function testThrowsUserNotFoundExceptionWhenDeletingNonExistentUser(): void
     {
-        $result = $this->userService->delete(999);
+        $this->expectException(UserNotFoundException::class);
+        $this->expectExceptionMessage('User with ID 999 not found.');
 
-        $this->assertFalse($result);
+        $this->userService->delete(999);
     }
 
     /**

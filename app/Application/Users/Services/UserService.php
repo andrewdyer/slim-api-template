@@ -55,12 +55,14 @@ final readonly class UserService
     /**
      * Deletes the user with the given ID from the repository.
      *
-     * @param  int  $id The unique identifier of the user to delete.
-     * @return bool True if the user was deleted, false if no user with that ID existed.
+     * @param  int                   $id The unique identifier of the user to delete.
+     * @throws UserNotFoundException If no user exists with the given ID.
      */
-    public function delete(int $id): bool
+    public function delete(int $id): void
     {
-        return $this->userRepository->delete($id);
+        $user = $this->find($id);
+
+        $this->userRepository->delete($user->getId());
     }
 
     /**
