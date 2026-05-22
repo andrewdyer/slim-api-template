@@ -9,8 +9,6 @@ use JsonSerializable;
 
 /**
  * Represents a user in outbound API responses.
- *
- * Constructed from a domain User entity and serialized to JSON in action responses.
  */
 final class UserResponseDTO implements JsonSerializable
 {
