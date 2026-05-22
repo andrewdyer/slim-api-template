@@ -7,7 +7,7 @@ if (!function_exists('root_path')) {
      * @param  string $path Relative path to append to the root.
      * @return string The absolute path.
      */
-    function root_path($path = ''): string
+    function root_path(string $path = ''): string
     {
         $base = __DIR__ . DIRECTORY_SEPARATOR . '..';
 
