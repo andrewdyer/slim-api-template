@@ -8,7 +8,7 @@ use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
 /**
- * In-memory implementation of UserRepository, pre-seeded with sample data.
+ * Creates a new repository pre-populated with sample users.
  */
 final class InMemoryUserRepository implements UserRepository
 {
