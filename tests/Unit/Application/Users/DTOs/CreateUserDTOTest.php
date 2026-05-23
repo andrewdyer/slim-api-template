@@ -51,18 +51,24 @@ final class CreateUserDTOTest extends TestCase
     public static function invalidPayloadProvider(): array
     {
         return [
-            'missing first name' => [[
-                'last_name' => 'Doe',
-                'email' => 'jane@example.com',
-            ]],
-            'missing last name' => [[
-                'first_name' => 'Jane',
-                'email' => 'jane@example.com',
-            ]],
-            'missing email' => [[
-                'first_name' => 'Jane',
-                'last_name' => 'Doe',
-            ]],
+            'missing first name' => [
+                [
+                    'last_name' => 'Doe',
+                    'email' => 'jane@example.com',
+                ],
+            ],
+            'missing last name' => [
+                [
+                    'first_name' => 'Jane',
+                    'email' => 'jane@example.com',
+                ],
+            ],
+            'missing email' => [
+                [
+                    'first_name' => 'Jane',
+                    'last_name' => 'Doe',
+                ],
+            ],
             'empty payload' => [[]],
         ];
     }
