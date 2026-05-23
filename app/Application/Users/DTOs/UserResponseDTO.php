@@ -9,13 +9,11 @@ use JsonSerializable;
 
 /**
  * Represents a user in outbound API responses.
- *
- * Constructed from a domain User entity and serialized to JSON in action responses.
  */
 final class UserResponseDTO implements JsonSerializable
 {
     /**
-     * Constructs a new UserResponseDTO with the provided user details.
+     * Creates a new UserResponseDTO with the provided user details.
      *
      * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.
@@ -47,7 +45,7 @@ final class UserResponseDTO implements JsonSerializable
     }
 
     /**
-     * Serializes the DTO to an associative array for JSON encoding.
+     * Returns an associative array representation for JSON encoding.
      *
      * @return array<string, mixed> An associative array of the DTO's public properties.
      */

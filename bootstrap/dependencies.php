@@ -10,6 +10,9 @@ use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Registers service dependencies in the container.
+ */
 return function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
         LoggerInterface::class => function(ContainerInterface $container) {

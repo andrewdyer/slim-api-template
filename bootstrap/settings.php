@@ -7,6 +7,9 @@ use AndrewDyer\Settings\Settings;
 use DI\ContainerBuilder;
 use Monolog\Logger;
 
+/**
+ * Defines application configuration settings.
+ */
 return function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
         SettingsInterface::class => function() {

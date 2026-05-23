@@ -46,23 +46,29 @@ final class CreateUserDTOTest extends TestCase
     /**
      * Provides input arrays with one or more missing required fields.
      *
-     * @return array<string, array> Named sets of invalid payloads.
+     * @return array<string, array>
      */
     public static function invalidPayloadProvider(): array
     {
         return [
-            'missing first name' => [[
-                'last_name' => 'Doe',
-                'email' => 'jane@example.com',
-            ]],
-            'missing last name' => [[
-                'first_name' => 'Jane',
-                'email' => 'jane@example.com',
-            ]],
-            'missing email' => [[
-                'first_name' => 'Jane',
-                'last_name' => 'Doe',
-            ]],
+            'missing first name' => [
+                [
+                    'last_name' => 'Doe',
+                    'email' => 'jane@example.com',
+                ],
+            ],
+            'missing last name' => [
+                [
+                    'first_name' => 'Jane',
+                    'email' => 'jane@example.com',
+                ],
+            ],
+            'missing email' => [
+                [
+                    'first_name' => 'Jane',
+                    'last_name' => 'Doe',
+                ],
+            ],
             'empty payload' => [[]],
         ];
     }

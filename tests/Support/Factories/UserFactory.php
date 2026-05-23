@@ -14,7 +14,7 @@ use Faker\Generator;
 final readonly class UserFactory
 {
     /**
-     * Constructs a new UserFactory with the given repository and faker instance.
+     * Creates a new UserFactory with the given repository and faker instance.
      *
      * @param UserRepository $users The repository used to persist created users.
      * @param Generator      $faker The Faker generator for creating random data.

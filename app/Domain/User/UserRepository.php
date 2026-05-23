@@ -6,8 +6,6 @@ namespace App\Domain\User;
 
 /**
  * Defines the contract for persisting and retrieving user entities.
- *
- * Implementations may use any storage mechanism such as a database or in-memory store.
  */
 interface UserRepository
 {
@@ -45,7 +43,7 @@ interface UserRepository
     public function findPaginated(int $page, int $perPage): array;
 
     /**
-     * Finds a user by their unique identifier.
+     * Returns a user by their unique identifier.
      *
      * @param  int       $id The unique identifier of the user to retrieve.
      * @return User|null The matching User entity, or null if not found.

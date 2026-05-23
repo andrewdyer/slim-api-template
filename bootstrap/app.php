@@ -10,6 +10,9 @@ use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 
+/**
+ * Creates and configures the Slim application instance.
+ */
 return function(): App {
     // Load environment variables from .env file
     if (!get_env('APP_ENV')) {
@@ -61,8 +64,8 @@ return function(): App {
         callableResolver: $app->getCallableResolver(),
         responseFactory: $app->getResponseFactory(),
         logger: $container->has(LoggerInterface::class)
-            ? $container->get(LoggerInterface::class)
-            : null
+        ? $container->get(LoggerInterface::class)
+        : null
     );
 
     // Set default error handler

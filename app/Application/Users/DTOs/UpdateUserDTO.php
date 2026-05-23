@@ -6,14 +6,11 @@ namespace App\Application\Users\DTOs;
 
 /**
  * Carries the partial input data required to update an existing user.
- *
- * Used by UpdateUserAction to pass the parsed request body to UserService.
- * All fields except the user ID are optional to support partial updates.
  */
 final class UpdateUserDTO
 {
     /**
-     * Constructs a new UpdateUserDTO for the specified user.
+     * Creates a new UpdateUserDTO for the specified user.
      *
      * @param int         $id        The unique identifier of the user to update.
      * @param string|null $firstName The updated first name, or null to leave unchanged.

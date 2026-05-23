@@ -9,13 +9,11 @@ use App\Application\Users\Services\UserService;
 
 /**
  * Base class for all user-related HTTP actions.
- *
- * Provides shared dependencies to concrete action classes via constructor injection.
  */
 abstract class AbstractUserAction extends AbstractAction
 {
     /**
-     * Injects the user service used by all user actions.
+     * Creates a new action with the required dependencies.
      *
      * @param UserService $userService The service that handles user application logic.
      */

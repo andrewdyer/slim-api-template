@@ -12,13 +12,11 @@ use App\Domain\User\UserRepository;
 
 /**
  * Handles user-related application logic, coordinating between actions and the repository.
- *
- * Acts as the primary entry point for all user use cases in the application layer.
  */
 final readonly class UserService
 {
     /**
-     * Injects the repository used to persist and retrieve user entities.
+     * Creates a new UserService with the required dependencies.
      *
      * @param UserRepository $userRepository The backing user persistence layer.
      */
@@ -28,7 +26,7 @@ final readonly class UserService
     }
 
     /**
-     * Retrieves all users from the repository.
+     * Returns all users from the repository.
      *
      * @return User[] An array of all User entities.
      */
@@ -66,7 +64,7 @@ final readonly class UserService
     }
 
     /**
-     * Finds and returns the user with the given ID.
+     * Returns the user with the given ID.
      *
      * @param  int                   $id The unique identifier of the user to retrieve.
      * @return User                  The matching User entity.
@@ -84,7 +82,7 @@ final readonly class UserService
     }
 
     /**
-     * Retrieves a paginated list of users from the repository.
+     * Returns a paginated list of users from the repository.
      *
      * @param  int                              $page    The 1-indexed page number. Must be >= 1.
      * @param  int                              $perPage The number of users per page. Must be >= 1.

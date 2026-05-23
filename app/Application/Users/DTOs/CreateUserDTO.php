@@ -8,13 +8,11 @@ use InvalidArgumentException;
 
 /**
  * Carries the validated input data required to create a new user.
- *
- * Used by CreateUserAction to pass the parsed request body to UserService.
  */
 final class CreateUserDTO
 {
     /**
-     * Constructs a new CreateUserDTO with the provided user details.
+     * Creates a new CreateUserDTO with the provided user details.
      *
      * @param string $firstName The user's first name.
      * @param string $lastName  The user's last name.

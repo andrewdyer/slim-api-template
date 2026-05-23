@@ -17,7 +17,7 @@ final class HelpersTest extends TestCase
     private array $originalEnv;
 
     /**
-     * {@inheritdoc}
+     * Backs up environment variables before each test.
      */
     protected function setUp(): void
     {
@@ -29,7 +29,7 @@ final class HelpersTest extends TestCase
     }
 
     /**
-     * {@inheritdoc}
+     * Restores original environment variables after each test.
      */
     protected function tearDown(): void
     {

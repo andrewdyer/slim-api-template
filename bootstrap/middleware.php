@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 use Slim\App;
 
+/**
+ * Registers application middleware.
+ */
 return function(App $app): void {
     // Add application middleware here.
 

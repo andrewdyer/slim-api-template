@@ -4,9 +4,10 @@ if (!function_exists('root_path')) {
     /**
      * Returns the absolute path to the project root, optionally suffixed with the given path.
      *
-     * @param string $path Relative path to append to the root.
+     * @param  string $path Relative path to append to the root.
+     * @return string The absolute path.
      */
-    function root_path($path = ''): string
+    function root_path(string $path = ''): string
     {
         $base = __DIR__ . DIRECTORY_SEPARATOR . '..';
 
@@ -22,12 +23,13 @@ if (!function_exists('root_path')) {
 
 if (!function_exists('get_env')) {
     /**
-     * Retrieves an environment variable, casting "true" and "false" strings to booleans.
+     * Returns an environment variable, casting "true" and "false" strings to booleans.
      *
-     * @param  mixed $default Value to return when the key is not set.
+     * @param  string $key     The environment variable key to retrieve.
+     * @param  mixed  $default Value to return when the key is not set.
      * @return mixed
      */
-    function get_env($key, $default = null)
+    function get_env(string $key, mixed $default = null): mixed
     {
         if (isset($_ENV[$key])) {
             $value = $_ENV[$key];
@@ -50,7 +52,7 @@ if (!function_exists('get_env')) {
 
 if (!function_exists('get_env_array')) {
     /**
-     * Retrieves an environment variable as an array, split by a delimiter.
+     * Returns an environment variable as an array, split by a delimiter.
      *
      * Empty values return an empty array.
      *
@@ -68,19 +70,20 @@ if (!function_exists('get_env_array')) {
 
         return array_values(array_filter(
             array_map('trim', explode($delimiter, $value)),
-            static fn (string $item): bool => $item !== ''
+            static fn(string $item): bool => $item !== ''
         ));
     }
 }
 
 if (!function_exists('require_from_root')) {
     /**
-     * Requires a file relative to the project root.
+     * Returns the result of requiring a file relative to the project root.
      *
-     * @throws \RuntimeException if the file does not exist
-     * @return mixed
+     * @param  string            $path The relative path to the file.
+     * @return mixed             The return value from the required file.
+     * @throws \RuntimeException If the file does not exist.
      */
-    function require_from_root(string $path)
+    function require_from_root(string $path): mixed
     {
         $full = root_path($path);
 

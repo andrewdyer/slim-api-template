@@ -8,13 +8,11 @@ use JsonSerializable;
 
 /**
  * Represents a user entity in the domain layer.
- *
- * Encapsulates the core user data and provides read-only access through getters.
  */
 final readonly class User implements JsonSerializable
 {
     /**
-     * Constructs a User entity with the given identity and personal details.
+     * Creates a User entity with the given identity and personal details.
      *
      * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.
@@ -70,7 +68,7 @@ final readonly class User implements JsonSerializable
     }
 
     /**
-     * Serializes the User entity to an associative array for JSON encoding.
+     * Returns an associative array representation of the User for JSON encoding.
      *
      * @return array<string, mixed> An associative array containing the user's id, firstName, lastName, and email.
      */

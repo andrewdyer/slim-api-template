@@ -15,7 +15,7 @@ use App\Domain\User\UserRepository;
 final class InMemoryUserRepository implements UserRepository
 {
     /**
-     * @var int Counter used to assign a unique, auto-incrementing ID to each new user.
+     * Counter used to assign a unique, auto-incrementing ID to each new user.
      */
     private int $nextId = 1;
 
@@ -25,7 +25,7 @@ final class InMemoryUserRepository implements UserRepository
     private array $store = [];
 
     /**
-     * Seeds the repository with a predefined set of sample users.
+     * Creates a new repository pre-populated with sample users.
      */
     public function __construct()
     {
@@ -53,7 +53,7 @@ final class InMemoryUserRepository implements UserRepository
     }
 
     /**
-     * Removes the user with the given ID from the in-memory store.
+     * Deletes the user with the given ID from the in-memory store.
      *
      * @param int $id The unique identifier of the user to delete.
      */
@@ -94,7 +94,7 @@ final class InMemoryUserRepository implements UserRepository
     }
 
     /**
-     * Looks up a user by their ID in the in-memory store.
+     * Returns a user by their ID from the in-memory store.
      *
      * @param  int       $id The unique identifier of the user to retrieve.
      * @return User|null The matching User entity, or null if not found.
@@ -105,7 +105,7 @@ final class InMemoryUserRepository implements UserRepository
     }
 
     /**
-     * Replaces the stored user with a new User entity reflecting the applied changes.
+     * Updates an existing user's details and returns the updated entity.
      *
      * @param  int         $id        The unique identifier of the user to update.
      * @param  string|null $firstName The new first name, or null to retain the existing value.

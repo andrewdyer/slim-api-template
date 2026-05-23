@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 final class UserServiceTest extends TestCase
 {
     /**
-     * @var UserService The service under test, backed by an in-memory repository.
+     * The service under test, backed by an in-memory repository.
      */
     private UserService $userService;
 
