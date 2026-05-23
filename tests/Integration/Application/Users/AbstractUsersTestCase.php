@@ -12,8 +12,6 @@ use Tests\Support\Factories\UserFactory;
 
 /**
  * Base class for User-related integration tests.
- *
- * Provides shared setup for UserRepository and UserFactory.
  */
 abstract class AbstractUsersTestCase extends AbstractTestCase
 {
