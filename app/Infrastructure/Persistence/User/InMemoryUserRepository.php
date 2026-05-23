@@ -9,6 +9,8 @@ use App\Domain\User\UserRepository;
 
 /**
  * In-memory implementation of UserRepository, pre-seeded with sample data.
+ *
+ * Intended for development and testing purposes. Data does not persist between requests.
  */
 final class InMemoryUserRepository implements UserRepository
 {
