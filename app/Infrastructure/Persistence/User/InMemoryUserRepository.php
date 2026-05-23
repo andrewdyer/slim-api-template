@@ -15,7 +15,7 @@ use App\Domain\User\UserRepository;
 final class InMemoryUserRepository implements UserRepository
 {
     /**
-     * @var int Counter used to assign a unique, auto-incrementing ID to each new user.
+     * Counter used to assign a unique, auto-incrementing ID to each new user.
      */
     private int $nextId = 1;
 
