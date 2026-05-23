@@ -10,6 +10,9 @@ use App\Application\Users\Actions\UpdateUserAction;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
+/**
+ * Registers HTTP route definitions.
+ */
 return function(App $app): void {
     $app->group('/api', function(Group $api) {
         $api->group('/v1', function(Group $v1) {
