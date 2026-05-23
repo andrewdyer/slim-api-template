@@ -23,7 +23,7 @@ if (!function_exists('root_path')) {
 
 if (!function_exists('get_env')) {
     /**
-     * Retrieves an environment variable, casting "true" and "false" strings to booleans.
+     * Returns an environment variable, casting "true" and "false" strings to booleans.
      *
      * @param  string $key     The environment variable key to retrieve.
      * @param  mixed  $default Value to return when the key is not set.
@@ -70,7 +70,7 @@ if (!function_exists('get_env_array')) {
 
         return array_values(array_filter(
             array_map('trim', explode($delimiter, $value)),
-            static fn (string $item): bool => $item !== ''
+            static fn(string $item): bool => $item !== ''
         ));
     }
 }
