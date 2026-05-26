@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Application\Users\Actions;
 
+use AndrewDyer\Actions\AbstractAction;
+use AndrewDyer\CommandBus\CommandBus;
+use App\Application\Users\Commands\CreateUserCommand;
 use App\Application\Users\DTOs\CreateUserDTO;
 use App\Application\Users\DTOs\UserResponseDTO;
 use InvalidArgumentException;
@@ -13,8 +16,17 @@ use Psr\Http\Message\ResponseInterface as Response;
 /**
  * Handles creating a new user via HTTP.
  */
-final class CreateUserAction extends AbstractUserAction
+final class CreateUserAction extends AbstractAction
 {
+    /**
+     * Creates a new CreateUserAction with the required dependencies.
+     *
+     * @param CommandBus $commandBus The command bus used to dispatch commands.
+     */
+    public function __construct(private readonly CommandBus $commandBus)
+    {
+    }
+
     /**
      * Handles the creation of a new user.
      *
@@ -26,7 +38,11 @@ final class CreateUserAction extends AbstractUserAction
     {
         $inputDto = CreateUserDTO::fromArray($this->getParsedBody());
 
-        $user = $this->userService->create($inputDto);
+        $user = $this->commandBus->dispatch(new CreateUserCommand(
+            $inputDto->firstName,
+            $inputDto->lastName,
+            $inputDto->email,
+        ));
 
         $responseDto = UserResponseDTO::fromDomain($user);
 
