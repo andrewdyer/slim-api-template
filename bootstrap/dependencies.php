@@ -2,7 +2,15 @@
 
 declare(strict_types=1);
 
+use AndrewDyer\CommandBus\CommandBus;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
+use App\Application\Users\Commands\CreateUserCommand;
+use App\Application\Users\Commands\DeleteUserCommand;
+use App\Application\Users\Commands\UpdateUserCommand;
+use App\Application\Users\Handlers\CreateUserHandler;
+use App\Application\Users\Handlers\DeleteUserHandler;
+use App\Application\Users\Handlers\UpdateUserHandler;
+use App\Domain\User\UserRepository;
 use DI\ContainerBuilder;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
@@ -15,6 +23,17 @@ use Psr\Log\LoggerInterface;
  */
 return function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
+        CommandBus::class => function(ContainerInterface $container) {
+            $userRepository = $container->get(UserRepository::class);
+
+            $bus = new CommandBus();
+
+            $bus->register(CreateUserCommand::class, new CreateUserHandler($userRepository));
+            $bus->register(DeleteUserCommand::class, new DeleteUserHandler($userRepository));
+            $bus->register(UpdateUserCommand::class, new UpdateUserHandler($userRepository));
+
+            return $bus;
+        },
         LoggerInterface::class => function(ContainerInterface $container) {
             $settings = $container->get(SettingsInterface::class);
 
