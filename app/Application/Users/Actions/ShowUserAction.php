@@ -4,16 +4,27 @@ declare(strict_types=1);
 
 namespace App\Application\Users\Actions;
 
+use AndrewDyer\Actions\AbstractAction;
 use App\Application\Users\DTOs\UserResponseDTO;
 use App\Application\Users\Exceptions\UserNotFoundException;
+use App\Domain\User\UserRepository;
 use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Handles retrieving a single user by ID via HTTP.
  */
-final class ShowUserAction extends AbstractUserAction
+final class ShowUserAction extends AbstractAction
 {
+    /**
+     * Creates a new ShowUserAction.
+     *
+     * @param UserRepository $userRepository The repository used to retrieve users.
+     */
+    public function __construct(private readonly UserRepository $userRepository)
+    {
+    }
+
     /**
      * Handles the retrieval of a single user by ID.
      *
@@ -25,7 +36,11 @@ final class ShowUserAction extends AbstractUserAction
     {
         $userId = (int)$this->resolveArg('id');
 
-        $user = $this->userService->find($userId);
+        $user = $this->userRepository->findById($userId);
+
+        if (null === $user) {
+            throw new UserNotFoundException("User with ID {$userId} not found.");
+        }
 
         $responseDto = UserResponseDTO::fromDomain($user);
 

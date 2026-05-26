@@ -4,16 +4,27 @@ declare(strict_types=1);
 
 namespace App\Application\Users\Actions;
 
+use AndrewDyer\Actions\AbstractAction;
 use App\Application\Users\DTOs\UserResponseDTO;
 use App\Domain\User\User;
+use App\Domain\User\UserRepository;
 use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Handles listing all users via HTTP.
  */
-final class ListUsersAction extends AbstractUserAction
+final class ListUsersAction extends AbstractAction
 {
+    /**
+     * Creates a new ListUsersAction.
+     *
+     * @param UserRepository $userRepository The repository used to retrieve users.
+     */
+    public function __construct(private readonly UserRepository $userRepository)
+    {
+    }
+
     /**
      * Handles the retrieval of paginated users.
      *
@@ -30,7 +41,7 @@ final class ListUsersAction extends AbstractUserAction
         $page = max(1, (int)$this->resolveQueryParam('page', 1));
         $perPage = max(1, min(100, (int)$this->resolveQueryParam('perPage', 10)));
 
-        ['users' => $users, 'total' => $total] = $this->userService->paginated($page, $perPage);
+        ['users' => $users, 'total' => $total] = $this->userRepository->findPaginated($page, $perPage);
 
         $userData = array_map(
             fn (User $user) => UserResponseDTO::fromDomain($user),
