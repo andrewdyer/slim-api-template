@@ -30,6 +30,7 @@ final class DeleteUserAction extends AbstractAction
      *
      * @return Response              A 204 JSON response with no body content.
      * @throws UserNotFoundException If no user exists with the given ID.
+     * @throws JsonException         If the request body contains invalid JSON.
      */
     protected function handle(): Response
     {
