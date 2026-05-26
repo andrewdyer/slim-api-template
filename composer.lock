@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10bee66dd437e70f8767f7de44b0738c",
+    "content-hash": "40c3bf230f25bf734fc795889edbe32b",
     "packages": [
         {
             "name": "andrewdyer/actions",
@@ -61,16 +61,16 @@
         },
         {
             "name": "andrewdyer/command-bus",
-            "version": "0.1.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdyer/command-bus.git",
-                "reference": "800d5df2a266bc1bf6c1dfe3598c16228750c5d7"
+                "reference": "07f45c652eef93079c53c1016f5cf675aafd2094"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdyer/command-bus/zipball/800d5df2a266bc1bf6c1dfe3598c16228750c5d7",
-                "reference": "800d5df2a266bc1bf6c1dfe3598c16228750c5d7",
+                "url": "https://api.github.com/repos/andrewdyer/command-bus/zipball/07f45c652eef93079c53c1016f5cf675aafd2094",
+                "reference": "07f45c652eef93079c53c1016f5cf675aafd2094",
                 "shasum": ""
             },
             "require": {
@@ -102,9 +102,9 @@
             ],
             "support": {
                 "issues": "https://github.com/andrewdyer/command-bus/issues",
-                "source": "https://github.com/andrewdyer/command-bus/tree/0.1.0"
+                "source": "https://github.com/andrewdyer/command-bus/tree/1.0.0"
             },
-            "time": "2026-05-24T23:13:49+00:00"
+            "time": "2026-05-26T21:31:48+00:00"
         },
         {
             "name": "andrewdyer/cors-response-emitter",

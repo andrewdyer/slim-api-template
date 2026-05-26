@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Users\Commands;
 
-use AndrewDyer\CommandBus\Contracts\CommandInterface;
-
-readonly class CreateUserCommand implements CommandInterface
+readonly class CreateUserCommand
 {
     public function __construct(
         public string $firstName,
