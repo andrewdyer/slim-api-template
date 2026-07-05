@@ -1,0 +1,43 @@
+name: Deploy
+
+on:
+  repository_dispatch:
+    types: [deploy]
+
+run-name: 'v${{ github.event.client_payload.version }}'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate deployment inputs
+        run: |
+          VERSION="${{ github.event.client_payload.version }}"
+
+          if [[ -z "$VERSION" ]]; then
+            echo "❌ Missing deploy payload (version)"
+            exit 1
+          fi
+
+          echo "Version: $VERSION"
+
+      - name: Deploy app
+        run: |
+          VERSION="${{ github.event.client_payload.version }}"
+          REPO=$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')
+          IMAGE="ghcr.io/${REPO}"
+
+          echo "Deploying $IMAGE:$VERSION..."
+
+          # TODO: add your deployment logic here.
+          # At this point the following variables are available:
+          #   VERSION — the released version (e.g. "1.2.3")
+          #   IMAGE   — the GHCR image name (e.g. "ghcr.io/your-github-org/slim-api-template")
