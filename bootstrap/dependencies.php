@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
-use Monolog\Formatter\LineFormatter;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
