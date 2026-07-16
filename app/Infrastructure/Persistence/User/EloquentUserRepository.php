@@ -71,18 +71,22 @@ final class EloquentUserRepository implements UserRepository
      */
     public function findPaginated(int $page, int $perPage): array
     {
-        $paginator = UserModel::query()
-            ->orderBy('id')
-            ->paginate($perPage, ['*'], 'page', $page);
+        $page = max(1, $page);
+        $perPage = min(max(1, $perPage), 100);
 
-        $users = array_map(
-            fn (UserModel $model): User => $this->toDomain($model),
-            $paginator->items(),
-        );
+        $query = UserModel::query()->orderBy('id');
+
+        $total = (clone $query)->count();
+
+        $users = $query
+            ->forPage($page, $perPage)
+            ->get()
+            ->map(fn (UserModel $model): User => $this->toDomain($model))
+            ->all();
 
         return [
             'users' => $users,
-            'total' => $paginator->total(),
+            'total' => $total,
         ];
     }
 
