@@ -45,6 +45,12 @@
     ],
     "scripts": {
         "cs": "php-cs-fixer fix",
+        "db:migrate": "phinx migrate",
+        "db:migrate:create": "phinx create",
+        "db:rollback": "phinx rollback",
+        "db:seed": "phinx seed:run",
+        "db:seed:create": "phinx seed:create",
+        "db:status": "phinx status",
         "test": "phpunit",
         "test:unit": "phpunit --testsuite Unit",
         "test:integration": "phpunit --testsuite Integration"
