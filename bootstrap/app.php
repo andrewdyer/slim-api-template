@@ -5,8 +5,6 @@ declare(strict_types=1);
 use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
-use Dotenv\Dotenv;
-use Illuminate\Database\Capsule\Manager as Capsule;
 use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
@@ -15,10 +13,8 @@ use Slim\Factory\AppFactory;
  * Creates and configures the Slim application instance.
  */
 return function(): App {
-    // Load environment variables from .env file
-    if (!get_env('APP_ENV')) {
-        Dotenv::createImmutable(root_path('/'))->load();
-    }
+    // Load the application environment configuration.
+    require_from_root('bootstrap/environment.php')();
 
     // Initialize dependency injection container builder
     $containerBuilder = new ContainerBuilder();
