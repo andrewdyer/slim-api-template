@@ -6,6 +6,7 @@ use AndrewDyer\JsonErrorHandler\JsonErrorHandler;
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
@@ -70,6 +71,10 @@ return function(): App {
 
     // Set default error handler
     $errorMiddleware->setDefaultErrorHandler($errorHandler);
+
+    // Boot Eloquent ORM
+    $capsule = $container->get(Capsule::class);
+    $capsule->bootEloquent();
 
     // Register application routes
     require_from_root('bootstrap/routes.php')($app);
