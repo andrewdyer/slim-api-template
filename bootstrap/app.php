@@ -72,9 +72,8 @@ return function(): App {
     // Set default error handler
     $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
-    // Boot Eloquent ORM
-    $capsule = $container->get(Capsule::class);
-    $capsule->bootEloquent();
+    // Boot the configured database integration
+    require_from_root('bootstrap/database.php')($container);
 
     // Register application routes
     require_from_root('bootstrap/routes.php')($app);
