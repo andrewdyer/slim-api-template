@@ -12,7 +12,7 @@ use InvalidArgumentException;
 final class CreateUserDTO
 {
     /**
-     * Creates a new CreateUserDTO with the provided user details.
+     * Creates a new CreateUserDTO.
      *
      * @param string $firstName The user's first name.
      * @param string $lastName  The user's last name.
