@@ -31,22 +31,19 @@ if (!function_exists('get_env')) {
      */
     function get_env(string $key, mixed $default = null): mixed
     {
-        $value = $_ENV[$key] ?? getenv($key);
+        $value = $_ENV[$key]
+            ?? $_SERVER[$key]
+            ?? getenv($key);
 
-        if ($value !== false) {
-            switch (strtolower($value)) {
-                case 'true':
-                    return true;
-
-                case 'false':
-                    return false;
-
-                default:
-                    return $value;
-            }
+        if ($value === false || $value === null) {
+            return $default;
         }
 
-        return $default;
+        return match (strtolower((string)$value)) {
+            'true' => true,
+            'false' => false,
+            default => $value,
+        };
     }
 }
 
