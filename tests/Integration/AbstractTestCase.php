@@ -15,7 +15,7 @@ use Slim\Psr7\Stream;
 use Slim\Psr7\Uri;
 
 /**
- * Base class for integration tests using the full application stack.
+ * Provides shared application infrastructure for integration tests.
  */
 abstract class AbstractTestCase extends TestCase
 {
@@ -30,7 +30,7 @@ abstract class AbstractTestCase extends TestCase
     protected Generator $faker;
 
     /**
-     * Sets up the application before each test.
+     * Builds the application state required before each test.
      */
     protected function setUp(): void
     {

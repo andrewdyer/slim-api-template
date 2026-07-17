@@ -33,6 +33,8 @@ final class CreateUserDTOTest extends TestCase
 
     /**
      * Asserts that an InvalidArgumentException is thrown when one or more required fields are absent.
+     *
+     * @param array<string, string> $payload The incomplete input payload.
      */
     #[DataProvider('invalidPayloadProvider')]
     public function testThrowsInvalidArgumentExceptionWhenRequiredFieldsAreMissing(array $payload): void
@@ -46,7 +48,7 @@ final class CreateUserDTOTest extends TestCase
     /**
      * Provides input arrays with one or more missing required fields.
      *
-     * @return array<string, array>
+     * @return array<string, array{array<string, string>}>
      */
     public static function invalidPayloadProvider(): array
     {

@@ -8,7 +8,7 @@ use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
 /**
- * Eloquent-based implementation of UserRepository.
+ * Manages user persistence and retrieval through Eloquent.
  *
  * Uses Illuminate Database Capsule to persist and retrieve user entities from a database.
  */
@@ -91,7 +91,7 @@ final class EloquentUserRepository implements UserRepository
     }
 
     /**
-     * Finds a user by their unique identifier.
+     * Returns a user by their unique identifier.
      *
      * @param  int       $id The unique identifier of the user to retrieve.
      * @return User|null The matching User entity, or null if not found.
@@ -142,7 +142,7 @@ final class EloquentUserRepository implements UserRepository
     }
 
     /**
-     * Transforms an Eloquent EloquentUserModel into a domain User entity.
+     * Builds a domain User entity from an Eloquent model.
      *
      * @param  EloquentUserModel $model The Eloquent model to convert.
      * @return User              The corresponding domain entity.

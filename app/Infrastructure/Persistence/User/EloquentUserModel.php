@@ -7,7 +7,7 @@ namespace App\Infrastructure\Persistence\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Eloquent model representing the users table.
+ * Represents the users table through Eloquent.
  *
  * Maps to the persistence layer and provides ORM capabilities via Illuminate Database.
  */
@@ -16,7 +16,7 @@ final class EloquentUserModel extends Model
     /**
      * The table associated with the model.
      *
-     * @var string
+     * @var string The table name used by Eloquent.
      */
     protected $table = 'users';
 
@@ -34,7 +34,7 @@ final class EloquentUserModel extends Model
     /**
      * Indicates if the model should be timestamped.
      *
-     * @var bool
+     * @var bool Whether Eloquent maintains timestamp columns.
      */
     public $timestamps = true;
 }

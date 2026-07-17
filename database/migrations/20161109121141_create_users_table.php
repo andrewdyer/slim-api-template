@@ -5,14 +5,12 @@ declare(strict_types=1);
 use Phinx\Migration\AbstractMigration;
 
 /**
- * Creates the users table used by the application persistence layer.
+ * Handles creation and removal of the users table.
  */
 final class CreateUsersTable extends AbstractMigration
 {
     /**
-     * Applies the migration by creating the users table and its required columns.
-     *
-     * @return void
+     * Creates the users table and its required columns.
      */
     public function up(): void
     {
@@ -32,9 +30,7 @@ final class CreateUsersTable extends AbstractMigration
     }
 
     /**
-     * Reverts the migration by dropping the users table if it exists.
-     *
-     * @return void
+     * Deletes the users table if it exists.
      */
     public function down(): void
     {

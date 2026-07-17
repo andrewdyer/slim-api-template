@@ -8,12 +8,12 @@ use App\Domain\User\User;
 use JsonSerializable;
 
 /**
- * Represents a user in outbound API responses.
+ * Carries user data for outbound API responses.
  */
 final class UserResponseDTO implements JsonSerializable
 {
     /**
-     * Creates a new UserResponseDTO with the provided user details.
+     * Creates a new UserResponseDTO.
      *
      * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.

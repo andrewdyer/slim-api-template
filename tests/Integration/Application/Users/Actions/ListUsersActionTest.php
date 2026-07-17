@@ -27,8 +27,7 @@ final class ListUsersActionTest extends AbstractUsersTestCase
     }
 
     /**
-     * Asserts that the pagination metadata is structurally correct and
-     * that the totals and page count arithmetic is consistent.
+     * Asserts that pagination metadata has the expected structure and consistent totals.
      */
     public function testPaginationMetadataIsCorrect(): void
     {
@@ -54,6 +53,8 @@ final class ListUsersActionTest extends AbstractUsersTestCase
     /**
      * Asserts that an invalid page parameter is clamped to a valid value.
      *
+     * @param string $query        The query string under test.
+     * @param int    $expectedPage The expected clamped page number.
      * @dataProvider invalidPageProvider
      */
     public function testInvalidPageIsClamped(string $query, int $expectedPage): void
@@ -81,6 +82,8 @@ final class ListUsersActionTest extends AbstractUsersTestCase
     /**
      * Asserts that an invalid perPage parameter is clamped to a valid value.
      *
+     * @param string $query           The query string under test.
+     * @param int    $expectedPerPage The expected clamped page size.
      * @dataProvider invalidPerPageProvider
      */
     public function testInvalidPerPageIsClamped(string $query, int $expectedPerPage): void

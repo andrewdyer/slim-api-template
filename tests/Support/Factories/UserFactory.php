@@ -9,12 +9,12 @@ use App\Domain\User\UserRepository;
 use Faker\Generator;
 
 /**
- * Factory for creating test User entities with generated or overridden data.
+ * Handles creation of test User entities with generated or overridden data.
  */
 final readonly class UserFactory
 {
     /**
-     * Creates a new UserFactory with the given repository and faker instance.
+     * Creates a new UserFactory with the required dependencies.
      *
      * @param UserRepository $users The repository used to persist created users.
      * @param Generator      $faker The Faker generator for creating random data.

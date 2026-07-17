@@ -11,7 +11,7 @@ use Tests\Integration\AbstractTestCase;
 use Tests\Support\Factories\UserFactory;
 
 /**
- * Base class for User-related integration tests.
+ * Provides shared setup for user-related integration tests.
  */
 abstract class AbstractUsersTestCase extends AbstractTestCase
 {
@@ -26,7 +26,7 @@ abstract class AbstractUsersTestCase extends AbstractTestCase
     protected UserFactory $userFactory;
 
     /**
-     * Sets up the test dependencies before each test.
+     * Builds the user test dependencies before each test.
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface

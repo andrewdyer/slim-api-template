@@ -5,12 +5,12 @@ declare(strict_types=1);
 use Phinx\Seed\AbstractSeed;
 
 /**
- * Seeds the users table with an example user.
+ * Handles seeding the users table with an example user.
  */
 final class UserSeeder extends AbstractSeed
 {
     /**
-     * Inserts the example user.
+     * Creates the example user record.
      */
     public function run(): void
     {

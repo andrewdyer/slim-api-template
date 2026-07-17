@@ -7,12 +7,12 @@ namespace App\Domain\User;
 use JsonSerializable;
 
 /**
- * Represents a user entity in the domain layer.
+ * Carries the data required to represent a user in the domain layer.
  */
 final readonly class User implements JsonSerializable
 {
     /**
-     * Creates a User entity with the given identity and personal details.
+     * Creates a new User.
      *
      * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.

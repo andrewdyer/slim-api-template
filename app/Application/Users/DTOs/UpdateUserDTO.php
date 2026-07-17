@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Application\Users\DTOs;
 
 /**
- * Carries the partial input data required to update an existing user.
+ * Carries partial input data required to update an existing user.
  */
 final class UpdateUserDTO
 {
     /**
-     * Creates a new UpdateUserDTO for the specified user.
+     * Creates a new UpdateUserDTO.
      *
      * @param int         $id        The unique identifier of the user to update.
      * @param string|null $firstName The updated first name, or null to leave unchanged.

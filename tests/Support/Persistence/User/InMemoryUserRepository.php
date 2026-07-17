@@ -8,7 +8,7 @@ use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
 /**
- * In-memory implementation of UserRepository, pre-seeded with sample data.
+ * Manages user persistence and retrieval in memory.
  *
  * Intended for development and testing purposes. Data does not persist between requests.
  */
@@ -20,12 +20,14 @@ final class InMemoryUserRepository implements UserRepository
     private int $nextId = 1;
 
     /**
-     * @var array<int, User> The in-memory store of User entities, keyed by user ID.
+     * The in-memory store of User entities, keyed by user ID.
+     *
+     * @var array<int, User>
      */
     private array $store = [];
 
     /**
-     * Creates a new repository pre-populated with sample users.
+     * Creates a new InMemoryUserRepository.
      */
     public function __construct()
     {
@@ -55,10 +57,15 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Deletes the user with the given ID from the in-memory store.
      *
-     * @param int $id The unique identifier of the user to delete.
+     * @param  int  $id The unique identifier of the user to delete.
+     * @return bool True if the user was deleted, false if no user with that ID existed.
      */
     public function delete(int $id): bool
     {
+        if (!isset($this->store[$id])) {
+            return false;
+        }
+
         unset($this->store[$id]);
 
         return true;
