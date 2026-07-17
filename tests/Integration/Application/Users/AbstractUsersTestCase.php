@@ -26,7 +26,7 @@ abstract class AbstractUsersTestCase extends AbstractTestCase
     protected UserFactory $userFactory;
 
     /**
-     * Sets up the test dependencies before each test.
+     * Builds the user test dependencies before each test.
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface

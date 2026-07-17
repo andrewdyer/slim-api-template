@@ -30,7 +30,7 @@ abstract class AbstractTestCase extends TestCase
     protected Generator $faker;
 
     /**
-     * Sets up the application before each test.
+     * Builds the application state required before each test.
      */
     protected function setUp(): void
     {

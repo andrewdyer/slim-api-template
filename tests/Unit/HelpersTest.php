@@ -45,7 +45,7 @@ final class HelpersTest extends TestCase
     private array $originalProcessEnvironment;
 
     /**
-     * Backs up environment variables before each test.
+     * Builds backups of environment variables before each test.
      */
     protected function setUp(): void
     {
