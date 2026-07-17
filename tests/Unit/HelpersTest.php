@@ -64,7 +64,7 @@ final class HelpersTest extends TestCase
     }
 
     /**
-     * Restores original environment variables after each test.
+     * Processes restoration of the original environment variables after each test.
      */
     protected function tearDown(): void
     {
@@ -157,6 +157,9 @@ final class HelpersTest extends TestCase
 
     /**
      * Asserts that boolean strings are cast without regard to case.
+     *
+     * @param string $value    The environment variable value to cast.
+     * @param bool   $expected The expected cast value.
      */
     #[DataProvider('booleanValueProvider')]
     public function testGetEnvCastsBooleanStrings(string $value, bool $expected): void

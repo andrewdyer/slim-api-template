@@ -10,7 +10,7 @@ use Phinx\Seed\AbstractSeed;
 final class UserSeeder extends AbstractSeed
 {
     /**
-     * Inserts the example user.
+     * Creates the example user record.
      */
     public function run(): void
     {

@@ -20,12 +20,14 @@ final class InMemoryUserRepository implements UserRepository
     private int $nextId = 1;
 
     /**
-     * @var array<int, User> The in-memory store of User entities, keyed by user ID.
+     * The in-memory store of User entities, keyed by user ID.
+     *
+     * @var array<int, User>
      */
     private array $store = [];
 
     /**
-     * Creates a new repository pre-populated with sample users.
+     * Creates a new InMemoryUserRepository.
      */
     public function __construct()
     {
@@ -55,7 +57,8 @@ final class InMemoryUserRepository implements UserRepository
     /**
      * Deletes the user with the given ID from the in-memory store.
      *
-     * @param int $id The unique identifier of the user to delete.
+     * @param  int  $id The unique identifier of the user to delete.
+     * @return bool True after removing the user from the store.
      */
     public function delete(int $id): bool
     {
