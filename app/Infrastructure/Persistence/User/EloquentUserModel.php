@@ -16,7 +16,7 @@ final class EloquentUserModel extends Model
     /**
      * The table associated with the model.
      *
-     * @var string
+     * @var string The table name used by Eloquent.
      */
     protected $table = 'users';
 
@@ -34,7 +34,7 @@ final class EloquentUserModel extends Model
     /**
      * Indicates if the model should be timestamped.
      *
-     * @var bool
+     * @var bool Whether Eloquent maintains timestamp columns.
      */
     public $timestamps = true;
 }
