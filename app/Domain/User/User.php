@@ -12,7 +12,7 @@ use JsonSerializable;
 final readonly class User implements JsonSerializable
 {
     /**
-     * Creates a User entity with the given identity and personal details.
+     * Creates a new User.
      *
      * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.

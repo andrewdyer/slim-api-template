@@ -10,7 +10,7 @@ namespace App\Application\Users\DTOs;
 final class UpdateUserDTO
 {
     /**
-     * Creates a new UpdateUserDTO for the specified user.
+     * Creates a new UpdateUserDTO.
      *
      * @param int         $id        The unique identifier of the user to update.
      * @param string|null $firstName The updated first name, or null to leave unchanged.

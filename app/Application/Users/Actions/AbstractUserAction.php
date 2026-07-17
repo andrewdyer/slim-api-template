@@ -13,7 +13,7 @@ use App\Application\Users\Services\UserService;
 abstract class AbstractUserAction extends AbstractAction
 {
     /**
-     * Creates a new action with the required dependencies.
+     * Creates a new AbstractUserAction with the required dependencies.
      *
      * @param UserService $userService The service that handles user application logic.
      */
