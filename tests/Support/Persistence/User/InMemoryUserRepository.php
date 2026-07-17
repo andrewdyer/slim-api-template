@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Persistence\User;
+namespace Tests\Support\Persistence\User;
 
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
@@ -57,9 +57,11 @@ final class InMemoryUserRepository implements UserRepository
      *
      * @param int $id The unique identifier of the user to delete.
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         unset($this->store[$id]);
+
+        return true;
     }
 
     /**
