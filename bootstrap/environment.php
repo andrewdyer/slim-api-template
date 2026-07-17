@@ -11,12 +11,12 @@ return static function(): void {
     $environment = get_env('APP_ENV');
 
     if ($environment === 'testing') {
-        Dotenv::createImmutable(root_path('/'), '.env.test')->load();
+        Dotenv::createImmutable(root_path('/'), '.env.test')->safeLoad();
 
         return;
     }
 
     if (!$environment) {
-        Dotenv::createImmutable(root_path('/'), '.env')->load();
+        Dotenv::createImmutable(root_path('/'), '.env')->safeLoad();
     }
 };
