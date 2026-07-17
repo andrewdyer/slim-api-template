@@ -9,7 +9,7 @@ use App\Domain\User\UserRepository;
 use Faker\Generator;
 
 /**
- * Factory for creating test User entities with generated or overridden data.
+ * Handles creation of test User entities with generated or overridden data.
  */
 final readonly class UserFactory
 {

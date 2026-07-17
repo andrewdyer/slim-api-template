@@ -8,7 +8,7 @@ use AndrewDyer\Actions\AbstractAction;
 use App\Application\Users\Services\UserService;
 
 /**
- * Base class for all user-related HTTP actions.
+ * Handles shared dependencies for user-related HTTP actions.
  */
 abstract class AbstractUserAction extends AbstractAction
 {
