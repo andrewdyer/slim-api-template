@@ -25,8 +25,10 @@
         "andrewdyer/json-error-handler": "^0.2",
         "andrewdyer/settings": "^0.1",
         "andrewdyer/shutdown-handler": "^0.1",
+        "illuminate/database": "^13.20",
         "monolog/monolog": "^3.10",
         "php-di/php-di": "^7.1",
+        "robmorgan/phinx": "^0.16.12",
         "slim/psr7": "^1.8",
         "slim/slim": "^4.15",
         "vlucas/phpdotenv": "^5.6"
@@ -44,6 +46,12 @@
     ],
     "scripts": {
         "cs": "php-cs-fixer fix",
+        "db:migrate": "phinx migrate",
+        "db:migrate:create": "phinx create",
+        "db:rollback": "phinx rollback",
+        "db:seed": "phinx seed:run",
+        "db:seed:create": "phinx seed:create",
+        "db:status": "phinx status",
         "test": "phpunit",
         "test:unit": "phpunit --testsuite Unit",
         "test:integration": "phpunit --testsuite Integration"

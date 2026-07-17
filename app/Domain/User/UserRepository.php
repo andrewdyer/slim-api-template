@@ -22,9 +22,10 @@ interface UserRepository
     /**
      * Deletes the user with the given ID.
      *
-     * @param int $id The unique identifier of the user to delete.
+     * @param  int  $id The unique identifier of the user to delete.
+     * @return bool True if the user was deleted, false if no user with that ID existed.
      */
-    public function delete(int $id): void;
+    public function delete(int $id): bool;
 
     /**
      * Returns all stored user entities.

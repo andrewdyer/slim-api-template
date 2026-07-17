@@ -31,22 +31,19 @@ if (!function_exists('get_env')) {
      */
     function get_env(string $key, mixed $default = null): mixed
     {
-        if (isset($_ENV[$key])) {
-            $value = $_ENV[$key];
+        $value = $_ENV[$key]
+            ?? $_SERVER[$key]
+            ?? getenv($key);
 
-            switch (strtolower($value)) {
-                case 'true':
-                    return true;
-
-                case 'false':
-                    return false;
-
-                default:
-                    return $value;
-            }
+        if ($value === false || $value === null) {
+            return $default;
         }
 
-        return $default;
+        return match (strtolower((string)$value)) {
+            'true' => true,
+            'false' => false,
+            default => $value,
+        };
     }
 }
 
@@ -70,7 +67,7 @@ if (!function_exists('get_env_array')) {
 
         return array_values(array_filter(
             array_map('trim', explode($delimiter, $value)),
-            static fn(string $item): bool => $item !== ''
+            static fn (string $item): bool => $item !== ''
         ));
     }
 }

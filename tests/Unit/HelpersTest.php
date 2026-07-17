@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,9 +13,36 @@ use PHPUnit\Framework\TestCase;
 final class HelpersTest extends TestCase
 {
     /**
+     * Environment variable keys used by these tests.
+     *
+     * @var list<string>
+     */
+    private const ENVIRONMENT_KEYS = [
+        'SOME_KEY',
+        'FLAG_KEY',
+        'LIST_KEY',
+        'MISSING_KEY',
+        'PROCESS_ENV_KEY',
+        'SERVER_ENV_KEY',
+        'PRECEDENCE_KEY',
+    ];
+
+    /**
      * Backup of the original environment variables array.
      */
     private array $originalEnv;
+
+    /**
+     * Backup of the original server variables array.
+     */
+    private array $originalServer;
+
+    /**
+     * Backup of the original process environment values used by these tests.
+     *
+     * @var array<string, string|false>
+     */
+    private array $originalProcessEnvironment;
 
     /**
      * Backs up environment variables before each test.
@@ -24,8 +52,15 @@ final class HelpersTest extends TestCase
         parent::setUp();
 
         $this->originalEnv = $_ENV;
+        $this->originalServer = $_SERVER;
+        $this->originalProcessEnvironment = [];
 
-        unset($_ENV['SOME_KEY'], $_ENV['FLAG_KEY'], $_ENV['LIST_KEY'], $_ENV['MISSING_KEY']);
+        foreach (self::ENVIRONMENT_KEYS as $key) {
+            $this->originalProcessEnvironment[$key] = getenv($key);
+
+            unset($_ENV[$key], $_SERVER[$key]);
+            putenv($key);
+        }
     }
 
     /**
@@ -34,6 +69,17 @@ final class HelpersTest extends TestCase
     protected function tearDown(): void
     {
         $_ENV = $this->originalEnv;
+        $_SERVER = $this->originalServer;
+
+        foreach ($this->originalProcessEnvironment as $key => $value) {
+            if ($value === false) {
+                putenv($key);
+
+                continue;
+            }
+
+            putenv("{$key}={$value}");
+        }
 
         parent::tearDown();
     }
@@ -57,63 +103,84 @@ final class HelpersTest extends TestCase
     }
 
     /**
-     * Asserts that "true" is cast to a boolean true.
+     * Asserts that server environment variables are available when $_ENV is not populated.
      */
-    public function testGetEnvCastsTrue(): void
+    public function testGetEnvReturnsServerEnvironmentValue(): void
     {
-        $_ENV['FLAG_KEY'] = 'true';
+        $_SERVER['SERVER_ENV_KEY'] = 'server-value';
 
-        $this->assertTrue(get_env('FLAG_KEY'));
+        $this->assertSame('server-value', get_env('SERVER_ENV_KEY'));
     }
 
     /**
-     * Asserts that "false" is cast to a boolean false.
+     * Asserts that process environment variables are available when $_ENV is not populated.
      */
-    public function testGetEnvCastsFalse(): void
+    public function testGetEnvReturnsProcessEnvironmentValue(): void
     {
-        $_ENV['FLAG_KEY'] = 'false';
+        putenv('PROCESS_ENV_KEY=process-value');
 
-        $this->assertFalse(get_env('FLAG_KEY'));
+        $this->assertSame('process-value', get_env('PROCESS_ENV_KEY'));
     }
 
     /**
-     * Asserts that "TRUE" (uppercase) is cast to a boolean true.
+     * Asserts that $_ENV takes precedence over $_SERVER and the process environment.
      */
-    public function testGetEnvCastsTrueUppercase(): void
+    public function testGetEnvPrefersEnvValue(): void
     {
-        $_ENV['FLAG_KEY'] = 'TRUE';
+        $_ENV['PRECEDENCE_KEY'] = 'env-value';
+        $_SERVER['PRECEDENCE_KEY'] = 'server-value';
+        putenv('PRECEDENCE_KEY=process-value');
 
-        $this->assertTrue(get_env('FLAG_KEY'));
+        $this->assertSame('env-value', get_env('PRECEDENCE_KEY'));
     }
 
     /**
-     * Asserts that "FALSE" (uppercase) is cast to a boolean false.
+     * Asserts that $_SERVER takes precedence over the process environment.
      */
-    public function testGetEnvCastsFalseUppercase(): void
+    public function testGetEnvPrefersServerValueToProcessValue(): void
     {
-        $_ENV['FLAG_KEY'] = 'FALSE';
+        $_SERVER['PRECEDENCE_KEY'] = 'server-value';
+        putenv('PRECEDENCE_KEY=process-value');
 
-        $this->assertFalse(get_env('FLAG_KEY'));
+        $this->assertSame('server-value', get_env('PRECEDENCE_KEY'));
     }
 
     /**
-     * Asserts that "True" (mixed-case) is cast to a boolean true.
+     * Asserts that an explicitly configured empty string is not replaced by the default.
      */
-    public function testGetEnvCastsTrueMixedCase(): void
+    public function testGetEnvPreservesEmptyString(): void
     {
-        $_ENV['FLAG_KEY'] = 'True';
+        $_ENV['SOME_KEY'] = '';
 
-        $this->assertTrue(get_env('FLAG_KEY'));
+        $this->assertSame('', get_env('SOME_KEY', 'default'));
     }
 
     /**
-     * Asserts that "False" (mixed-case) is cast to a boolean false.
+     * Asserts that boolean strings are cast without regard to case.
      */
-    public function testGetEnvCastsFalseMixedCase(): void
+    #[DataProvider('booleanValueProvider')]
+    public function testGetEnvCastsBooleanStrings(string $value, bool $expected): void
     {
-        $_ENV['FLAG_KEY'] = 'False';
+        $_ENV['FLAG_KEY'] = $value;
 
-        $this->assertFalse(get_env('FLAG_KEY'));
+        $this->assertSame($expected, get_env('FLAG_KEY'));
+    }
+
+    /**
+     * Provides boolean strings with representative casing.
+     *
+     * @return array<string, array{string, bool}>
+     */
+    public static function booleanValueProvider(): array
+    {
+        return [
+            'true lowercase' => ['true', true],
+            'false lowercase' => ['false', false],
+            'true uppercase' => ['TRUE', true],
+            'false uppercase' => ['FALSE', false],
+            'true mixed case' => ['True', true],
+            'false mixed case' => ['False', false],
+        ];
     }
 
     /**
@@ -132,6 +199,16 @@ final class HelpersTest extends TestCase
         $_ENV['LIST_KEY'] = 'a,b,c';
 
         $this->assertSame(['a', 'b', 'c'], get_env_array('LIST_KEY'));
+    }
+
+    /**
+     * Asserts that values can be split using a custom delimiter.
+     */
+    public function testGetEnvArrayUsesCustomDelimiter(): void
+    {
+        $_ENV['LIST_KEY'] = 'a|b|c';
+
+        $this->assertSame(['a', 'b', 'c'], get_env_array('LIST_KEY', '|'));
     }
 
     /**

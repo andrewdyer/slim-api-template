@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use AndrewDyer\Settings\Contracts\SettingsInterface;
 use DI\ContainerBuilder;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
@@ -15,6 +16,15 @@ use Psr\Log\LoggerInterface;
  */
 return function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
+        Capsule::class => function(ContainerInterface $container) {
+            $settings = $container->get(SettingsInterface::class);
+
+            $capsule = new Capsule();
+            $capsule->addConnection($settings->get('db'));
+            $capsule->setAsGlobal();
+
+            return $capsule;
+        },
         LoggerInterface::class => function(ContainerInterface $container) {
             $settings = $container->get(SettingsInterface::class);
 

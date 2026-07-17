@@ -26,6 +26,16 @@ return function(ContainerBuilder $containerBuilder): void {
                 'cors' => [
                     'allowedOrigins' => get_env_array('CORS_ALLOWED_ORIGINS'),
                 ],
+                'db' => [
+                    'driver' => get_env('DB_DRIVER'),
+                    'host' => get_env('DB_HOST'),
+                    'port' => get_env('DB_PORT'),
+                    'database' => get_env('DB_DATABASE'),
+                    'username' => get_env('DB_USERNAME'),
+                    'password' => get_env('DB_PASSWORD'),
+                    'charset' => get_env('DB_CHARSET'),
+                    'collation' => get_env('DB_COLLATION'),
+                ],
                 'logger' => [
                     'name' => get_env('LOGGER_NAME', 'app'),
                     'handler' => [
