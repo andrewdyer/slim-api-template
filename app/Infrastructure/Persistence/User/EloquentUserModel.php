@@ -7,7 +7,7 @@ namespace App\Infrastructure\Persistence\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Manages the users table through Eloquent.
+ * Represents the users table through Eloquent.
  *
  * Maps to the persistence layer and provides ORM capabilities via Illuminate Database.
  */

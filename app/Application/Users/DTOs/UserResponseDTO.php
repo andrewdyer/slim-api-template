@@ -8,7 +8,7 @@ use App\Domain\User\User;
 use JsonSerializable;
 
 /**
- * Carries the validated input data required to build a user API response.
+ * Carries user data for outbound API responses.
  */
 final class UserResponseDTO implements JsonSerializable
 {
