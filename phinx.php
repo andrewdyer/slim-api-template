@@ -2,13 +2,9 @@
 
 declare(strict_types=1);
 
-use Dotenv\Dotenv;
-
 require __DIR__ . '/vendor/autoload.php';
 
-if (!get_env('APP_ENV')) {
-    Dotenv::createImmutable(root_path('/'))->load();
-}
+require_from_root('bootstrap/environment.php')();
 
 return [
     'paths' => [
