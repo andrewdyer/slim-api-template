@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * Maps to the persistence layer and provides ORM capabilities via Illuminate Database.
  */
-final class UserModel extends Model
+final class EloquentUserModel extends Model
 {
     /**
      * The table associated with the model.

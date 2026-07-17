@@ -24,7 +24,7 @@ final class EloquentUserRepository implements UserRepository
      */
     public function create(string $firstName, string $lastName, string $email): User
     {
-        $model = UserModel::create([
+        $model = EloquentUserModel::create([
             'first_name' => $firstName,
             'last_name' => $lastName,
             'email' => $email,
@@ -41,7 +41,7 @@ final class EloquentUserRepository implements UserRepository
      */
     public function delete(int $id): bool
     {
-        $model = UserModel::find($id);
+        $model = EloquentUserModel::find($id);
 
         if (null === $model) {
             return false;
@@ -57,8 +57,8 @@ final class EloquentUserRepository implements UserRepository
      */
     public function findAll(): array
     {
-        return UserModel::all()
-            ->map(fn (UserModel $model) => $this->toDomain($model))
+        return EloquentUserModel::all()
+            ->map(fn (EloquentUserModel $model) => $this->toDomain($model))
             ->all();
     }
 
@@ -74,14 +74,14 @@ final class EloquentUserRepository implements UserRepository
         $page = max(1, $page);
         $perPage = min(max(1, $perPage), 100);
 
-        $query = UserModel::query()->orderBy('id');
+        $query = EloquentUserModel::query()->orderBy('id');
 
         $total = (clone $query)->count();
 
         $users = $query
             ->forPage($page, $perPage)
             ->get()
-            ->map(fn (UserModel $model): User => $this->toDomain($model))
+            ->map(fn (EloquentUserModel $model): User => $this->toDomain($model))
             ->all();
 
         return [
@@ -98,7 +98,7 @@ final class EloquentUserRepository implements UserRepository
      */
     public function findById(int $id): ?User
     {
-        $model = UserModel::find($id);
+        $model = EloquentUserModel::find($id);
 
         if (null === $model) {
             return null;
@@ -118,7 +118,7 @@ final class EloquentUserRepository implements UserRepository
      */
     public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
     {
-        $model = UserModel::find($id);
+        $model = EloquentUserModel::find($id);
 
         if (null === $model) {
             return null;
@@ -142,12 +142,12 @@ final class EloquentUserRepository implements UserRepository
     }
 
     /**
-     * Transforms an Eloquent UserModel into a domain User entity.
+     * Transforms an Eloquent EloquentUserModel into a domain User entity.
      *
-     * @param  UserModel $model The Eloquent model to convert.
-     * @return User      The corresponding domain entity.
+     * @param  EloquentUserModel $model The Eloquent model to convert.
+     * @return User              The corresponding domain entity.
      */
-    private function toDomain(UserModel $model): User
+    private function toDomain(EloquentUserModel $model): User
     {
         return new User(
             id: $model->id,
