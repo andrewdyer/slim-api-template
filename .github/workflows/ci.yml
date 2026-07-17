@@ -1,17 +1,36 @@
-name: Continuous Integration
+name: Test
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, synchronize]
+
+concurrency:
+  group: test-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
-  php-test:
-    name: PHP test
-    uses: andrewdyer/github-workflows/.github/workflows/php-test.yml@main
-    with:
-      php-version: "8.3"
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: ${{ !startsWith(github.head_ref, 'release-please--') }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: xdebug
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run unit tests
+        run: vendor/bin/phpunit
