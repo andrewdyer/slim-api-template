@@ -1,0 +1,55 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build and push Docker image
+        run: |
+          # Extract version from tag (e.g. v1.2.3 -> 1.2.3)
+          VERSION="${GITHUB_REF_NAME#v}"
+          REPO=$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')
+          IMAGE="ghcr.io/${REPO}"
+
+          echo "Building and pushing $IMAGE:$VERSION..."
+
+          docker build \
+            -t "$IMAGE:$VERSION" \
+            -t "$IMAGE:latest" \
+            .
+
+          # Push both versioned and latest tags
+          docker push "$IMAGE:$VERSION"
+          docker push "$IMAGE:latest"
+
+          echo "Dispatching deploy event for $VERSION..."
+
+          # Trigger downstream deploy workflow via repository dispatch.
+          # IMPORTANT: --fail ensures HTTP 4xx/5xx responses fail the workflow.
+          # Without this, curl would exit 0 even if GitHub rejected the request.
+          curl --fail --show-error \
+            -X POST \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d "{\"event_type\":\"deploy\",\"client_payload\":{\"version\":\"$VERSION\"}}"
