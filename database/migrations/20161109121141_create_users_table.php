@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Phinx\Migration\AbstractMigration;
 
 /**
- * Creates the users table used by the application persistence layer.
+ * Handles creation and removal of the users table.
  */
 final class CreateUsersTable extends AbstractMigration
 {

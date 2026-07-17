@@ -15,7 +15,7 @@ use Slim\Psr7\Stream;
 use Slim\Psr7\Uri;
 
 /**
- * Base class for integration tests using the full application stack.
+ * Integration tests for AbstractTestCase.
  */
 abstract class AbstractTestCase extends TestCase
 {

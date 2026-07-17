@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for helper functions.
+ * Unit tests for Helpers.
  */
 final class HelpersTest extends TestCase
 {

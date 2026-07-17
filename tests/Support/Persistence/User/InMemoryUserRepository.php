@@ -8,7 +8,7 @@ use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
 /**
- * In-memory implementation of UserRepository, pre-seeded with sample data.
+ * Manages user persistence and retrieval in memory.
  *
  * Intended for development and testing purposes. Data does not persist between requests.
  */

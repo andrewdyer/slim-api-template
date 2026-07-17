@@ -7,7 +7,7 @@ namespace App\Domain\User;
 use JsonSerializable;
 
 /**
- * Represents a user entity in the domain layer.
+ * Carries the data required to represent a user in the domain layer.
  */
 final readonly class User implements JsonSerializable
 {

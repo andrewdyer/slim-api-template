@@ -8,7 +8,7 @@ use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
 /**
- * Eloquent-based implementation of UserRepository.
+ * Manages user persistence and retrieval through Eloquent.
  *
  * Uses Illuminate Database Capsule to persist and retrieve user entities from a database.
  */

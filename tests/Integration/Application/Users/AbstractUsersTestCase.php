@@ -11,7 +11,7 @@ use Tests\Integration\AbstractTestCase;
 use Tests\Support\Factories\UserFactory;
 
 /**
- * Base class for User-related integration tests.
+ * Integration tests for AbstractUsersTestCase.
  */
 abstract class AbstractUsersTestCase extends AbstractTestCase
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\User;
 
 /**
- * Defines the contract for persisting and retrieving user entities.
+ * Manages the persistence and retrieval contract for user entities.
  */
 interface UserRepository
 {
