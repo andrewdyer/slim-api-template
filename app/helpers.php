@@ -31,9 +31,9 @@ if (!function_exists('get_env')) {
      */
     function get_env(string $key, mixed $default = null): mixed
     {
-        if (isset($_ENV[$key])) {
-            $value = $_ENV[$key];
+        $value = $_ENV[$key] ?? getenv($key);
 
+        if ($value !== false) {
             switch (strtolower($value)) {
                 case 'true':
                     return true;
@@ -70,7 +70,7 @@ if (!function_exists('get_env_array')) {
 
         return array_values(array_filter(
             array_map('trim', explode($delimiter, $value)),
-            static fn(string $item): bool => $item !== ''
+            static fn (string $item): bool => $item !== ''
         ));
     }
 }

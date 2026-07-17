@@ -57,6 +57,20 @@ final class HelpersTest extends TestCase
     }
 
     /**
+     * Asserts that process environment variables are available when $_ENV is not populated.
+     */
+    public function testGetEnvReturnsProcessEnvironmentValue(): void
+    {
+        putenv('PROCESS_ENV_KEY=process-value');
+
+        try {
+            $this->assertSame('process-value', get_env('PROCESS_ENV_KEY'));
+        } finally {
+            putenv('PROCESS_ENV_KEY');
+        }
+    }
+
+    /**
      * Asserts that "true" is cast to a boolean true.
      */
     public function testGetEnvCastsTrue(): void
