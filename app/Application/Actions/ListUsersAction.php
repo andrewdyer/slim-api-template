@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Application\Actions;
 
+use AndrewDyer\Actions\AbstractAction;
 use App\Application\DTOs\Output\UserOutput;
+use App\Application\Services\UserService;
 use App\Domain\Models\User;
 use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -12,8 +14,17 @@ use Psr\Http\Message\ResponseInterface as Response;
 /**
  * Handles listing all users via HTTP.
  */
-final class ListUsersAction extends AbstractUserAction
+final class ListUsersAction extends AbstractAction
 {
+    /**
+     * Creates a new CreateUserAction with the required dependencies.
+     *
+     * @param UserService $userService The service that handles user application logic.
+     */
+    public function __construct(protected readonly UserService $userService)
+    {
+    }
+
     /**
      * Handles the retrieval of paginated users.
      *
