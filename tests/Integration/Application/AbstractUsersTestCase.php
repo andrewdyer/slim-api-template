@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Application\Users;
+namespace Integration\Application;
 
 use App\Domain\User\UserRepository;
 use Psr\Container\ContainerExceptionInterface;

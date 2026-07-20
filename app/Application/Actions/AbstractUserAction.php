@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Users\Actions;
+namespace App\Application\Actions;
 
 use AndrewDyer\Actions\AbstractAction;
-use App\Application\Users\Services\UserService;
+use App\Application\Services\UserService;
 
 /**
  * Handles shared dependencies for user-related HTTP actions.

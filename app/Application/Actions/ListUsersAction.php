@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Users\Actions;
+namespace App\Application\Actions;
 
-use App\Application\Users\DTOs\UserResponseDTO;
+use App\Application\DTOs\UserResponseDTO;
 use App\Domain\User\User;
 use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;

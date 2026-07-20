@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Users\Exceptions;
+namespace App\Application\Exceptions;
 
 use AndrewDyer\Actions\Exceptions\NotFoundException;
 

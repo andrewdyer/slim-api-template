@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\Users\Services;
+namespace Tests\Unit\Application\Services;
 
-use App\Application\Users\DTOs\CreateUserDTO;
-use App\Application\Users\DTOs\UpdateUserDTO;
-use App\Application\Users\Exceptions\UserNotFoundException;
-use App\Application\Users\Services\UserService;
+use App\Application\DTOs\CreateUserDTO;
+use App\Application\DTOs\UpdateUserDTO;
+use App\Application\Exceptions\UserNotFoundException;
+use App\Application\Services\UserService;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Persistence\User\InMemoryUserRepository;
 

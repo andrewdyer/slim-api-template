@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Users\Services;
+namespace App\Application\Services;
 
-use App\Application\Users\DTOs\CreateUserDTO;
-use App\Application\Users\DTOs\UpdateUserDTO;
-use App\Application\Users\Exceptions\UserNotFoundException;
+use App\Application\DTOs\CreateUserDTO;
+use App\Application\DTOs\UpdateUserDTO;
+use App\Application\Exceptions\UserNotFoundException;
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 

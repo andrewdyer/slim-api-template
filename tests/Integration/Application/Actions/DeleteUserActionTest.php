@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Application\Users\Actions;
+namespace Integration\Application\Actions;
 
-use Tests\Integration\Application\Users\AbstractUsersTestCase;
+use Integration\Application\AbstractUsersTestCase;
 
 /**
  * Integration tests for DeleteUserAction.

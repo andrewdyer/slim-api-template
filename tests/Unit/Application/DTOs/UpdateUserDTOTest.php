@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\Users\DTOs;
+namespace Tests\Unit\Application\DTOs;
 
-use App\Application\Users\DTOs\UpdateUserDTO;
+use App\Application\DTOs\UpdateUserDTO;
 use PHPUnit\Framework\TestCase;
 
 /**

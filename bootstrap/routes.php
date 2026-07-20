@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Application\Users\Actions\CreateUserAction;
-use App\Application\Users\Actions\DeleteUserAction;
-use App\Application\Users\Actions\ListUsersAction;
-use App\Application\Users\Actions\ShowUserAction;
-use App\Application\Users\Actions\UpdateUserAction;
+use App\Application\Actions\CreateUserAction;
+use App\Application\Actions\DeleteUserAction;
+use App\Application\Actions\ListUsersAction;
+use App\Application\Actions\ShowUserAction;
+use App\Application\Actions\UpdateUserAction;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
