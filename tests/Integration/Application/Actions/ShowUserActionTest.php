@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Integration\Application\Actions;
-
-use Integration\Application\AbstractUsersTestCase;
+namespace Tests\Integration\Application\Actions;
 
 /**
  * Integration tests for ShowUserAction.
  */
-final class ShowUserActionTest extends AbstractUsersTestCase
+final class ShowUserActionTest extends AbstractUserActionTestCase
 {
     /**
      * Asserts that a 200 response containing the requested user is returned when the user exists.

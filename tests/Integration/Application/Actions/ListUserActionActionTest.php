@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Integration\Application\Actions;
-
-use Integration\Application\AbstractUsersTestCase;
+namespace Tests\Integration\Application\Actions;
 
 /**
  * Integration tests for ListUsersAction.
  */
-final class ListUsersActionTest extends AbstractUsersTestCase
+final class ListUserActionActionTest extends AbstractUserActionTestCase
 {
     /**
      * Asserts that the total user count increases after new users are created.

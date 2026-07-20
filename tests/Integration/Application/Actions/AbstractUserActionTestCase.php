@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Application;
+namespace Tests\Integration\Application\Actions;
 
 use App\Domain\Repositories\UserRepository;
 use Psr\Container\ContainerExceptionInterface;
@@ -13,7 +13,7 @@ use Tests\Support\Factories\UserFactory;
 /**
  * Provides shared setup for user-related integration tests.
  */
-abstract class AbstractUsersTestCase extends AbstractTestCase
+abstract class AbstractUserActionTestCase extends AbstractTestCase
 {
     /**
      * The user repository instance.

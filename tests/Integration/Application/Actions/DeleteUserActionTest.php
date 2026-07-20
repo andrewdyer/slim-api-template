@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Integration\Application\Actions;
-
-use Integration\Application\AbstractUsersTestCase;
+namespace Tests\Integration\Application\Actions;
 
 /**
  * Integration tests for DeleteUserAction.
  */
-final class DeleteUserActionTest extends AbstractUsersTestCase
+final class DeleteUserActionTest extends AbstractUserActionTestCase
 {
     /**
      * Asserts that a 204 response is returned when the user exists.

@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Integration\Application\Actions;
-
-use Integration\Application\AbstractUsersTestCase;
+namespace Tests\Integration\Application\Actions;
 
 /**
  * Integration tests for UpdateUserAction.
  */
-final class UpdateUserActionTest extends AbstractUsersTestCase
+final class UpdateUserActionTest extends AbstractUserActionTestCase
 {
     /**
      * Asserts that a 200 response containing the updated user data is returned when the user exists.
