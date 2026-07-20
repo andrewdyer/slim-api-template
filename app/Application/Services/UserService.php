@@ -7,8 +7,8 @@ namespace App\Application\Services;
 use App\Application\DTOs\CreateUserDTO;
 use App\Application\DTOs\UpdateUserDTO;
 use App\Application\Exceptions\UserNotFoundException;
-use App\Domain\User\User;
-use App\Domain\User\UserRepository;
+use App\Domain\Models\User;
+use App\Domain\Repositories\UserRepository;
 
 /**
  * Handles user-related application logic, coordinating between actions and the repository.

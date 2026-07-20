@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Persistence\User;
+namespace App\Infrastructure\Persistence\Repositories;
 
-use App\Domain\User\User;
-use App\Domain\User\UserRepository;
+use App\Domain\Models\User;
+use App\Domain\Repositories\UserRepository;
+use App\Infrastructure\Persistence\Models\EloquentUserModel;
 
 /**
  * Manages user persistence and retrieval through Eloquent.

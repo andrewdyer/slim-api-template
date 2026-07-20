@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Domain\User\UserRepository;
-use App\Infrastructure\Persistence\User\EloquentUserRepository;
+use App\Domain\Repositories\UserRepository;
+use App\Infrastructure\Persistence\Repositories\EloquentUserRepository;
 use DI\ContainerBuilder;
 
 /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\DTOs;
 
-use App\Domain\User\User;
+use App\Domain\Models\User;
 use JsonSerializable;
 
 /**

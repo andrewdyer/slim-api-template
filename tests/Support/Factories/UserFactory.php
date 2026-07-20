@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Support\Factories;
 
-use App\Domain\User\User;
-use App\Domain\User\UserRepository;
+use App\Domain\Models\User;
+use App\Domain\Repositories\UserRepository;
 use Faker\Generator;
 
 /**

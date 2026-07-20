@@ -9,7 +9,7 @@ use App\Application\DTOs\UpdateUserDTO;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use PHPUnit\Framework\TestCase;
-use Tests\Support\Persistence\User\InMemoryUserRepository;
+use Tests\Support\Persistence\Repositories\InMemoryUserRepository;
 
 /**
  * Unit tests for UserService.

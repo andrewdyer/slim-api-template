@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Integration\Application;
 
-use App\Domain\User\UserRepository;
+use App\Domain\Repositories\UserRepository;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Tests\Integration\AbstractTestCase;

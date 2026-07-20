@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\DTOs;
 
 use App\Application\DTOs\UserResponseDTO;
-use App\Domain\User\User;
+use App\Domain\Models\User;
 use PHPUnit\Framework\TestCase;
 
 /**
