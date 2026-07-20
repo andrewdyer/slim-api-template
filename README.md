@@ -18,29 +18,44 @@ Before you begin, ensure you have met the following requirements:
 
 ## Structure
 
-This project follows an ADR-style architecture, organising code by responsibility:
+This project follows an ADR-style architecture, organising code by layer and responsibility:
 
 - **Application**: HTTP layer and use-case coordination
 - **Domain**: Core business logic and contracts
 - **Infrastructure**: External integrations and implementations
 
-The structure is intentionally simple and feature-oriented, allowing features to grow vertically without blurring boundaries between layers.
+The structure is intentionally simple and responsibility-oriented. Shared application concerns are grouped by their role, while domain contracts remain independent of infrastructure implementations.
 
 ```plaintext
 repo/
-├── app/                         # PSR-4 Autoloaded logic
-│   ├── Application/             # Request handling & orchestration
-│   ├── Domain/                  # Business logic & interface contracts
-│   ├── Infrastructure/          # External integrations & implementations
+├── app/                         # PSR-4 autoloaded application code
+│   ├── Application/             # Request handling and use-case orchestration
+│   │   ├── Actions/             # HTTP actions
+│   │   ├── DTOs/                # Application input and output objects
+│   │   │   ├── Input/           # Validated use-case input
+│   │   │   └── Output/          # Serializable response output
+│   │   ├── Exceptions/          # Application-specific exceptions
+│   │   └── Services/            # Application services
+│   ├── Domain/                  # Business models and contracts
+│   │   ├── Models/              # Domain models
+│   │   └── Repositories/        # Repository interfaces
+│   ├── Infrastructure/          # External integrations and implementations
+│   │   └── Persistence/
+│   │       ├── Models/          # Eloquent persistence models
+│   │       └── Repositories/    # Repository implementations
 │   └── helpers.php              # Global utility functions
 │
 ├── bootstrap/                   # Application configuration layer
-│   ├── app.php                  # Application bootstrap & initialization
+│   ├── app.php                  # Application bootstrap and initialization
+│   ├── database.php             # Database integration setup
 │   ├── dependencies.php         # Container service registrations
+│   ├── environment.php          # Environment variable loading
 │   ├── middleware.php           # HTTP middleware pipeline configuration
 │   ├── repositories.php         # Interface → implementation bindings
 │   ├── routes.php               # Slim route definitions
 │   └── settings.php             # Configuration arrays
+│
+├── database/                    # Database migrations and seeders
 │
 ├── public/                      # Web server document root
 │   └── index.php                # HTTP entry point
@@ -53,6 +68,7 @@ repo/
 │
 ├── tests/                       # PHPUnit Test Suite
 │   ├── Integration/             # Full HTTP stack tests
+│   ├── Support/                 # Test factories and in-memory implementations
 │   └── Unit/                    # Isolated logic tests
 │
 ├── workbench/                   # Scratchpad for local experimentation
@@ -63,13 +79,14 @@ repo/
 └── .env.example                # Example environment variables file
 ```
 
-The template includes a simple **Users** feature to demonstrate how a vertical slice can be structured using the ADR approach. This example shows how a single feature can be organised across all layers:
+The template includes a simple **Users** API to demonstrate how a feature flows through the ADR layers while the code remains grouped by responsibility:
 
 - **Actions**: HTTP entry points for creating, retrieving, listing, updating, and deleting users.
-- **DTOs**: Data transfer objects for input and output.
+- **Input/Output**: Application data objects for use-case input and serializable output.
 - **Service**: Application logic orchestrated in a dedicated service class.
-- **Domain**: Entity and repository contracts define the business model and persistence interface.
-- **Infrastructure**: In-memory repository implementation for demonstration purposes.
+- **Domain**: The `User` model and `UserRepositoryInterface` define the business model and persistence contract.
+- **Infrastructure**: Eloquent model and repository classes implement database persistence without coupling the domain to Eloquent.
+- **Tests**: An in-memory repository implementation supports isolated and deterministic tests.
 
 Routes are versioned under `/api/v1` and follow RESTful conventions:
 
@@ -81,16 +98,18 @@ Routes are versioned under `/api/v1` and follow RESTful conventions:
 | `PUT`    | `/api/v1/users/{id}` | Update a user   |
 | `DELETE` | `/api/v1/users/{id}` | Delete a user   |
 
-This feature is provided as a reference and starting point. It may be used as a template for additional features, or removed entirely when initialising a new project.
+This API is provided as a reference and starting point. Its responsibility-based folders can accommodate additional models and use cases, and projects can introduce feature-level grouping later if their size warrants it.
 
 ## Configuration
 
 Application configuration and bootstrapping are organised inside the `bootstrap/` directory. Each file is responsible for a specific part of the application setup.
 
 - **app.php**: Creates and configures the Slim application instance, including environment loading, container setup, middleware registration, error handling, and route registration.
+- **environment.php**: Loads environment variables from the appropriate dotenv file.
 - **settings.php**: Defines application configuration values such as environment mappings, error handling behaviour, logging settings, and CORS configuration.
 - **dependencies.php**: Registers services in the dependency injection container, including infrastructure services and shared application components.
 - **repositories.php**: Maps domain interfaces to their concrete implementations, keeping the domain layer decoupled from infrastructure.
+- **database.php**: Boots Eloquent after the dependency injection container has been built.
 - **middleware.php**: Configures the HTTP middleware pipeline, including cross-cutting concerns applied to incoming requests.
 - **routes.php**: Defines HTTP routes and maps them to application actions, typically grouped and versioned.
 
