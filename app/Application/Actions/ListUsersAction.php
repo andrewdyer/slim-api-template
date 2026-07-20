@@ -17,7 +17,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class ListUsersAction extends AbstractAction
 {
     /**
-     * Creates a new CreateUserAction with the required dependencies.
+     * Creates a new ListUsersAction with the required dependencies.
      *
      * @param UserService $userService The service that handles user application logic.
      */

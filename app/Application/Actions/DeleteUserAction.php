@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class DeleteUserAction extends AbstractAction
 {
     /**
-     * Creates a new CreateUserAction with the required dependencies.
+     * Creates a new DeleteUserAction with the required dependencies.
      *
      * @param UserService $userService The service that handles user application logic.
      */
