@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Actions;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * Integration tests for ListUsersAction.
  */
@@ -53,8 +55,8 @@ final class ListUserActionActionTest extends AbstractUserActionTestCase
      *
      * @param string $query        The query string under test.
      * @param int    $expectedPage The expected clamped page number.
-     * @dataProvider invalidPageProvider
      */
+    #[DataProvider('invalidPageProvider')]
     public function testInvalidPageIsClamped(string $query, int $expectedPage): void
     {
         $response = $this->request('GET', "/api/v1/users?{$query}");
@@ -82,8 +84,8 @@ final class ListUserActionActionTest extends AbstractUserActionTestCase
      *
      * @param string $query           The query string under test.
      * @param int    $expectedPerPage The expected clamped page size.
-     * @dataProvider invalidPerPageProvider
      */
+    #[DataProvider('invalidPerPageProvider')]
     public function testInvalidPerPageIsClamped(string $query, int $expectedPerPage): void
     {
         $response = $this->request('GET', "/api/v1/users?{$query}");
