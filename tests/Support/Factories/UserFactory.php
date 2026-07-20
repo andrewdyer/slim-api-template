@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Support\Factories;
 
-use App\Domain\User\User;
-use App\Domain\User\UserRepository;
+use App\Domain\Models\User;
+use App\Domain\Repositories\UserRepositoryInterface;
 use Faker\Generator;
 
 /**
@@ -16,12 +16,12 @@ final readonly class UserFactory
     /**
      * Creates a new UserFactory with the required dependencies.
      *
-     * @param UserRepository $users The repository used to persist created users.
-     * @param Generator      $faker The Faker generator for creating random data.
+     * @param UserRepositoryInterface $users The repository used to persist created users.
+     * @param Generator               $faker The Faker generator for creating random data.
      */
     public function __construct(
-        private UserRepository $users,
-        private Generator      $faker,
+        private UserRepositoryInterface $users,
+        private Generator               $faker,
     ) {
     }
 
