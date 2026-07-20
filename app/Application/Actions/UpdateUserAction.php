@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Actions;
 
-use App\Application\DTOs\Input\UpdateUserDTO;
-use App\Application\DTOs\Output\UserResponseDTO;
+use App\Application\DTOs\Input\UpdateUserInput;
+use App\Application\DTOs\Output\UserOutput;
 use App\Application\Exceptions\UserNotFoundException;
 use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -26,12 +26,12 @@ final class UpdateUserAction extends AbstractUserAction
     {
         $userId = (int)$this->resolveArg('id');
 
-        $inputDto = UpdateUserDTO::fromArray($userId, $this->getParsedBody());
+        $input = UpdateUserInput::fromArray($userId, $this->getParsedBody());
 
-        $user = $this->userService->update($inputDto);
+        $user = $this->userService->update($input);
 
-        $responseDto = UserResponseDTO::fromDomain($user);
+        $output = UserOutput::fromDomain($user);
 
-        return $this->ok($responseDto);
+        return $this->ok($output);
     }
 }

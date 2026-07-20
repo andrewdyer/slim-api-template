@@ -10,10 +10,10 @@ use JsonSerializable;
 /**
  * Carries user data for outbound API responses.
  */
-final class UserResponseDTO implements JsonSerializable
+final class UserOutput implements JsonSerializable
 {
     /**
-     * Creates a new UserResponseDTO.
+     * Creates a new UserOutput.
      *
      * @param int    $id        The unique identifier of the user.
      * @param string $firstName The user's first name.
@@ -29,10 +29,10 @@ final class UserResponseDTO implements JsonSerializable
     }
 
     /**
-     * Creates a UserResponseDTO from a domain User entity.
+     * Creates a UserOutput from a domain User entity.
      *
      * @param  User $user The domain user to convert.
-     * @return self A populated UserResponseDTO instance.
+     * @return self A populated UserOutput instance.
      */
     public static function fromDomain(User $user): self
     {

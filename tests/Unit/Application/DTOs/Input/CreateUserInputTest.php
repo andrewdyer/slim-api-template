@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\DTOs\Input;
 
-use App\Application\DTOs\Input\CreateUserDTO;
+use App\Application\DTOs\Input\CreateUserInput;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for CreateUserDTO.
+ * Unit tests for CreateUserInput.
  */
-final class CreateUserDTOTest extends TestCase
+final class CreateUserInputTest extends TestCase
 {
     /**
      * Asserts that a DTO is successfully created when all required fields are present in the input array.
@@ -24,11 +24,11 @@ final class CreateUserDTOTest extends TestCase
             'email' => 'jane@example.com',
         ];
 
-        $dto = CreateUserDTO::fromArray($payload);
+        $input = CreateUserInput::fromArray($payload);
 
-        $this->assertSame('Jane', $dto->firstName);
-        $this->assertSame('Doe', $dto->lastName);
-        $this->assertSame('jane@example.com', $dto->email);
+        $this->assertSame('Jane', $input->firstName);
+        $this->assertSame('Doe', $input->lastName);
+        $this->assertSame('jane@example.com', $input->email);
     }
 
     /**
@@ -42,7 +42,7 @@ final class CreateUserDTOTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing required fields');
 
-        CreateUserDTO::fromArray($payload);
+        CreateUserInput::fromArray($payload);
     }
 
     /**

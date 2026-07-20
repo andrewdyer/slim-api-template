@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Actions;
 
-use App\Application\DTOs\Output\UserResponseDTO;
+use App\Application\DTOs\Output\UserOutput;
 use App\Application\Exceptions\UserNotFoundException;
 use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -27,8 +27,8 @@ final class ShowUserAction extends AbstractUserAction
 
         $user = $this->userService->find($userId);
 
-        $responseDto = UserResponseDTO::fromDomain($user);
+        $output = UserOutput::fromDomain($user);
 
-        return $this->ok($responseDto);
+        return $this->ok($output);
     }
 }

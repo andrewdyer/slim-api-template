@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Services;
 
-use App\Application\DTOs\Input\CreateUserDTO;
-use App\Application\DTOs\Input\UpdateUserDTO;
+use App\Application\DTOs\Input\CreateUserInput;
+use App\Application\DTOs\Input\UpdateUserInput;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Domain\Models\User;
 use App\Domain\Repositories\UserRepositoryInterface;
@@ -38,15 +38,15 @@ final readonly class UserService
     /**
      * Creates a new user from the provided DTO and persists it via the repository.
      *
-     * @param  CreateUserDTO $dto The data required to create the user.
-     * @return User          The newly created User entity.
+     * @param  CreateUserInput $input The data required to create the user.
+     * @return User            The newly created User entity.
      */
-    public function create(CreateUserDTO $dto): User
+    public function create(CreateUserInput $input): User
     {
         return $this->userRepository->create(
-            $dto->firstName,
-            $dto->lastName,
-            $dto->email
+            $input->firstName,
+            $input->lastName,
+            $input->email
         );
     }
 
@@ -96,23 +96,23 @@ final readonly class UserService
     /**
      * Updates an existing user with the fields provided in the DTO and returns the result.
      *
-     * @param  UpdateUserDTO         $dto The data to apply to the existing user. Null fields are left unchanged.
+     * @param  UpdateUserInput       $input The data to apply to the existing user. Null fields are left unchanged.
      * @return User                  The updated User entity.
      * @throws UserNotFoundException If no user exists with the given ID.
      */
-    public function update(UpdateUserDTO $dto): User
+    public function update(UpdateUserInput $input): User
     {
-        $user = $this->find($dto->id);
+        $user = $this->find($input->id);
 
         $updated = $this->userRepository->update(
             id: $user->getId(),
-            firstName: $dto->firstName,
-            lastName: $dto->lastName,
-            email: $dto->email
+            firstName: $input->firstName,
+            lastName: $input->lastName,
+            email: $input->email
         );
 
         if (null === $updated) {
-            throw new UserNotFoundException("User with ID {$dto->id} not found.");
+            throw new UserNotFoundException("User with ID {$input->id} not found.");
         }
 
         return $updated;

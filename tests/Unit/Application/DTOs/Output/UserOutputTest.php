@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\DTOs\Output;
 
-use App\Application\DTOs\Output\UserResponseDTO;
+use App\Application\DTOs\Output\UserOutput;
 use App\Domain\Models\User;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for UserResponseDTO.
+ * Unit tests for UserOutput.
  */
-final class UserResponseDTOTest extends TestCase
+final class UserOutputTest extends TestCase
 {
     /**
      * Asserts that the DTO is correctly populated from a domain User entity.
@@ -20,12 +20,12 @@ final class UserResponseDTOTest extends TestCase
     {
         $user = new User(1, 'Jane', 'Doe', 'jane@example.com');
 
-        $dto = UserResponseDTO::fromDomain($user);
+        $output = UserOutput::fromDomain($user);
 
-        $this->assertSame(1, $dto->id);
-        $this->assertSame('Jane', $dto->firstName);
-        $this->assertSame('Doe', $dto->lastName);
-        $this->assertSame('jane@example.com', $dto->email);
+        $this->assertSame(1, $output->id);
+        $this->assertSame('Jane', $output->firstName);
+        $this->assertSame('Doe', $output->lastName);
+        $this->assertSame('jane@example.com', $output->email);
     }
 
     /**
@@ -33,13 +33,13 @@ final class UserResponseDTOTest extends TestCase
      */
     public function testReturnsAssociativeArrayWhenSerialized(): void
     {
-        $dto = new UserResponseDTO(2, 'John', 'Smith', 'john@example.com');
+        $output = new UserOutput(2, 'John', 'Smith', 'john@example.com');
 
         $this->assertSame([
             'id' => 2,
             'firstName' => 'John',
             'lastName' => 'Smith',
             'email' => 'john@example.com',
-        ], $dto->jsonSerialize());
+        ], $output->jsonSerialize());
     }
 }

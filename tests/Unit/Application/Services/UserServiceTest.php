@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Services;
 
-use App\Application\DTOs\Input\CreateUserDTO;
-use App\Application\DTOs\Input\UpdateUserDTO;
+use App\Application\DTOs\Input\CreateUserInput;
+use App\Application\DTOs\Input\UpdateUserInput;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use PHPUnit\Framework\TestCase;
@@ -113,13 +113,13 @@ final class UserServiceTest extends TestCase
      */
     public function testCreatesUserWhenValidDataIsProvided(): void
     {
-        $dto = new CreateUserDTO(
+        $input = new CreateUserInput(
             firstName: 'Jane',
             lastName: 'Doe',
             email: 'jane@example.com'
         );
 
-        $user = $this->userService->create($dto);
+        $user = $this->userService->create($input);
 
         $this->assertSame('Jane', $user->getFirstName());
         $this->assertSame('Doe', $user->getLastName());
@@ -156,14 +156,14 @@ final class UserServiceTest extends TestCase
      */
     public function testUpdatesUserWhenUserExists(): void
     {
-        $dto = new UpdateUserDTO(
+        $input = new UpdateUserInput(
             id: 1,
             firstName: 'William',
             lastName: 'French III',
             email: 'william.gates@example.com'
         );
 
-        $user = $this->userService->update($dto);
+        $user = $this->userService->update($input);
 
         $this->assertSame(1, $user->getId());
         $this->assertSame('William', $user->getFirstName());
@@ -176,12 +176,12 @@ final class UserServiceTest extends TestCase
      */
     public function testPreservesUnchangedFieldsWhenPartialDataIsProvided(): void
     {
-        $dto = new UpdateUserDTO(
+        $input = new UpdateUserInput(
             id: 2,
             firstName: 'Stephen'
         );
 
-        $user = $this->userService->update($dto);
+        $user = $this->userService->update($input);
 
         $this->assertSame(2, $user->getId());
         $this->assertSame('Stephen', $user->getFirstName());
@@ -194,7 +194,7 @@ final class UserServiceTest extends TestCase
      */
     public function testThrowsUserNotFoundExceptionWhenUpdatingNonExistentUser(): void
     {
-        $dto = new UpdateUserDTO(
+        $input = new UpdateUserInput(
             id: 999,
             firstName: 'Test'
         );
@@ -202,7 +202,7 @@ final class UserServiceTest extends TestCase
         $this->expectException(UserNotFoundException::class);
         $this->expectExceptionMessage('User with ID 999 not found.');
 
-        $this->userService->update($dto);
+        $this->userService->update($input);
     }
 
     /**
@@ -234,13 +234,13 @@ final class UserServiceTest extends TestCase
     {
         $initialCount = count($this->userService->all());
 
-        $dto = new CreateUserDTO(
+        $input = new CreateUserInput(
             firstName: 'New',
             lastName: 'User',
             email: 'new@example.com'
         );
 
-        $this->userService->create($dto);
+        $this->userService->create($input);
 
         $finalCount = count($this->userService->all());
 

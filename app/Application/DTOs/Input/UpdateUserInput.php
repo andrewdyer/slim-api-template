@@ -7,10 +7,10 @@ namespace App\Application\DTOs\Input;
 /**
  * Carries partial input data required to update an existing user.
  */
-final class UpdateUserDTO
+final class UpdateUserInput
 {
     /**
-     * Creates a new UpdateUserDTO.
+     * Creates a new UpdateUserInput.
      *
      * @param int         $id        The unique identifier of the user to update.
      * @param string|null $firstName The updated first name, or null to leave unchanged.
@@ -26,11 +26,11 @@ final class UpdateUserDTO
     }
 
     /**
-     * Creates an UpdateUserDTO from a raw associative array, typically sourced from a request body.
+     * Creates an UpdateUserInput from a raw associative array, typically sourced from a request body.
      *
      * @param  int                  $id   The unique identifier of the user to update.
      * @param  array<string, mixed> $data The raw input data. Unset keys default to null.
-     * @return self                 A populated UpdateUserDTO instance.
+     * @return self                 A populated UpdateUserInput instance.
      */
     public static function fromArray(int $id, array $data): self
     {

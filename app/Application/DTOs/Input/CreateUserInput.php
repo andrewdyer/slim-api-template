@@ -9,10 +9,10 @@ use InvalidArgumentException;
 /**
  * Carries the validated input data required to create a new user.
  */
-final class CreateUserDTO
+final class CreateUserInput
 {
     /**
-     * Creates a new CreateUserDTO.
+     * Creates a new CreateUserInput.
      *
      * @param string $firstName The user's first name.
      * @param string $lastName  The user's last name.
@@ -26,10 +26,10 @@ final class CreateUserDTO
     }
 
     /**
-     * Creates a CreateUserDTO from a raw associative array, typically sourced from a request body.
+     * Creates a CreateUserInput from a raw associative array, typically sourced from a request body.
      *
      * @param  array<string, mixed>     $data The raw input data.
-     * @return self                     A populated CreateUserDTO instance.
+     * @return self                     A populated CreateUserInput instance.
      * @throws InvalidArgumentException If any of the required fields (first_name, last_name, email) are missing.
      */
     public static function fromArray(array $data): self

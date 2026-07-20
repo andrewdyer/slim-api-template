@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\DTOs\Input;
 
-use App\Application\DTOs\Input\UpdateUserDTO;
+use App\Application\DTOs\Input\UpdateUserInput;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for UpdateUserDTO.
+ * Unit tests for UpdateUserInput.
  */
-final class UpdateUserDTOTest extends TestCase
+final class UpdateUserInputTest extends TestCase
 {
     /**
      * Asserts that all fields are correctly mapped when a complete input array is provided.
@@ -23,12 +23,12 @@ final class UpdateUserDTOTest extends TestCase
             'email' => 'jane@example.com',
         ];
 
-        $dto = UpdateUserDTO::fromArray(42, $payload);
+        $input = UpdateUserInput::fromArray(42, $payload);
 
-        $this->assertSame(42, $dto->id);
-        $this->assertSame('Jane', $dto->firstName);
-        $this->assertSame('Doe', $dto->lastName);
-        $this->assertSame('jane@example.com', $dto->email);
+        $this->assertSame(42, $input->id);
+        $this->assertSame('Jane', $input->firstName);
+        $this->assertSame('Doe', $input->lastName);
+        $this->assertSame('jane@example.com', $input->email);
     }
 
     /**
@@ -36,12 +36,12 @@ final class UpdateUserDTOTest extends TestCase
      */
     public function testAllowsPartialUpdateWhenSomeFieldsAreOmitted(): void
     {
-        $dto = UpdateUserDTO::fromArray(7, ['first_name' => 'Janet']);
+        $input = UpdateUserInput::fromArray(7, ['first_name' => 'Janet']);
 
-        $this->assertSame(7, $dto->id);
-        $this->assertSame('Janet', $dto->firstName);
-        $this->assertNull($dto->lastName);
-        $this->assertNull($dto->email);
+        $this->assertSame(7, $input->id);
+        $this->assertSame('Janet', $input->firstName);
+        $this->assertNull($input->lastName);
+        $this->assertNull($input->email);
     }
 
     /**
@@ -49,10 +49,10 @@ final class UpdateUserDTOTest extends TestCase
      */
     public function testDefaultsFieldsToNullWhenPayloadIsEmpty(): void
     {
-        $dto = UpdateUserDTO::fromArray(9, []);
+        $input = UpdateUserInput::fromArray(9, []);
 
-        $this->assertNull($dto->firstName);
-        $this->assertNull($dto->lastName);
-        $this->assertNull($dto->email);
+        $this->assertNull($input->firstName);
+        $this->assertNull($input->lastName);
+        $this->assertNull($input->email);
     }
 }

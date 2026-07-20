@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Actions;
 
-use App\Application\DTOs\Output\UserResponseDTO;
+use App\Application\DTOs\Output\UserOutput;
 use App\Domain\Models\User;
 use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -32,13 +32,13 @@ final class ListUsersAction extends AbstractUserAction
 
         ['users' => $users, 'total' => $total] = $this->userService->paginated($page, $perPage);
 
-        $userData = array_map(
-            fn (User $user) => UserResponseDTO::fromDomain($user),
+        $output = array_map(
+            fn (User $user) => UserOutput::fromDomain($user),
             $users
         );
 
         return $this->ok(
-            $userData,
+            $output,
             [
                 'total' => $total,
                 'page' => $page,
