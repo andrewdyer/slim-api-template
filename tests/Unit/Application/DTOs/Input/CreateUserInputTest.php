@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 final class CreateUserInputTest extends TestCase
 {
     /**
-     * Asserts that a DTO is successfully created when all required fields are present in the input array.
+     * Asserts that an input object is successfully created when all required fields are present in the input array.
      */
     public function testCreatesInstanceWhenAllFieldsAreProvided(): void
     {

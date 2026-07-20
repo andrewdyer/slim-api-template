@@ -172,7 +172,7 @@ final class UserServiceTest extends TestCase
     }
 
     /**
-     * Asserts that fields omitted from the update DTO retain their original values.
+     * Asserts that fields omitted from the update input retain their original values.
      */
     public function testPreservesUnchangedFieldsWhenPartialDataIsProvided(): void
     {

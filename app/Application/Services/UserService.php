@@ -36,7 +36,7 @@ final readonly class UserService
     }
 
     /**
-     * Creates a new user from the provided DTO and persists it via the repository.
+     * Creates a new user from the provided input and persists it via the repository.
      *
      * @param  CreateUserInput $input The data required to create the user.
      * @return User            The newly created User entity.
@@ -94,7 +94,7 @@ final readonly class UserService
     }
 
     /**
-     * Updates an existing user with the fields provided in the DTO and returns the result.
+     * Updates an existing user with the fields provided in the input and returns the result.
      *
      * @param  UpdateUserInput       $input The data to apply to the existing user. Null fields are left unchanged.
      * @return User                  The updated User entity.

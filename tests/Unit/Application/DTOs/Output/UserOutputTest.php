@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 final class UserOutputTest extends TestCase
 {
     /**
-     * Asserts that the DTO is correctly populated from a domain User entity.
+     * Asserts that the output is correctly populated from a domain User entity.
      */
     public function testCreatesInstanceWhenDomainUserIsProvided(): void
     {

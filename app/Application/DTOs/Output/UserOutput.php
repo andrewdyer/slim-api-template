@@ -47,7 +47,7 @@ final class UserOutput implements JsonSerializable
     /**
      * Returns an associative array representation for JSON encoding.
      *
-     * @return array<string, mixed> An associative array of the DTO's public properties.
+     * @return array<string, mixed> An associative array of the output's public properties.
      */
     public function jsonSerialize(): array
     {
