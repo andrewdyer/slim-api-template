@@ -8,7 +8,7 @@ use App\Application\DTOs\CreateUserDTO;
 use App\Application\DTOs\UpdateUserDTO;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Domain\Models\User;
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Repositories\UserRepositoryInterface;
 
 /**
  * Handles user-related application logic, coordinating between actions and the repository.
@@ -18,10 +18,10 @@ final readonly class UserService
     /**
      * Creates a new UserService with the required dependencies.
      *
-     * @param UserRepository $userRepository The backing user persistence layer.
+     * @param UserRepositoryInterface $userRepository The backing user persistence layer.
      */
     public function __construct(
-        protected UserRepository $userRepository,
+        protected UserRepositoryInterface $userRepository,
     ) {
     }
 

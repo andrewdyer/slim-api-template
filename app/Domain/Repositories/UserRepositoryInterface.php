@@ -9,7 +9,7 @@ use App\Domain\Models\User;
 /**
  * Defines the contract for persisting and retrieving user entities.
  */
-interface UserRepository
+interface UserRepositoryInterface
 {
     /**
      * Creates and persists a new user with the given details.

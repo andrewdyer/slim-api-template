@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Tests\Support\Persistence\Repositories;
 
 use App\Domain\Models\User;
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Repositories\UserRepositoryInterface;
 
 /**
  * Manages user persistence and retrieval in memory.
  *
  * Intended for development and testing purposes. Data does not persist between requests.
  */
-final class InMemoryUserRepository implements UserRepository
+final class InMemoryUserRepository implements UserRepositoryInterface
 {
     /**
      * Counter used to assign a unique, auto-incrementing ID to each new user.

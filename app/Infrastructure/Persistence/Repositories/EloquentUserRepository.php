@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence\Repositories;
 
 use App\Domain\Models\User;
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Repositories\UserRepositoryInterface;
 use App\Infrastructure\Persistence\Models\EloquentUserModel;
 
 /**
@@ -13,7 +13,7 @@ use App\Infrastructure\Persistence\Models\EloquentUserModel;
  *
  * Uses Illuminate Database Capsule to persist and retrieve user entities from a database.
  */
-final class EloquentUserRepository implements UserRepository
+final class EloquentUserRepository implements UserRepositoryInterface
 {
     /**
      * Creates and persists a new user with the given details.

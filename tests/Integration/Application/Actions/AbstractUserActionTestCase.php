@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Actions;
 
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Repositories\UserRepositoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Tests\Integration\AbstractTestCase;
@@ -18,7 +18,7 @@ abstract class AbstractUserActionTestCase extends AbstractTestCase
     /**
      * The user repository instance.
      */
-    protected UserRepository $userRepository;
+    protected UserRepositoryInterface $userRepository;
 
     /**
      * The user factory instance.
@@ -37,7 +37,7 @@ abstract class AbstractUserActionTestCase extends AbstractTestCase
 
         $this->userRepository = $this->app
             ->getContainer()
-            ->get(UserRepository::class);
+            ->get(UserRepositoryInterface::class);
 
         $this->userFactory = new UserFactory(
             $this->userRepository,
