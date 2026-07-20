@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Services;
 
-use App\Application\DTOs\CreateUserDTO;
-use App\Application\DTOs\UpdateUserDTO;
+use App\Application\DTOs\Input\CreateUserDTO;
+use App\Application\DTOs\Input\UpdateUserDTO;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use PHPUnit\Framework\TestCase;
