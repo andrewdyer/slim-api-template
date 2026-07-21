@@ -14,6 +14,36 @@ use PHPUnit\Framework\TestCase;
 final class CreateUserInputTest extends TestCase
 {
     /**
+     * Provides input arrays with one or more missing required fields.
+     *
+     * @return array<string, array{array<string, string>}>
+     */
+    public static function invalidPayloadProvider(): array
+    {
+        return [
+            'missing first name' => [
+                [
+                    'last_name' => 'Doe',
+                    'email' => 'jane@example.com',
+                ],
+            ],
+            'missing last name' => [
+                [
+                    'first_name' => 'Jane',
+                    'email' => 'jane@example.com',
+                ],
+            ],
+            'missing email' => [
+                [
+                    'first_name' => 'Jane',
+                    'last_name' => 'Doe',
+                ],
+            ],
+            'empty payload' => [[]],
+        ];
+    }
+
+    /**
      * Asserts that an input object is successfully created when all required fields are present in the input array.
      */
     public function testCreatesInstanceWhenAllFieldsAreProvided(): void
@@ -43,35 +73,5 @@ final class CreateUserInputTest extends TestCase
         $this->expectExceptionMessage('Missing required fields');
 
         CreateUserInput::fromArray($payload);
-    }
-
-    /**
-     * Provides input arrays with one or more missing required fields.
-     *
-     * @return array<string, array{array<string, string>}>
-     */
-    public static function invalidPayloadProvider(): array
-    {
-        return [
-            'missing first name' => [
-                [
-                    'last_name' => 'Doe',
-                    'email' => 'jane@example.com',
-                ],
-            ],
-            'missing last name' => [
-                [
-                    'first_name' => 'Jane',
-                    'email' => 'jane@example.com',
-                ],
-            ],
-            'missing email' => [
-                [
-                    'first_name' => 'Jane',
-                    'last_name' => 'Doe',
-                ],
-            ],
-            'empty payload' => [[]],
-        ];
     }
 }

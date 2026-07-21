@@ -13,29 +13,9 @@ use PHPUnit\Framework\TestCase;
 final class HelpersTest extends TestCase
 {
     /**
-     * Environment variable keys used by these tests.
-     *
-     * @var list<string>
-     */
-    private const ENVIRONMENT_KEYS = [
-        'SOME_KEY',
-        'FLAG_KEY',
-        'LIST_KEY',
-        'MISSING_KEY',
-        'PROCESS_ENV_KEY',
-        'SERVER_ENV_KEY',
-        'PRECEDENCE_KEY',
-    ];
-
-    /**
      * Backup of the original environment variables array.
      */
     private array $originalEnv;
-
-    /**
-     * Backup of the original server variables array.
-     */
-    private array $originalServer;
 
     /**
      * Backup of the original process environment values used by these tests.
@@ -43,6 +23,28 @@ final class HelpersTest extends TestCase
      * @var array<string, string|false>
      */
     private array $originalProcessEnvironment;
+
+    /**
+     * Backup of the original server variables array.
+     */
+    private array $originalServer;
+
+    /**
+     * Provides boolean strings with representative casing.
+     *
+     * @return array<string, array{string, bool}>
+     */
+    public static function booleanValueProvider(): array
+    {
+        return [
+            'true lowercase' => ['true', true],
+            'false lowercase' => ['false', false],
+            'true uppercase' => ['TRUE', true],
+            'false uppercase' => ['FALSE', false],
+            'true mixed case' => ['True', true],
+            'false mixed case' => ['False', false],
+        ];
+    }
 
     /**
      * Builds backups of environment variables before each test.
@@ -85,41 +87,55 @@ final class HelpersTest extends TestCase
     }
 
     /**
-     * Asserts that the default value is returned when the key is missing.
+     * Asserts that an empty array is returned when the key is missing.
      */
-    public function testGetEnvReturnsDefaultWhenMissing(): void
+    public function testGetEnvArrayReturnsEmptyWhenMissing(): void
     {
-        $this->assertSame('default', get_env('MISSING_KEY', 'default'));
+        $this->assertSame([], get_env_array('LIST_KEY'));
     }
 
     /**
-     * Asserts that string values are returned without modification.
+     * Asserts that comma-separated values are split into an array.
      */
-    public function testGetEnvReturnsStringValue(): void
+    public function testGetEnvArraySplitsValues(): void
     {
-        $_ENV['SOME_KEY'] = 'some-value';
+        $_ENV['LIST_KEY'] = 'a,b,c';
 
-        $this->assertSame('some-value', get_env('SOME_KEY'));
+        $this->assertSame(['a', 'b', 'c'], get_env_array('LIST_KEY'));
     }
 
     /**
-     * Asserts that server environment variables are available when $_ENV is not populated.
+     * Asserts that values are trimmed and empty entries are removed.
      */
-    public function testGetEnvReturnsServerEnvironmentValue(): void
+    public function testGetEnvArrayTrimsAndFilters(): void
     {
-        $_SERVER['SERVER_ENV_KEY'] = 'server-value';
+        $_ENV['LIST_KEY'] = ' a, ,b , , c ';
 
-        $this->assertSame('server-value', get_env('SERVER_ENV_KEY'));
+        $this->assertSame(['a', 'b', 'c'], get_env_array('LIST_KEY'));
     }
 
     /**
-     * Asserts that process environment variables are available when $_ENV is not populated.
+     * Asserts that values can be split using a custom delimiter.
      */
-    public function testGetEnvReturnsProcessEnvironmentValue(): void
+    public function testGetEnvArrayUsesCustomDelimiter(): void
     {
-        putenv('PROCESS_ENV_KEY=process-value');
+        $_ENV['LIST_KEY'] = 'a|b|c';
 
-        $this->assertSame('process-value', get_env('PROCESS_ENV_KEY'));
+        $this->assertSame(['a', 'b', 'c'], get_env_array('LIST_KEY', '|'));
+    }
+
+    /**
+     * Asserts that boolean strings are cast without regard to case.
+     *
+     * @param string $value    The environment variable value to cast.
+     * @param bool   $expected The expected cast value.
+     */
+    #[DataProvider('booleanValueProvider')]
+    public function testGetEnvCastsBooleanStrings(string $value, bool $expected): void
+    {
+        $_ENV['FLAG_KEY'] = $value;
+
+        $this->assertSame($expected, get_env('FLAG_KEY'));
     }
 
     /**
@@ -156,71 +172,54 @@ final class HelpersTest extends TestCase
     }
 
     /**
-     * Asserts that boolean strings are cast without regard to case.
+     * Asserts that the default value is returned when the key is missing.
+     */
+    public function testGetEnvReturnsDefaultWhenMissing(): void
+    {
+        $this->assertSame('default', get_env('MISSING_KEY', 'default'));
+    }
+
+    /**
+     * Asserts that process environment variables are available when $_ENV is not populated.
+     */
+    public function testGetEnvReturnsProcessEnvironmentValue(): void
+    {
+        putenv('PROCESS_ENV_KEY=process-value');
+
+        $this->assertSame('process-value', get_env('PROCESS_ENV_KEY'));
+    }
+
+    /**
+     * Asserts that server environment variables are available when $_ENV is not populated.
+     */
+    public function testGetEnvReturnsServerEnvironmentValue(): void
+    {
+        $_SERVER['SERVER_ENV_KEY'] = 'server-value';
+
+        $this->assertSame('server-value', get_env('SERVER_ENV_KEY'));
+    }
+
+    /**
+     * Asserts that string values are returned without modification.
+     */
+    public function testGetEnvReturnsStringValue(): void
+    {
+        $_ENV['SOME_KEY'] = 'some-value';
+
+        $this->assertSame('some-value', get_env('SOME_KEY'));
+    }
+    /**
+     * Environment variable keys used by these tests.
      *
-     * @param string $value    The environment variable value to cast.
-     * @param bool   $expected The expected cast value.
+     * @var list<string>
      */
-    #[DataProvider('booleanValueProvider')]
-    public function testGetEnvCastsBooleanStrings(string $value, bool $expected): void
-    {
-        $_ENV['FLAG_KEY'] = $value;
-
-        $this->assertSame($expected, get_env('FLAG_KEY'));
-    }
-
-    /**
-     * Provides boolean strings with representative casing.
-     *
-     * @return array<string, array{string, bool}>
-     */
-    public static function booleanValueProvider(): array
-    {
-        return [
-            'true lowercase' => ['true', true],
-            'false lowercase' => ['false', false],
-            'true uppercase' => ['TRUE', true],
-            'false uppercase' => ['FALSE', false],
-            'true mixed case' => ['True', true],
-            'false mixed case' => ['False', false],
-        ];
-    }
-
-    /**
-     * Asserts that an empty array is returned when the key is missing.
-     */
-    public function testGetEnvArrayReturnsEmptyWhenMissing(): void
-    {
-        $this->assertSame([], get_env_array('LIST_KEY'));
-    }
-
-    /**
-     * Asserts that comma-separated values are split into an array.
-     */
-    public function testGetEnvArraySplitsValues(): void
-    {
-        $_ENV['LIST_KEY'] = 'a,b,c';
-
-        $this->assertSame(['a', 'b', 'c'], get_env_array('LIST_KEY'));
-    }
-
-    /**
-     * Asserts that values can be split using a custom delimiter.
-     */
-    public function testGetEnvArrayUsesCustomDelimiter(): void
-    {
-        $_ENV['LIST_KEY'] = 'a|b|c';
-
-        $this->assertSame(['a', 'b', 'c'], get_env_array('LIST_KEY', '|'));
-    }
-
-    /**
-     * Asserts that values are trimmed and empty entries are removed.
-     */
-    public function testGetEnvArrayTrimsAndFilters(): void
-    {
-        $_ENV['LIST_KEY'] = ' a, ,b , , c ';
-
-        $this->assertSame(['a', 'b', 'c'], get_env_array('LIST_KEY'));
-    }
+    private const ENVIRONMENT_KEYS = [
+        'SOME_KEY',
+        'FLAG_KEY',
+        'LIST_KEY',
+        'MISSING_KEY',
+        'PROCESS_ENV_KEY',
+        'SERVER_ENV_KEY',
+        'PRECEDENCE_KEY',
+    ];
 }

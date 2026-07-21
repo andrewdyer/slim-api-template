@@ -82,6 +82,17 @@ final class InMemoryUserRepository implements UserRepositoryInterface
     }
 
     /**
+     * Returns a user by their ID from the in-memory store.
+     *
+     * @param  int       $id The unique identifier of the user to retrieve.
+     * @return User|null The matching User entity, or null if not found.
+     */
+    public function findById(int $id): ?User
+    {
+        return $this->store[$id] ?? null;
+    }
+
+    /**
      * Returns a paginated subset of users from the in-memory store.
      *
      * @param  int                              $page    The 1-indexed page number. Must be >= 1.
@@ -100,17 +111,6 @@ final class InMemoryUserRepository implements UserRepositoryInterface
             'users' => $users,
             'total' => $total,
         ];
-    }
-
-    /**
-     * Returns a user by their ID from the in-memory store.
-     *
-     * @param  int       $id The unique identifier of the user to retrieve.
-     * @return User|null The matching User entity, or null if not found.
-     */
-    public function findById(int $id): ?User
-    {
-        return $this->store[$id] ?? null;
     }
 
     /**

@@ -16,14 +16,13 @@ use Tests\Support\Factories\UserFactory;
 abstract class AbstractUserActionTestCase extends AbstractTestCase
 {
     /**
-     * The user repository instance.
-     */
-    protected UserRepositoryInterface $userRepository;
-
-    /**
      * The user factory instance.
      */
     protected UserFactory $userFactory;
+    /**
+     * The user repository instance.
+     */
+    protected UserRepositoryInterface $userRepository;
 
     /**
      * Builds the user test dependencies before each test.

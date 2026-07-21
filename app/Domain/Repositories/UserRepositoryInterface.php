@@ -37,6 +37,14 @@ interface UserRepositoryInterface
     public function findAll(): array;
 
     /**
+     * Returns a user by their unique identifier.
+     *
+     * @param  int       $id The unique identifier of the user to retrieve.
+     * @return User|null The matching User entity, or null if not found.
+     */
+    public function findById(int $id): ?User;
+
+    /**
      * Returns a paginated subset of users.
      *
      * @param  int                              $page    The page number to retrieve (1-indexed).
@@ -44,14 +52,6 @@ interface UserRepositoryInterface
      * @return array{users: User[], total: int} An array containing the users for the requested page and the total count.
      */
     public function findPaginated(int $page, int $perPage): array;
-
-    /**
-     * Returns a user by their unique identifier.
-     *
-     * @param  int       $id The unique identifier of the user to retrieve.
-     * @return User|null The matching User entity, or null if not found.
-     */
-    public function findById(int $id): ?User;
 
     /**
      * Updates an existing user's details and returns the updated entity.
