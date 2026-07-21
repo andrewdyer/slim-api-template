@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\DTOs\Input;
+namespace App\Application\DTOs\Inputs;
 
 /**
  * Carries partial input data required to update an existing user.

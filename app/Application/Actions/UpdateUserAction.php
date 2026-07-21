@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Application\Actions;
 
 use AndrewDyer\Actions\AbstractAction;
-use App\Application\DTOs\Input\UpdateUserInput;
-use App\Application\DTOs\Output\UserOutput;
+use App\Application\DTOs\Inputs\UpdateUserInput;
+use App\Application\DTOs\Outputs\UserOutput;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use JsonException;
