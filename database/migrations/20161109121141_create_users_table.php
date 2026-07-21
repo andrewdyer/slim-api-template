@@ -10,6 +10,16 @@ use Phinx\Migration\AbstractMigration;
 final class CreateUsersTable extends AbstractMigration
 {
     /**
+     * Deletes the users table if it exists.
+     */
+    public function down(): void
+    {
+        if ($this->hasTable('users')) {
+            $this->table('users')->drop()->save();
+        }
+    }
+
+    /**
      * Creates the users table and its required columns.
      */
     public function up(): void
@@ -27,15 +37,5 @@ final class CreateUsersTable extends AbstractMigration
                 'update' => 'CURRENT_TIMESTAMP',
             ])
             ->create();
-    }
-
-    /**
-     * Deletes the users table if it exists.
-     */
-    public function down(): void
-    {
-        if ($this->hasTable('users')) {
-            $this->table('users')->drop()->save();
-        }
     }
 }

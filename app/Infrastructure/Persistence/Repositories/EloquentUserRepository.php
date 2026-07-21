@@ -64,6 +64,23 @@ final class EloquentUserRepository implements UserRepositoryInterface
     }
 
     /**
+     * Returns a user by their unique identifier.
+     *
+     * @param  int       $id The unique identifier of the user to retrieve.
+     * @return User|null The matching User entity, or null if not found.
+     */
+    public function findById(int $id): ?User
+    {
+        $model = EloquentUserModel::find($id);
+
+        if (null === $model) {
+            return null;
+        }
+
+        return $this->toDomain($model);
+    }
+
+    /**
      * Returns a paginated collection of persisted user entities.
      *
      * @param  int                                  $page    The page number to retrieve.
@@ -92,20 +109,19 @@ final class EloquentUserRepository implements UserRepositoryInterface
     }
 
     /**
-     * Returns a user by their unique identifier.
+     * Builds a domain User entity from an Eloquent model.
      *
-     * @param  int       $id The unique identifier of the user to retrieve.
-     * @return User|null The matching User entity, or null if not found.
+     * @param  EloquentUserModel $model The Eloquent model to convert.
+     * @return User              The corresponding domain entity.
      */
-    public function findById(int $id): ?User
+    private function toDomain(EloquentUserModel $model): User
     {
-        $model = EloquentUserModel::find($id);
-
-        if (null === $model) {
-            return null;
-        }
-
-        return $this->toDomain($model);
+        return new User(
+            id: $model->id,
+            firstName: $model->first_name,
+            lastName: $model->last_name,
+            email: $model->email
+        );
     }
 
     /**
@@ -140,21 +156,5 @@ final class EloquentUserRepository implements UserRepositoryInterface
         $model->save();
 
         return $this->toDomain($model);
-    }
-
-    /**
-     * Builds a domain User entity from an Eloquent model.
-     *
-     * @param  EloquentUserModel $model The Eloquent model to convert.
-     * @return User              The corresponding domain entity.
-     */
-    private function toDomain(EloquentUserModel $model): User
-    {
-        return new User(
-            id: $model->id,
-            firstName: $model->first_name,
-            lastName: $model->last_name,
-            email: $model->email
-        );
     }
 }

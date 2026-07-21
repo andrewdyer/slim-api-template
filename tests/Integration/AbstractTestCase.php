@@ -30,12 +30,21 @@ abstract class AbstractTestCase extends TestCase
     protected Generator $faker;
 
     /**
-     * Builds the application state required before each test.
+     * Returns the decoded JSON response body.
+     *
+     * @param  ResponseInterface    $response The HTTP response.
+     * @return array<string, mixed> The decoded response data.
+     * @throws JsonException        If JSON decoding fails.
      */
-    protected function setUp(): void
+    protected function decodeJson(ResponseInterface $response): array
     {
-        $this->app = require_from_root('bootstrap/app.php')();
-        $this->faker = FakerFactory::create();
+        $body = (string)$response->getBody();
+
+        if ($body === '') {
+            return [];
+        }
+
+        return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -80,20 +89,11 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * Returns the decoded JSON response body.
-     *
-     * @param  ResponseInterface    $response The HTTP response.
-     * @return array<string, mixed> The decoded response data.
-     * @throws JsonException        If JSON decoding fails.
+     * Builds the application state required before each test.
      */
-    protected function decodeJson(ResponseInterface $response): array
+    protected function setUp(): void
     {
-        $body = (string)$response->getBody();
-
-        if ($body === '') {
-            return [];
-        }
-
-        return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+        $this->app = require_from_root('bootstrap/app.php')();
+        $this->faker = FakerFactory::create();
     }
 }

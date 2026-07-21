@@ -12,18 +12,61 @@ use PHPUnit\Framework\Attributes\DataProvider;
 final class ListUserActionActionTest extends AbstractUserActionTestCase
 {
     /**
-     * Asserts that the total user count increases after new users are created.
+     * Provides invalid page query strings and their expected clamped values.
+     *
+     * @return array<string, array{string, int}>
      */
-    public function testTotalIncreasesAfterUsersAreCreated(): void
+    public static function invalidPageProvider(): array
     {
-        $beforeTotal = $this->decodeJson($this->request('GET', '/api/v1/users'))['meta']['total'];
+        return [
+            'zero page' => ['page=0&perPage=10', 1],
+            'negative page' => ['page=-5&perPage=10', 1],
+            'non-numeric' => ['page=abc&perPage=10', 1],
+        ];
+    }
 
-        $this->userFactory->create();
-        $this->userFactory->create();
+    /**
+     * Provides invalid perPage query strings and their expected clamped values.
+     *
+     * @return array<string, array{string, int}>
+     */
+    public static function invalidPerPageProvider(): array
+    {
+        return [
+            'zero perPage' => ['page=1&perPage=0', 1],
+            'negative perPage' => ['page=1&perPage=-10', 1],
+            'exceeds maximum' => ['page=1&perPage=999', 100],
+        ];
+    }
 
-        $afterTotal = $this->decodeJson($this->request('GET', '/api/v1/users'))['meta']['total'];
+    /**
+     * Asserts that an invalid page parameter is clamped to a valid value.
+     *
+     * @param string $query        The query string under test.
+     * @param int    $expectedPage The expected clamped page number.
+     */
+    #[DataProvider('invalidPageProvider')]
+    public function testInvalidPageIsClamped(string $query, int $expectedPage): void
+    {
+        $response = $this->request('GET', "/api/v1/users?{$query}");
 
-        $this->assertSame($beforeTotal + 2, $afterTotal);
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame($expectedPage, $this->decodeJson($response)['meta']['page']);
+    }
+
+    /**
+     * Asserts that an invalid perPage parameter is clamped to a valid value.
+     *
+     * @param string $query           The query string under test.
+     * @param int    $expectedPerPage The expected clamped page size.
+     */
+    #[DataProvider('invalidPerPageProvider')]
+    public function testInvalidPerPageIsClamped(string $query, int $expectedPerPage): void
+    {
+        $response = $this->request('GET', "/api/v1/users?{$query}");
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame($expectedPerPage, $this->decodeJson($response)['meta']['perPage']);
     }
 
     /**
@@ -51,60 +94,17 @@ final class ListUserActionActionTest extends AbstractUserActionTestCase
     }
 
     /**
-     * Asserts that an invalid page parameter is clamped to a valid value.
-     *
-     * @param string $query        The query string under test.
-     * @param int    $expectedPage The expected clamped page number.
+     * Asserts that the total user count increases after new users are created.
      */
-    #[DataProvider('invalidPageProvider')]
-    public function testInvalidPageIsClamped(string $query, int $expectedPage): void
+    public function testTotalIncreasesAfterUsersAreCreated(): void
     {
-        $response = $this->request('GET', "/api/v1/users?{$query}");
+        $beforeTotal = $this->decodeJson($this->request('GET', '/api/v1/users'))['meta']['total'];
 
-        $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame($expectedPage, $this->decodeJson($response)['meta']['page']);
-    }
+        $this->userFactory->create();
+        $this->userFactory->create();
 
-    /**
-     * Provides invalid page query strings and their expected clamped values.
-     *
-     * @return array<string, array{string, int}>
-     */
-    public static function invalidPageProvider(): array
-    {
-        return [
-            'zero page' => ['page=0&perPage=10', 1],
-            'negative page' => ['page=-5&perPage=10', 1],
-            'non-numeric' => ['page=abc&perPage=10', 1],
-        ];
-    }
+        $afterTotal = $this->decodeJson($this->request('GET', '/api/v1/users'))['meta']['total'];
 
-    /**
-     * Asserts that an invalid perPage parameter is clamped to a valid value.
-     *
-     * @param string $query           The query string under test.
-     * @param int    $expectedPerPage The expected clamped page size.
-     */
-    #[DataProvider('invalidPerPageProvider')]
-    public function testInvalidPerPageIsClamped(string $query, int $expectedPerPage): void
-    {
-        $response = $this->request('GET', "/api/v1/users?{$query}");
-
-        $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame($expectedPerPage, $this->decodeJson($response)['meta']['perPage']);
-    }
-
-    /**
-     * Provides invalid perPage query strings and their expected clamped values.
-     *
-     * @return array<string, array{string, int}>
-     */
-    public static function invalidPerPageProvider(): array
-    {
-        return [
-            'zero perPage' => ['page=1&perPage=0', 1],
-            'negative perPage' => ['page=1&perPage=-10', 1],
-            'exceeds maximum' => ['page=1&perPage=999', 100],
-        ];
+        $this->assertSame($beforeTotal + 2, $afterTotal);
     }
 }

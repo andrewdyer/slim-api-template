@@ -13,6 +13,19 @@ use PHPUnit\Framework\TestCase;
 final class UpdateUserInputTest extends TestCase
 {
     /**
+     * Asserts that absent fields are set to null, allowing only the provided fields to be updated.
+     */
+    public function testAllowsPartialUpdateWhenSomeFieldsAreOmitted(): void
+    {
+        $input = UpdateUserInput::fromArray(7, ['first_name' => 'Janet']);
+
+        $this->assertSame(7, $input->id);
+        $this->assertSame('Janet', $input->firstName);
+        $this->assertNull($input->lastName);
+        $this->assertNull($input->email);
+    }
+
+    /**
      * Asserts that all fields are correctly mapped when a complete input array is provided.
      */
     public function testCreatesInstanceWhenAllFieldsAreProvided(): void
@@ -29,19 +42,6 @@ final class UpdateUserInputTest extends TestCase
         $this->assertSame('Jane', $input->firstName);
         $this->assertSame('Doe', $input->lastName);
         $this->assertSame('jane@example.com', $input->email);
-    }
-
-    /**
-     * Asserts that absent fields are set to null, allowing only the provided fields to be updated.
-     */
-    public function testAllowsPartialUpdateWhenSomeFieldsAreOmitted(): void
-    {
-        $input = UpdateUserInput::fromArray(7, ['first_name' => 'Janet']);
-
-        $this->assertSame(7, $input->id);
-        $this->assertSame('Janet', $input->firstName);
-        $this->assertNull($input->lastName);
-        $this->assertNull($input->email);
     }
 
     /**
