@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\DTOs\Output;
+namespace Tests\Unit\Application\DTOs\Outputs;
 
-use App\Application\DTOs\Output\UserOutput;
+use App\Application\DTOs\Outputs\UserOutput;
 use App\Domain\Models\User;
 use PHPUnit\Framework\TestCase;
 

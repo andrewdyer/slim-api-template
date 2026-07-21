@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Actions;
 
 use AndrewDyer\Actions\AbstractAction;
-use App\Application\DTOs\Output\UserOutput;
+use App\Application\DTOs\Outputs\UserOutput;
 use App\Application\Services\UserService;
 use App\Domain\Models\User;
 use JsonException;

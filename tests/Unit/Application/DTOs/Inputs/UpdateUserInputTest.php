@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\DTOs\Input;
+namespace Tests\Unit\Application\DTOs\Inputs;
 
-use App\Application\DTOs\Input\UpdateUserInput;
+use App\Application\DTOs\Inputs\UpdateUserInput;
 use PHPUnit\Framework\TestCase;
 
 /**

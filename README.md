@@ -32,8 +32,8 @@ repo/
 │   ├── Application/             # Request handling and use-case orchestration
 │   │   ├── Actions/             # HTTP actions
 │   │   ├── DTOs/                # Application input and output objects
-│   │   │   ├── Input/           # Validated use-case input
-│   │   │   └── Output/          # Serializable response output
+│   │   │   ├── Inputs/          # Validated use-case input
+│   │   │   └── Outputs/         # Serializable response output
 │   │   ├── Exceptions/          # Application-specific exceptions
 │   │   └── Services/            # Application services
 │   ├── Domain/                  # Business models and contracts

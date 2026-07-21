@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Services;
 
-use App\Application\DTOs\Input\CreateUserInput;
-use App\Application\DTOs\Input\UpdateUserInput;
+use App\Application\DTOs\Inputs\CreateUserInput;
+use App\Application\DTOs\Inputs\UpdateUserInput;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Domain\Models\User;
 use App\Domain\Repositories\UserRepositoryInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\DTOs\Output;
+namespace App\Application\DTOs\Outputs;
 
 use App\Domain\Models\User;
 use JsonSerializable;
