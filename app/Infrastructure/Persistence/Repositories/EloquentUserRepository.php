@@ -120,12 +120,17 @@ final class EloquentUserRepository implements UserRepositoryInterface
     /**
      * Determines whether a query exception was caused by the email uniqueness constraint.
      *
+     * SQLSTATE 23000 is the broad "integrity constraint violation" class, which also
+     * covers NOT NULL and foreign key violations, so it isn't specific enough on its own.
+     * MySQL's driver-specific error code 1062 (ER_DUP_ENTRY) is used instead, since the
+     * users table has exactly one unique index and this repository is MySQL-only.
+     *
      * @param  QueryException $e The query exception to inspect.
-     * @return bool           True if the exception represents an integrity constraint violation.
+     * @return bool           True if the exception represents a duplicate-entry violation.
      */
     private function isDuplicateEmailViolation(QueryException $e): bool
     {
-        return $e->getCode() === '23000';
+        return ($e->errorInfo[1] ?? null) === 1062;
     }
 
     /**
