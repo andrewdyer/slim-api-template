@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Repositories;
 
+use App\Domain\Exceptions\DuplicateEmailException;
 use App\Domain\Models\User;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Infrastructure\Persistence\Models\EloquentUserModel;
@@ -18,13 +19,18 @@ final class EloquentUserRepository implements UserRepositoryInterface
     /**
      * Creates and persists a new user with the given details.
      *
-     * @param  string $firstName The user's first name.
-     * @param  string $lastName  The user's last name.
-     * @param  string $email     The user's email address.
-     * @return User   The newly created User entity.
+     * @param  string                  $firstName The user's first name.
+     * @param  string                  $lastName  The user's last name.
+     * @param  string                  $email     The user's email address.
+     * @return User                    The newly created User entity.
+     * @throws DuplicateEmailException If a user with the given email already exists.
      */
     public function create(string $firstName, string $lastName, string $email): User
     {
+        if (EloquentUserModel::where('email', $email)->exists()) {
+            throw new DuplicateEmailException("A user with email {$email} already exists.");
+        }
+
         $model = EloquentUserModel::create([
             'first_name' => $firstName,
             'last_name' => $lastName,
@@ -127,11 +133,12 @@ final class EloquentUserRepository implements UserRepositoryInterface
     /**
      * Updates an existing user's details and returns the updated entity.
      *
-     * @param  int         $id        The unique identifier of the user to update.
-     * @param  string|null $firstName The new first name, or null to leave unchanged.
-     * @param  string|null $lastName  The new last name, or null to leave unchanged.
-     * @param  string|null $email     The new email address, or null to leave unchanged.
-     * @return User|null   The updated User entity, or null if no user with that ID existed.
+     * @param  int                     $id        The unique identifier of the user to update.
+     * @param  string|null             $firstName The new first name, or null to leave unchanged.
+     * @param  string|null             $lastName  The new last name, or null to leave unchanged.
+     * @param  string|null             $email     The new email address, or null to leave unchanged.
+     * @return User|null               The updated User entity, or null if no user with that ID existed.
+     * @throws DuplicateEmailException If another user with the given email already exists.
      */
     public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
     {
@@ -139,6 +146,10 @@ final class EloquentUserRepository implements UserRepositoryInterface
 
         if (null === $model) {
             return null;
+        }
+
+        if (null !== $email && EloquentUserModel::where('email', $email)->where('id', '!=', $id)->exists()) {
+            throw new DuplicateEmailException("A user with email {$email} already exists.");
         }
 
         if (null !== $firstName) {

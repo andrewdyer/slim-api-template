@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Support\Persistence\Repositories;
 
+use App\Domain\Exceptions\DuplicateEmailException;
 use App\Domain\Models\User;
 use App\Domain\Repositories\UserRepositoryInterface;
 
@@ -41,13 +42,18 @@ final class InMemoryUserRepository implements UserRepositoryInterface
     /**
      * Creates a new User entity, assigns it the next available ID, and stores it.
      *
-     * @param  string $firstName The user's first name.
-     * @param  string $lastName  The user's last name.
-     * @param  string $email     The user's email address.
-     * @return User   The newly created and stored User entity.
+     * @param  string                  $firstName The user's first name.
+     * @param  string                  $lastName  The user's last name.
+     * @param  string                  $email     The user's email address.
+     * @return User                    The newly created and stored User entity.
+     * @throws DuplicateEmailException If a user with the given email already exists.
      */
     public function create(string $firstName, string $lastName, string $email): User
     {
+        if ($this->emailExists($email)) {
+            throw new DuplicateEmailException("A user with email {$email} already exists.");
+        }
+
         $user = new User($this->nextId++, $firstName, $lastName, $email);
         $this->store[$user->getId()] = $user;
 
@@ -69,6 +75,24 @@ final class InMemoryUserRepository implements UserRepositoryInterface
         unset($this->store[$id]);
 
         return true;
+    }
+
+    /**
+     * Determines whether a user with the given email exists in the in-memory store.
+     *
+     * @param  string   $email     The email address to check.
+     * @param  int|null $excludeId A user ID to exclude from the check, typically the user being updated.
+     * @return bool     True if another stored user already has the given email.
+     */
+    private function emailExists(string $email, ?int $excludeId = null): bool
+    {
+        foreach ($this->store as $user) {
+            if ($user->getEmail() === $email && $user->getId() !== $excludeId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -116,11 +140,12 @@ final class InMemoryUserRepository implements UserRepositoryInterface
     /**
      * Updates an existing user's details and returns the updated entity.
      *
-     * @param  int         $id        The unique identifier of the user to update.
-     * @param  string|null $firstName The new first name, or null to retain the existing value.
-     * @param  string|null $lastName  The new last name, or null to retain the existing value.
-     * @param  string|null $email     The new email address, or null to retain the existing value.
-     * @return User|null   The updated User entity, or null if no user with that ID existed.
+     * @param  int                     $id        The unique identifier of the user to update.
+     * @param  string|null             $firstName The new first name, or null to retain the existing value.
+     * @param  string|null             $lastName  The new last name, or null to retain the existing value.
+     * @param  string|null             $email     The new email address, or null to retain the existing value.
+     * @return User|null               The updated User entity, or null if no user with that ID existed.
+     * @throws DuplicateEmailException If another user with the given email already exists.
      */
     public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
     {
@@ -128,6 +153,10 @@ final class InMemoryUserRepository implements UserRepositoryInterface
 
         if (null === $existing) {
             return null;
+        }
+
+        if (null !== $email && $this->emailExists($email, excludeId: $id)) {
+            throw new DuplicateEmailException("A user with email {$email} already exists.");
         }
 
         $updated = new User(

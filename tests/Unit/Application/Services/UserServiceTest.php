@@ -6,6 +6,7 @@ namespace Tests\Unit\Application\Services;
 
 use App\Application\DTOs\Inputs\CreateUserInput;
 use App\Application\DTOs\Inputs\UpdateUserInput;
+use App\Application\Exceptions\UserEmailAlreadyExistsException;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use PHPUnit\Framework\TestCase;
@@ -201,6 +202,37 @@ final class UserServiceTest extends TestCase
         $this->assertSame('Oliver', $user->getFirstName());
         $this->assertSame('French', $user->getLastName());
         $this->assertSame('oliver.french@example.com', $user->getEmail());
+    }
+
+    /**
+     * Asserts that UserEmailAlreadyExistsException is thrown when creating a user with an email already in use.
+     */
+    public function testThrowsUserEmailAlreadyExistsExceptionWhenCreatingWithDuplicateEmail(): void
+    {
+        $input = new CreateUserInput(
+            firstName: 'Jane',
+            lastName: 'Doe',
+            email: 'oliver.french@example.com'
+        );
+
+        $this->expectException(UserEmailAlreadyExistsException::class);
+
+        $this->userService->create($input);
+    }
+
+    /**
+     * Asserts that UserEmailAlreadyExistsException is thrown when updating a user with an email already in use.
+     */
+    public function testThrowsUserEmailAlreadyExistsExceptionWhenUpdatingWithDuplicateEmail(): void
+    {
+        $input = new UpdateUserInput(
+            id: 1,
+            email: 'charlotte.anderson@example.com'
+        );
+
+        $this->expectException(UserEmailAlreadyExistsException::class);
+
+        $this->userService->update($input);
     }
 
     /**
