@@ -63,6 +63,23 @@ final class CreateUserInputTest extends TestCase
     }
 
     /**
+     * Asserts that a BadRequestException is thrown when the email address is not validly formatted.
+     */
+    public function testThrowsBadRequestExceptionWhenEmailIsInvalid(): void
+    {
+        $payload = [
+            'first_name' => 'Jane',
+            'last_name' => 'Doe',
+            'email' => 'not-an-email',
+        ];
+
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('Invalid email address');
+
+        CreateUserInput::fromArray($payload);
+    }
+
+    /**
      * Asserts that a BadRequestException is thrown when one or more required fields are absent.
      *
      * @param array<string, string> $payload The incomplete input payload.

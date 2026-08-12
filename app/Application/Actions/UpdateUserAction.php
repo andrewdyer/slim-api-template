@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Actions;
 
 use AndrewDyer\Actions\AbstractAction;
+use AndrewDyer\Actions\Exceptions\BadRequestException;
 use App\Application\DTOs\Inputs\UpdateUserInput;
 use App\Application\DTOs\Outputs\UserOutput;
 use App\Application\Exceptions\UserNotFoundException;
@@ -31,6 +32,7 @@ final class UpdateUserAction extends AbstractAction
      *
      * @return Response              A 200 JSON response containing the updated user.
      * @throws UserNotFoundException If no user exists with the given ID.
+     * @throws BadRequestException   If an email address is provided but is not validly formatted.
      * @throws JsonException         If the request body contains invalid JSON.
      */
     protected function handle(): Response

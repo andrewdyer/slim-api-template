@@ -40,6 +40,20 @@ final class UpdateUserActionTest extends AbstractUserActionTestCase
     }
 
     /**
+     * Asserts that a 400 response is returned when the given email is not validly formatted.
+     */
+    public function testReturns400WhenEmailIsInvalid(): void
+    {
+        $user = $this->userFactory->create();
+
+        $response = $this->request('PUT', '/api/v1/users/' . $user->getId(), [
+            'email' => 'not-an-email',
+        ]);
+
+        $this->assertSame(400, $response->getStatusCode());
+    }
+
+    /**
      * Asserts that a 404 response is returned when no user exists with the given ID.
      */
     public function testReturns404WhenUserNotFound(): void

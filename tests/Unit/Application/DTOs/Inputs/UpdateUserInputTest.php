@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\DTOs\Inputs;
 
+use AndrewDyer\Actions\Exceptions\BadRequestException;
 use App\Application\DTOs\Inputs\UpdateUserInput;
 use PHPUnit\Framework\TestCase;
 
@@ -54,5 +55,16 @@ final class UpdateUserInputTest extends TestCase
         $this->assertNull($input->firstName);
         $this->assertNull($input->lastName);
         $this->assertNull($input->email);
+    }
+
+    /**
+     * Asserts that a BadRequestException is thrown when the email address is not validly formatted.
+     */
+    public function testThrowsBadRequestExceptionWhenEmailIsInvalid(): void
+    {
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('Invalid email address');
+
+        UpdateUserInput::fromArray(1, ['email' => 'not-an-email']);
     }
 }
