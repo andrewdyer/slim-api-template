@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Repositories;
 
+use App\Domain\Exceptions\DuplicateEmailException;
 use App\Domain\Models\User;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Infrastructure\Persistence\Models\EloquentUserModel;
+use Illuminate\Database\QueryException;
 
 /**
  * Manages user persistence and retrieval through Eloquent.
@@ -18,18 +20,25 @@ final class EloquentUserRepository implements UserRepositoryInterface
     /**
      * Creates and persists a new user with the given details.
      *
-     * @param  string $firstName The user's first name.
-     * @param  string $lastName  The user's last name.
-     * @param  string $email     The user's email address.
-     * @return User   The newly created User entity.
+     * @param  string                  $firstName The user's first name.
+     * @param  string                  $lastName  The user's last name.
+     * @param  string                  $email     The user's email address.
+     * @return User                    The newly created User entity.
+     * @throws DuplicateEmailException If a user with the given email already exists.
      */
     public function create(string $firstName, string $lastName, string $email): User
     {
-        $model = EloquentUserModel::create([
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email,
-        ]);
+        try {
+            $model = EloquentUserModel::create([
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'email' => $email,
+            ]);
+        } catch (QueryException $e) {
+            throw $this->isDuplicateEmailViolation($e)
+                ? new DuplicateEmailException("A user with email {$email} already exists.", previous: $e)
+                : $e;
+        }
 
         return $this->toDomain($model);
     }
@@ -109,6 +118,17 @@ final class EloquentUserRepository implements UserRepositoryInterface
     }
 
     /**
+     * Determines whether a query exception was caused by the email uniqueness constraint.
+     *
+     * @param  QueryException $e The query exception to inspect.
+     * @return bool           True if the exception represents an integrity constraint violation.
+     */
+    private function isDuplicateEmailViolation(QueryException $e): bool
+    {
+        return $e->getCode() === '23000';
+    }
+
+    /**
      * Builds a domain User entity from an Eloquent model.
      *
      * @param  EloquentUserModel $model The Eloquent model to convert.
@@ -127,11 +147,12 @@ final class EloquentUserRepository implements UserRepositoryInterface
     /**
      * Updates an existing user's details and returns the updated entity.
      *
-     * @param  int         $id        The unique identifier of the user to update.
-     * @param  string|null $firstName The new first name, or null to leave unchanged.
-     * @param  string|null $lastName  The new last name, or null to leave unchanged.
-     * @param  string|null $email     The new email address, or null to leave unchanged.
-     * @return User|null   The updated User entity, or null if no user with that ID existed.
+     * @param  int                     $id        The unique identifier of the user to update.
+     * @param  string|null             $firstName The new first name, or null to leave unchanged.
+     * @param  string|null             $lastName  The new last name, or null to leave unchanged.
+     * @param  string|null             $email     The new email address, or null to leave unchanged.
+     * @return User|null               The updated User entity, or null if no user with that ID existed.
+     * @throws DuplicateEmailException If another user with the given email already exists.
      */
     public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
     {
@@ -153,7 +174,13 @@ final class EloquentUserRepository implements UserRepositoryInterface
             $model->email = $email;
         }
 
-        $model->save();
+        try {
+            $model->save();
+        } catch (QueryException $e) {
+            throw $this->isDuplicateEmailViolation($e)
+                ? new DuplicateEmailException("A user with email {$email} already exists.", previous: $e)
+                : $e;
+        }
 
         return $this->toDomain($model);
     }

@@ -6,7 +6,9 @@ namespace App\Application\Services;
 
 use App\Application\DTOs\Inputs\CreateUserInput;
 use App\Application\DTOs\Inputs\UpdateUserInput;
+use App\Application\Exceptions\UserEmailAlreadyExistsException;
 use App\Application\Exceptions\UserNotFoundException;
+use App\Domain\Exceptions\DuplicateEmailException;
 use App\Domain\Models\User;
 use App\Domain\Repositories\UserRepositoryInterface;
 
@@ -38,16 +40,21 @@ final readonly class UserService
     /**
      * Creates a new user from the provided input and persists it via the repository.
      *
-     * @param  CreateUserInput $input The data required to create the user.
-     * @return User            The newly created User entity.
+     * @param  CreateUserInput                 $input The data required to create the user.
+     * @return User                            The newly created User entity.
+     * @throws UserEmailAlreadyExistsException If a user with the given email already exists.
      */
     public function create(CreateUserInput $input): User
     {
-        return $this->userRepository->create(
-            $input->firstName,
-            $input->lastName,
-            $input->email
-        );
+        try {
+            return $this->userRepository->create(
+                $input->firstName,
+                $input->lastName,
+                $input->email
+            );
+        } catch (DuplicateEmailException $e) {
+            throw new UserEmailAlreadyExistsException($e->getMessage(), previous: $e);
+        }
     }
 
     /**
@@ -96,20 +103,25 @@ final readonly class UserService
     /**
      * Updates an existing user with the fields provided in the input and returns the result.
      *
-     * @param  UpdateUserInput       $input The data to apply to the existing user. Null fields are left unchanged.
-     * @return User                  The updated User entity.
-     * @throws UserNotFoundException If no user exists with the given ID.
+     * @param  UpdateUserInput                 $input The data to apply to the existing user. Null fields are left unchanged.
+     * @return User                            The updated User entity.
+     * @throws UserNotFoundException           If no user exists with the given ID.
+     * @throws UserEmailAlreadyExistsException If another user with the given email already exists.
      */
     public function update(UpdateUserInput $input): User
     {
         $user = $this->find($input->id);
 
-        $updated = $this->userRepository->update(
-            id: $user->getId(),
-            firstName: $input->firstName,
-            lastName: $input->lastName,
-            email: $input->email
-        );
+        try {
+            $updated = $this->userRepository->update(
+                id: $user->getId(),
+                firstName: $input->firstName,
+                lastName: $input->lastName,
+                email: $input->email
+            );
+        } catch (DuplicateEmailException $e) {
+            throw new UserEmailAlreadyExistsException($e->getMessage(), previous: $e);
+        }
 
         if (null === $updated) {
             throw new UserNotFoundException("User with ID {$input->id} not found.");

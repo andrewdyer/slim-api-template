@@ -54,4 +54,19 @@ final class UpdateUserActionTest extends AbstractUserActionTestCase
 
         $this->assertSame(404, $response->getStatusCode());
     }
+
+    /**
+     * Asserts that a 409 response is returned when updating to an email already in use by another user.
+     */
+    public function testReturns409WhenEmailAlreadyExists(): void
+    {
+        $existingUser = $this->userFactory->create();
+        $userToUpdate = $this->userFactory->create();
+
+        $response = $this->request('PUT', '/api/v1/users/' . $userToUpdate->getId(), [
+            'email' => $existingUser->getEmail(),
+        ]);
+
+        $this->assertSame(409, $response->getStatusCode());
+    }
 }

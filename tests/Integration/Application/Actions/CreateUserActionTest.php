@@ -46,4 +46,20 @@ final class CreateUserActionTest extends AbstractUserActionTestCase
 
         $this->assertSame(400, $response->getStatusCode());
     }
+
+    /**
+     * Asserts that a 409 response is returned when the given email is already in use.
+     */
+    public function testReturns409WhenEmailAlreadyExists(): void
+    {
+        $existingUser = $this->userFactory->create();
+
+        $response = $this->request('POST', '/api/v1/users', [
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'email' => $existingUser->getEmail(),
+        ]);
+
+        $this->assertSame(409, $response->getStatusCode());
+    }
 }
