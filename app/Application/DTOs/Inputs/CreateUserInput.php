@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\DTOs\Inputs;
 
-use InvalidArgumentException;
+use AndrewDyer\Actions\Exceptions\BadRequestException;
 
 /**
  * Carries the validated input data required to create a new user.
@@ -28,14 +28,14 @@ final class CreateUserInput
     /**
      * Creates a CreateUserInput from a raw associative array, typically sourced from a request body.
      *
-     * @param  array<string, mixed>     $data The raw input data.
-     * @return self                     A populated CreateUserInput instance.
-     * @throws InvalidArgumentException If any of the required fields (first_name, last_name, email) are missing.
+     * @param  array<string, mixed> $data The raw input data.
+     * @return self                 A populated CreateUserInput instance.
+     * @throws BadRequestException  If any of the required fields (first_name, last_name, email) are missing.
      */
     public static function fromArray(array $data): self
     {
         if (!isset($data['first_name']) || !isset($data['last_name']) || !isset($data['email'])) {
-            throw new InvalidArgumentException('Missing required fields');
+            throw new BadRequestException('Missing required fields');
         }
 
         return new self(
