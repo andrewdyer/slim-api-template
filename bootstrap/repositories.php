@@ -9,7 +9,7 @@ use DI\ContainerBuilder;
 /**
  * Binds domain interfaces to their infrastructure implementations.
  */
-return function(ContainerBuilder $containerBuilder): void {
+return static function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
         UserRepositoryInterface::class => new EloquentUserRepository(),
     ]);

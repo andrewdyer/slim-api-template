@@ -14,9 +14,9 @@ use Psr\Log\LoggerInterface;
 /**
  * Registers service dependencies in the container.
  */
-return function(ContainerBuilder $containerBuilder): void {
+return static function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
-        Capsule::class => function(ContainerInterface $container) {
+        Capsule::class => static function(ContainerInterface $container) {
             $settings = $container->get(SettingsInterface::class);
 
             $capsule = new Capsule();
@@ -25,7 +25,7 @@ return function(ContainerBuilder $containerBuilder): void {
 
             return $capsule;
         },
-        LoggerInterface::class => function(ContainerInterface $container) {
+        LoggerInterface::class => static function(ContainerInterface $container) {
             $settings = $container->get(SettingsInterface::class);
 
             $logger = new Logger($settings->get('logger.name'));

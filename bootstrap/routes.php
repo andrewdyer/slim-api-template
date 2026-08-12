@@ -15,7 +15,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 /**
  * Registers HTTP route definitions.
  */
-return function(App $app): void {
+return static function(App $app): void {
     $app->options('/{routes:.*}', function(Request $request, Response $response): Response {
         return $response;
     });

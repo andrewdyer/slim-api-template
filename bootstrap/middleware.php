@@ -7,7 +7,7 @@ use Slim\App;
 /**
  * Registers application middleware.
  */
-return function(App $app): void {
+return static function(App $app): void {
     // Add application middleware here.
 
     // Example:

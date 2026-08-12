@@ -10,9 +10,9 @@ use Monolog\Logger;
 /**
  * Defines application configuration settings.
  */
-return function(ContainerBuilder $containerBuilder): void {
+return static function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
-        SettingsInterface::class => function() {
+        SettingsInterface::class => static function() {
             return new Settings([
                 'displayErrorDetails' => (bool)get_env('APP_DEBUG', false),
                 'logError' => (bool)get_env('APP_LOG_ERRORS', true),

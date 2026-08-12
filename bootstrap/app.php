@@ -12,7 +12,7 @@ use Slim\Factory\AppFactory;
 /**
  * Creates and configures the Slim application instance.
  */
-return function(): App {
+return static function(): App {
     // Load the application environment configuration.
     require_from_root('bootstrap/environment.php')();
 
