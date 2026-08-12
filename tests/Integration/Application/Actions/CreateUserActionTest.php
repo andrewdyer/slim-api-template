@@ -38,12 +38,12 @@ final class CreateUserActionTest extends AbstractUserActionTestCase
     }
 
     /**
-     * Asserts that a 500 response is returned when the request body is missing required fields.
+     * Asserts that a 400 response is returned when the request body is missing required fields.
      */
-    public function testReturns500WhenRequiredFieldsAreMissing(): void
+    public function testReturns400WhenRequiredFieldsAreMissing(): void
     {
         $response = $this->request('POST', '/api/v1/users', []);
 
-        $this->assertSame(500, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
     }
 }

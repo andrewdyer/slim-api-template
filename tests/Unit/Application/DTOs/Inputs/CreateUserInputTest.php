@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\DTOs\Inputs;
 
+use AndrewDyer\Actions\Exceptions\BadRequestException;
 use App\Application\DTOs\Inputs\CreateUserInput;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -62,14 +63,14 @@ final class CreateUserInputTest extends TestCase
     }
 
     /**
-     * Asserts that an InvalidArgumentException is thrown when one or more required fields are absent.
+     * Asserts that a BadRequestException is thrown when one or more required fields are absent.
      *
      * @param array<string, string> $payload The incomplete input payload.
      */
     #[DataProvider('invalidPayloadProvider')]
-    public function testThrowsInvalidArgumentExceptionWhenRequiredFieldsAreMissing(array $payload): void
+    public function testThrowsBadRequestExceptionWhenRequiredFieldsAreMissing(array $payload): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(BadRequestException::class);
         $this->expectExceptionMessage('Missing required fields');
 
         CreateUserInput::fromArray($payload);

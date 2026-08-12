@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Application\Actions;
 
 use AndrewDyer\Actions\AbstractAction;
+use AndrewDyer\Actions\Exceptions\BadRequestException;
 use App\Application\DTOs\Inputs\CreateUserInput;
 use App\Application\DTOs\Outputs\UserOutput;
 use App\Application\Services\UserService;
-use InvalidArgumentException;
 use JsonException;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -29,9 +29,9 @@ final class CreateUserAction extends AbstractAction
     /**
      * Handles the creation of a new user.
      *
-     * @return Response                 A 201 JSON response containing the newly created user.
-     * @throws InvalidArgumentException If required fields are missing from the request body.
-     * @throws JsonException            If the request body contains invalid JSON.
+     * @return Response            A 201 JSON response containing the newly created user.
+     * @throws BadRequestException If required fields are missing from the request body.
+     * @throws JsonException       If the request body contains invalid JSON.
      */
     protected function handle(): Response
     {
