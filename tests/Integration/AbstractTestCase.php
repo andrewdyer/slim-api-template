@@ -50,13 +50,14 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Processes an HTTP request through the application.
      *
-     * @param  string                    $method The HTTP method.
-     * @param  string                    $path   The request URI path (may include query string).
-     * @param  array<string, mixed>|null $data   Optional JSON request body.
+     * @param  string                    $method  The HTTP method.
+     * @param  string                    $path    The request URI path (may include query string).
+     * @param  array<string, mixed>|null $data    Optional JSON request body.
+     * @param  array<string, string>     $headers Additional request headers.
      * @return ResponseInterface         The application response.
      * @throws JsonException             If JSON encoding fails.
      */
-    protected function request(string $method, string $path, ?array $data = null): ResponseInterface
+    protected function request(string $method, string $path, ?array $data = null, array $headers = []): ResponseInterface
     {
         $urlParts = is_array($parsed = parse_url($path)) ? $parsed : [];
         $uriPath = $urlParts['path'] ?? $path;
@@ -73,6 +74,10 @@ abstract class AbstractTestCase extends TestCase
         $serverRequest = (new ServerRequestFactory())
             ->createServerRequest($method, $uri)
             ->withHeader('Accept', 'application/json');
+
+        foreach ($headers as $name => $value) {
+            $serverRequest = $serverRequest->withHeader($name, $value);
+        }
 
         if ($data !== null) {
             $stream = fopen('php://temp', 'wb+');
