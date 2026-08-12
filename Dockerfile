@@ -29,15 +29,19 @@ RUN printf '<Directory /var/www/html/public>\n\tAllowOverride All\n</Directory>\
 # SYSTEM DEPENDENCIES
 # =============================
 
-# Required for Composer and general usage
+# Add packages here as the application requires them
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Optional: install PHP extensions as needed
-# RUN docker-php-ext-install pdo pdo_mysql
+# =============================
+# PHP EXTENSIONS
+# =============================
+
+# Add extensions here as the application requires them
+RUN docker-php-ext-install pdo_mysql
 
 
 # =============================
