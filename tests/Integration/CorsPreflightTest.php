@@ -10,11 +10,21 @@ namespace Tests\Integration;
 final class CorsPreflightTest extends AbstractTestCase
 {
     /**
-     * Asserts that an OPTIONS preflight request to any route returns a 200 response.
+     * Asserts that an OPTIONS preflight request to a nested route returns a 200 response.
      */
-    public function testReturns200ForPreflightRequest(): void
+    public function testReturns200ForPreflightRequestToNestedRoute(): void
     {
         $response = $this->request('OPTIONS', '/api/v1/users/1');
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    /**
+     * Asserts that an OPTIONS preflight request to the root route returns a 200 response.
+     */
+    public function testReturns200ForPreflightRequestToRootRoute(): void
+    {
+        $response = $this->request('OPTIONS', '/');
 
         $this->assertSame(200, $response->getStatusCode());
     }
