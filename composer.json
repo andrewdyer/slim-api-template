@@ -20,23 +20,23 @@
     },
     "require": {
         "php": "^8.3",
-        "andrewdyer/actions": "^1.1",
-        "andrewdyer/cors-response-emitter": "^0.1",
-        "andrewdyer/json-error-handler": "^0.2",
-        "andrewdyer/settings": "^0.1",
-        "andrewdyer/shutdown-handler": "^0.1",
-        "illuminate/database": "^13.20",
+        "andrewdyer/actions": "^1.3",
+        "andrewdyer/cors-response-emitter": "^0.1.3",
+        "andrewdyer/json-error-handler": "^0.3.1",
+        "andrewdyer/settings": "^0.1.8",
+        "andrewdyer/shutdown-handler": "^0.1.4",
+        "illuminate/database": "^13.25",
         "monolog/monolog": "^3.10",
-        "php-di/php-di": "^7.1",
+        "php-di/php-di": "^7.1.1",
         "robmorgan/phinx": "^0.16.12",
         "slim/psr7": "^1.8",
-        "slim/slim": "^4.15",
-        "vlucas/phpdotenv": "^5.6"
+        "slim/slim": "^4.15.2",
+        "vlucas/phpdotenv": "^5.6.4"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.24",
-        "friendsofphp/php-cs-fixer": "^3.94",
-        "phpunit/phpunit": "^11.5"
+        "fakerphp/faker": "^1.24.1",
+        "friendsofphp/php-cs-fixer": "^3.95.18",
+        "phpunit/phpunit": "^11.5.56"
     },
     "repositories": [
         {
