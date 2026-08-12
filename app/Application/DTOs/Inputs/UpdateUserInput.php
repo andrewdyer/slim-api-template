@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\DTOs\Inputs;
 
+use AndrewDyer\Actions\Exceptions\BadRequestException;
+
 /**
  * Carries partial input data required to update an existing user.
  */
@@ -31,14 +33,21 @@ final class UpdateUserInput
      * @param  int                  $id   The unique identifier of the user to update.
      * @param  array<string, mixed> $data The raw input data. Unset keys default to null.
      * @return self                 A populated UpdateUserInput instance.
+     * @throws BadRequestException  If an email address is provided but is not validly formatted.
      */
     public static function fromArray(int $id, array $data): self
     {
+        $email = isset($data['email']) ? (string)$data['email'] : null;
+
+        if (null !== $email && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            throw new BadRequestException('Invalid email address');
+        }
+
         return new self(
             id: $id,
             firstName: isset($data['first_name']) ? (string)$data['first_name'] : null,
             lastName: isset($data['last_name']) ? (string)$data['last_name'] : null,
-            email: isset($data['email']) ? (string)$data['email'] : null,
+            email: $email,
         );
     }
 }

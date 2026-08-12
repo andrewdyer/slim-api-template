@@ -30,7 +30,8 @@ final class CreateUserInput
      *
      * @param  array<string, mixed> $data The raw input data.
      * @return self                 A populated CreateUserInput instance.
-     * @throws BadRequestException  If any of the required fields (first_name, last_name, email) are missing.
+     * @throws BadRequestException  If any of the required fields (first_name, last_name, email) are missing,
+     *                              or if the email address is not a validly formatted email address.
      */
     public static function fromArray(array $data): self
     {
@@ -38,10 +39,16 @@ final class CreateUserInput
             throw new BadRequestException('Missing required fields');
         }
 
+        $email = (string)$data['email'];
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            throw new BadRequestException('Invalid email address');
+        }
+
         return new self(
             firstName: (string)$data['first_name'],
             lastName: (string)$data['last_name'],
-            email: (string)$data['email']
+            email: $email
         );
     }
 }

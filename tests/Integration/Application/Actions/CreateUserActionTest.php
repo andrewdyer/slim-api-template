@@ -38,6 +38,20 @@ final class CreateUserActionTest extends AbstractUserActionTestCase
     }
 
     /**
+     * Asserts that a 400 response is returned when the given email is not validly formatted.
+     */
+    public function testReturns400WhenEmailIsInvalid(): void
+    {
+        $response = $this->request('POST', '/api/v1/users', [
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'email' => 'not-an-email',
+        ]);
+
+        $this->assertSame(400, $response->getStatusCode());
+    }
+
+    /**
      * Asserts that a 400 response is returned when the request body is missing required fields.
      */
     public function testReturns400WhenRequiredFieldsAreMissing(): void
