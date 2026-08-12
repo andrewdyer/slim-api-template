@@ -8,7 +8,6 @@ use App\Domain\Exceptions\DuplicateEmailException;
 use App\Domain\Models\User;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Infrastructure\Persistence\Models\EloquentUserModel;
-use Illuminate\Database\QueryException;
 
 /**
  * Manages user persistence and retrieval through Eloquent.
@@ -28,17 +27,15 @@ final class EloquentUserRepository implements UserRepositoryInterface
      */
     public function create(string $firstName, string $lastName, string $email): User
     {
-        try {
-            $model = EloquentUserModel::create([
-                'first_name' => $firstName,
-                'last_name' => $lastName,
-                'email' => $email,
-            ]);
-        } catch (QueryException $e) {
-            throw $this->isDuplicateEmailViolation($e)
-                ? new DuplicateEmailException("A user with email {$email} already exists.", previous: $e)
-                : $e;
+        if (EloquentUserModel::where('email', $email)->exists()) {
+            throw new DuplicateEmailException("A user with email {$email} already exists.");
         }
+
+        $model = EloquentUserModel::create([
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $email,
+        ]);
 
         return $this->toDomain($model);
     }
@@ -118,22 +115,6 @@ final class EloquentUserRepository implements UserRepositoryInterface
     }
 
     /**
-     * Determines whether a query exception was caused by the email uniqueness constraint.
-     *
-     * SQLSTATE 23000 is the broad "integrity constraint violation" class, which also
-     * covers NOT NULL and foreign key violations, so it isn't specific enough on its own.
-     * MySQL's driver-specific error code 1062 (ER_DUP_ENTRY) is used instead, since the
-     * users table has exactly one unique index and this repository is MySQL-only.
-     *
-     * @param  QueryException $e The query exception to inspect.
-     * @return bool           True if the exception represents a duplicate-entry violation.
-     */
-    private function isDuplicateEmailViolation(QueryException $e): bool
-    {
-        return ($e->errorInfo[1] ?? null) === 1062;
-    }
-
-    /**
      * Builds a domain User entity from an Eloquent model.
      *
      * @param  EloquentUserModel $model The Eloquent model to convert.
@@ -167,6 +148,10 @@ final class EloquentUserRepository implements UserRepositoryInterface
             return null;
         }
 
+        if (null !== $email && EloquentUserModel::where('email', $email)->where('id', '!=', $id)->exists()) {
+            throw new DuplicateEmailException("A user with email {$email} already exists.");
+        }
+
         if (null !== $firstName) {
             $model->first_name = $firstName;
         }
@@ -179,13 +164,7 @@ final class EloquentUserRepository implements UserRepositoryInterface
             $model->email = $email;
         }
 
-        try {
-            $model->save();
-        } catch (QueryException $e) {
-            throw $this->isDuplicateEmailViolation($e)
-                ? new DuplicateEmailException("A user with email {$email} already exists.", previous: $e)
-                : $e;
-        }
+        $model->save();
 
         return $this->toDomain($model);
     }
