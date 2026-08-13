@@ -11,6 +11,8 @@ use DI\ContainerBuilder;
  */
 return static function(ContainerBuilder $containerBuilder): void {
     $containerBuilder->addDefinitions([
-        UserRepositoryInterface::class => new EloquentUserRepository(),
+        UserRepositoryInterface::class => static function(): EloquentUserRepository {
+            return new EloquentUserRepository();
+        },
     ]);
 };
