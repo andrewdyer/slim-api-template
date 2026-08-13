@@ -1,25 +1,44 @@
+# Logs
+**/storage/logs
+**/*.log
+
+# Environment files
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+
 # Dependencies
-vendor/
+**/vendor
+
+# Generated files
+**/.php-cs-fixer.cache
+**/.phpunit.result.cache
+
+# Local development
+compose.dev.yaml
 workbench/
+**/.php-cs-fixer.php
+**/storage/*.key
 
-# Environment
-.env
-.env.backup
+# Editor / OS
+**/.vscode
+**/.idea
+**/.DS_Store
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+**/*.sw?
 
-# Version control
-.git/
+# VCS
+.git
 .gitignore
 
 # Development & testing
 tests/
 .php-cs-fixer.dist.php
-.php-cs-fixer.php
-.php-cs-fixer.cache
-.phpunit.result.cache
-
-# Logs & storage
-storage/logs/
-storage/*.key
+phpunit.xml
 
 # Documentation
 README.md
@@ -28,8 +47,3 @@ CHANGELOG.md
 # Docker
 Dockerfile
 .dockerignore
-
-# Editor / OS
-.vscode/
-.idea/
-.DS_Store

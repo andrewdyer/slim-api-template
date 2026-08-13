@@ -1,23 +1,30 @@
-# Ignore PhpStorm project files
-.idea/
+# Logs
+storage/logs/*
+!storage/logs/.gitignore
+*.log
 
-# Ignore VSCode project files
-.vscode/
-
-# Ignore storage keys
-/storage/*.key
-
-# Ignore vendor dependencies
-/vendor
-
-# Ignore environment files
+# Environment files
 .env
 .env.*
 !.env.example
 
-# Ignore generated files
+# Dependencies
+vendor/
+
+# Generated files
 .php-cs-fixer.cache
 .phpunit.result.cache
 
-# Ignore local config
+# Local development
 .php-cs-fixer.php
+storage/*.key
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
