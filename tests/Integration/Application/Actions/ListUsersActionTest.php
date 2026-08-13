@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * Integration tests for ListUsersAction.
  */
-final class ListUserActionActionTest extends AbstractUserActionTestCase
+final class ListUsersActionTest extends AbstractUserActionTestCase
 {
     /**
      * Provides invalid page query strings and their expected clamped values.
