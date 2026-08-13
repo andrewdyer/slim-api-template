@@ -1,164 +1,198 @@
 # Contributing
 
-Thank you for your interest in contributing! We welcome improvements and suggestions to make this project even better. Please follow the guidelines below for a smooth experience.
+Thank you for your interest in contributing! Contributions and suggestions that improve the project are always welcome. The guidelines below help ensure a smooth and productive experience for everyone involved.
 
 ## Table of Contents
 
 - [Code of Conduct](#code-of-conduct)
+- [Environment Setup](#environment-setup)
 - [Development Setup](#development-setup)
-- [Environment](#environment)
-- [Configuration](#configuration)
-- [Upgrading Dependencies](#upgrading-dependencies)
-- [Testing](#testing)
-- [Docker](#docker)
+- [Development Workflow](#development-workflow)
+  - [Branching](#branching)
+  - [Coding](#coding)
+  - [Testing](#testing)
+  - [Committing](#committing)
+- [Dependency Management](#dependency-management)
 - [Coding Standards](#coding-standards)
 - [Issue Reporting](#issue-reporting)
-- [Commit Guidelines](#commit-guidelines)
 
 ## Code of Conduct
 
-Please adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md) in all interactions. Respectful and inclusive behavior is expected from all contributors.
+We strive to maintain a welcoming, respectful, and inclusive community where everyone can collaborate productively. Please adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md) in all interactions.
+
+## Environment Setup
+
+Environment-specific configuration is kept outside the codebase so contributors can use local services and credentials safely. The committed `.env.example` file is the canonical reference for every required variable and should be updated whenever configuration is added or changed.
+
+Create and configure the environment files needed for local development:
+
+1. Copy `.env.example` to `.env` and update its values for the local application and database.
+2. Copy `.env.example` to `.env.test` and configure a separate test database so the test suite cannot modify development data.
+
+The application loads `.env` during local development and `.env.test` when `APP_ENV=testing`. PHPUnit sets the testing environment automatically. Other environments should provide configuration through their runtime or deployment platform; additional dotenv files can be introduced here in the future when the application supports them.
+
+> **Note:** Populated environment files must never be committed. Keep placeholders and safe defaults in `.env.example` so new contributors can reproduce the required configuration without exposing credentials.
 
 ## Development Setup
 
-To get started with contributing, set up the project by following these steps:
+A consistent development environment helps ensure contributors can run and test the project reliably.
 
-1. Begin by cloning the repository and navigating to its directory.
-2. Ensure you have PHP 8.3 or higher installed.
-3. Copy the example environment file with `cp .env.example .env` and update the values for your local setup.
-4. Install all project dependencies with `composer install`.
-5. Start the built-in PHP development server with `php -S 127.0.0.1:8888 -t public public/index.php`.
+Prepare the project for local development after cloning the repository:
 
-## Environment
+1. Install PHP 8.3 or later and [Composer](https://getcomposer.org/). 
+2. Install project dependencies with `composer install`.
+3. Complete the [environment setup](#environment-setup).
+4. Run migrations against the development database with `composer db:migrate`.
+5. Start the development server with `php -S 127.0.0.1:8888 -t public public/index.php`.
 
-Environment configuration is managed via a `.env` file loaded at runtime using [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv). A `.env.example` file is committed to the repository as the canonical reference for all required variables — copy it to `.env` for local development.
+A running development server confirms the environment is ready for local changes.
 
-The `.env` file should **never** be committed to version control. In production, set environment variables directly in the hosting environment; when `APP_ENV` is already set, the application skips loading the `.env` file automatically.
+## Development Workflow
 
-> ⚠️ **Important:** When adding a new environment variable, always add a corresponding entry to `.env.example` with a sensible placeholder or default value.
+Moving from a new branch to a reviewable change follows the same sequence for every contribution.
 
-## Configuration
+### Branching
 
-Application configuration and bootstrapping are organised inside the `bootstrap/` directory. These files define the application configuration, dependency bindings, middleware pipeline, route definitions, and HTTP application setup.
+Keeping work isolated in focused branches makes reviews easier and reduces the risk of unrelated changes being introduced.
 
-The `app.php` file is responsible for creating and configuring the Slim application instance used by HTTP entry points such as `public/index.php` and the integration test suite. It loads environment variables, builds the dependency injection container, registers middleware and routes, configures error handling, and returns a fully configured application ready to handle requests.
+Choose the appropriate target branch before creating a feature branch:
 
-### Settings
+- Bug fixes should be sent to the latest stable branch.
+- Minor features that are fully backwards compatible with the current release may be sent to the latest stable branch.
+- Major features should always be sent to the `main` branch, which contains the upcoming release.
 
-Application configuration values and environment mappings are defined in `settings.php`, which provides the base configuration used throughout the application.
+Create and submit a branch for each change in order:
 
-This file is typically used for environment-specific configuration values, feature toggles, and structured configuration arrays consumed across the system.
+1. Create a feature branch for each change with `git checkout -b feature/your-feature-name`.
+2. Complete the change, then test and commit it — see [Coding](#coding), [Testing](#testing), and [Committing](#committing).
+3. Push the branch once changes are ready with `git push origin feature/your-feature-name`.
+4. Open a pull request with a title and description that clearly explain the change — see [Committing](#committing) for the title format.
 
-### Dependencies
+An open pull request signals the change is ready for review.
 
-Service registrations for the dependency injection container are defined in `dependencies.php`, which controls how infrastructure services are constructed and resolved at runtime.
+> **Tip:** GitHub pre-fills the description from the repository's single pull request template, ready to complete before submitting.
 
-This includes factory closures, external library wiring, and shared service definitions.
+The review process continues until the change is ready to merge:
 
-### Repositories
+- Review feedback carefully and suggest improvements or alternatives when needed.
+- Apply requested changes in follow-up commits instead of overwriting or squashing history; the merge will be squashed later.
+- Keep the branch up to date with the target branch if new commits land while review is in progress.
+- Re-request review after the requested changes are in place.
+- Resolve review conversations once the underlying concern has been addressed.
 
-Interface to implementation bindings are defined in `repositories.php`, which maps domain interfaces to infrastructure implementations.
+The pull request is ready to merge once review conversations are resolved and required checks pass.
 
-This ensures the Domain layer remains independent of persistence or external systems.
+### Coding
 
-### Middleware
+Keeping changes focused makes reviews easier and reduces the likelihood of unrelated regressions.
 
-Custom middleware is registered in `middleware.php`, which applies global and feature-level middleware to the Slim application instance.
+Write the change with the existing codebase in mind:
 
-Middleware is executed in LIFO order and is responsible for cross-cutting concerns such as authentication and request transformation.
+- Keep changes limited to the branch's purpose, avoiding unrelated edits.
+- Match existing patterns and conventions already used nearby in the codebase.
+- Add or update tests alongside behavioural changes.
+- Apply the formatting expectations described in [Coding Standards](#coding-standards) while writing code.
 
-### Routes
+A focused, convention-following change is faster to review and less likely to introduce regressions.
 
-Slim route definitions are registered in `routes.php`, which attaches HTTP endpoints to their corresponding application actions.
+### Testing
 
-Routes follow RESTful conventions and are typically grouped by feature or domain area. The standard set of routes for a resource is:
+Writing tests helps verify changes behave as expected and reduces the chance of regressions reaching other contributors.
 
-| Method   | Path             | Description         |
-| -------- | ---------------- | ------------------- |
-| `GET`    | `/resource`      | List all records    |
-| `POST`   | `/resource`      | Create a new record |
-| `GET`    | `/resource/{id}` | Retrieve a record   |
-| `PUT`    | `/resource/{id}` | Update a record     |
-| `DELETE` | `/resource/{id}` | Delete a record     |
+Before running the test suite, complete the [environment setup](#environment-setup), confirm `.env.test` points to an available test database, and run its migrations with `APP_ENV=testing composer db:migrate`.
 
-## Upgrading Dependencies
+Run the validation suite before submitting changes:
 
-Keeping dependencies up-to-date is crucial for maintaining the security and performance of the project.
+- Execute all tests with `composer test`.
+- Run fast, isolated unit tests with `composer test:unit`.
+- Verify behaviour across layers with `composer test:integration`.
 
-1. Check for outdated packages with `composer outdated`.
-2. Update all dependencies to their latest allowed versions with `composer update`.
-3. Update a specific package with `composer update <vendor/package>`.
-4. Run the test suite with `composer test` to verify nothing is broken after updating.
-5. Commit both `composer.json` and `composer.lock` together with a clear message and open a pull request for review.
+Structure tests consistently for readability and easier maintenance:
 
-## Testing
+- Keep test cases small and focused.
+- Use unit tests for isolated classes and methods.
+- Use integration tests when behaviour crosses application layers or HTTP boundaries.
 
-Please write tests for any new features or modifications to the project.
+Passing tests confirm changes behave as intended and are ready for review.
 
-Tests live under `tests/` and are organised into two suites:
+### Committing
 
-- `tests/Unit/` — isolated unit tests for individual classes and methods
-- `tests/Integration/` — tests that exercise multiple layers working together
+Consistent commit messages, written in a shared format, improve project history and clarify the intent behind each change.
 
-The test suite is configured via `phpunit.xml`, which defines test suites, source directories, and environment variables. By default, the `APP_ENV` variable is set to `testing` when running tests, and this can be extended to suit your needs.
+Follow the format below for every commit:
 
-You can run tests using the provided Composer scripts:
+```text
+<type>(<scope>): <description>
 
-- Run the full test suite with `composer test`
-- Use `composer test:unit` for fast, isolated unit tests during development
-- Use `composer test:integration` to verify end-to-end behaviour across layers
+<body>
 
-For consistency and maintainability:
+[optional footer]
+```
 
-- Keep tests focused and readable
-- Prefer small, isolated test cases
-- Use integration tests for HTTP actions where appropriate
-- Avoid unnecessary complexity in setup
+The subject line summarises the change and must:
 
-> 💡 **Note:** The testing setup is intentionally minimal and may evolve over time. Contributions to improve testing structure are welcome.
+1. **Use a valid commit type.**
+   - A new feature uses `feat`.
+   - A bug fix uses `fix`.
+   - A dependency change uses `deps`.
+   - Maintenance, documentation, refactors, tests, and CI changes use `chore`, `docs`, `refactor`, `test`, or `ci`.
+2. **Use the scope to identify the affected area of the application.**
+3. **Have a clear description.**
+   - Use lowercase text.
+   - Be written in the imperative style (for example, `add feature` instead of `added feature`).
+   - Be concise and specific enough to understand the change at a glance.
+   - Do not end with a full stop.
+   - Keep the subject line under 72 characters.
 
-## Docker
+> **Tip:** Omit the scope for repository-wide changes.
 
-This repository includes a Dockerfile based on the official `php:8.3-apache` image, with Apache configured to serve from the `public/` directory and `mod_rewrite` enabled for Slim's routing.
+The body provides additional context about the change and should:
 
-Build the image with `docker build -t slim-app:local .`.
+- Explain what changed and why.
+- Include relevant context that helps reviewers understand the decision without reading the diff.
+- Keep lines under 100 characters.
+- Use paragraphs rather than lists or headers.
 
-Run the container with `docker run --name slim-app -p 8080:80 -d slim-app:local`.
+The footer is optional and is used for additional metadata, such as breaking changes.
 
-The application will be available at `http://localhost:8080`.
+- A breaking change should use `!` after the type (for example, `feat!`) or include a `BREAKING CHANGE:` footer.
 
-> 💡 **Note:** When running via Docker, `APP_ENV` is typically set to `production`, so the application will not attempt to load a `.env` file. Pass any required environment variables at runtime using `-e` flags or a `--env-file`.
+> **Note:** Pull request titles follow the same format, since they become the squash merge commit message.
+
+A well-formatted commit message helps reviewers and future contributors understand why a change was made.
+
+## Dependency Management
+
+Dependencies should be managed carefully to keep the project secure, compatible, and easy to maintain over time.
+
+Check for outdated dependencies before planning an update with `composer outdated`.
+
+Update dependencies to bring in fixes and improvements:
+
+- Update a specific package with `composer update <vendor/package>`.
+- Update every dependency within the constraints in `composer.json` with `composer update`.
+
+After any dependency change, run the test suite, then commit `composer.json` and `composer.lock` together.
 
 ## Coding Standards
 
-This project uses [PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) to enforce a consistent code style. Run the formatter before committing your changes with `composer cs`.
+Following shared coding conventions keeps the codebase consistent, readable, and easier to maintain.
 
-- Follow modern PHP practices (typed properties, readonly where appropriate, strict types)
-- Keep code simple and consistent with the existing structure
+Apply consistent formatting before submitting changes with `composer cs`.
+
+Formatted code passes CI checks without additional review comments on style.
 
 ## Issue Reporting
 
-We welcome bug reports, feature requests, and questions about the project. To ensure we can help you effectively, please use the appropriate issue template when creating a new issue, including:
+Clear issue reports make it easier to reproduce problems, discuss improvements, and track future work.
 
-- **🐛 Bug Report**: Report issues or unexpected behavior
-- **✨ Feature Request**: Suggest new features or improvements
-- **❓ Question**: Ask for help or clarification
+Select the template that matches the issue before submitting a report:
 
-Before creating an issue, please:
+- Unexpected behaviour or defects use the Bug Report template.
+- New features or improvements use the Feature Request template.
+- Requests for help or clarification use the Question template.
+- Avoid duplicate reports by searching existing issues and checking the README and documentation first.
 
-- Search existing issues to avoid duplicates
-- Check the documentation and README for answers to common questions
-- Use GitHub Discussions for general questions and community support
+> **Tip:** GitHub shows the matching template automatically once an issue category is selected.
 
-> 💡 **Tip:** When you create a new issue, GitHub will automatically show you the available templates. Choose the one that best fits your situation for a guided experience.
-
-## Commit Guidelines
-
-When contributing changes, it's important to follow clear commit practices that help maintain project history and make collaboration easier. Use descriptive commit messages following the [Conventional Commits](https://www.conventionalcommits.org/) format, and feel free to add emojis to quickly convey the type of change using [Git Commit Emoji](https://dev.andrewdyer.rocks/git-commit-emoji) conventions.
-
-Once you've made your changes, follow these steps to submit them for review:
-
-1. Create a feature branch with `git checkout -b feature/your-feature-name`.
-2. Commit your changes following the commit guidelines.
-3. Push your branch with `git push origin feature/your-feature-name`.
-4. Open a pull request with a title and description that clearly explain your changes.
+A complete, well-templated report helps maintainers triage and respond quickly.
