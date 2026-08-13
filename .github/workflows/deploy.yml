@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate deployment inputs
+        env:
+          VERSION: ${{ github.event.client_payload.version }}
         run: |
-          VERSION="${{ github.event.client_payload.version }}"
-
           if [[ -z "$VERSION" ]]; then
             echo "❌ Missing deploy payload (version)"
             exit 1
@@ -30,8 +30,9 @@ jobs:
           echo "Version: $VERSION"
 
       - name: Deploy app
+        env:
+          VERSION: ${{ github.event.client_payload.version }}
         run: |
-          VERSION="${{ github.event.client_payload.version }}"
           REPO=$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')
           IMAGE="ghcr.io/${REPO}"
 
