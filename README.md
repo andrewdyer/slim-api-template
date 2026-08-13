@@ -1,4 +1,4 @@
-![Slim API Template](https://public-assets.andrewdyer.rocks/images/covers/slim-api-template.png)
+![Slim API Template](https://public-assets.dyerlabs.co.uk/images/repos/slim-api-template.png)
 
 # Slim API Template
 
