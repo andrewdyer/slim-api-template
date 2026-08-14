@@ -23,7 +23,7 @@ use Tests\Support\Persistence\Repositories\InMemoryPermissionRepository;
 final class RequirePermissionMiddlewareTest extends TestCase
 {
     /**
-     * Returns a handler that always responds successfully.
+     * Creates a handler that always responds successfully.
      *
      * @return RequestHandlerInterface The test request handler.
      * @internal

@@ -17,6 +17,8 @@ final class HelpersTest extends TestCase
 {
     /**
      * Backup of the original environment variables array.
+     *
+     * @var array<string, mixed>
      */
     private array $originalEnv;
 
@@ -29,6 +31,8 @@ final class HelpersTest extends TestCase
 
     /**
      * Backup of the original server variables array.
+     *
+     * @var array<string, mixed>
      */
     private array $originalServer;
 
@@ -69,7 +73,7 @@ final class HelpersTest extends TestCase
     }
 
     /**
-     * Processes restoration of the original environment variables after each test.
+     * Updates the environment and server variables to their original values after each test.
      */
     protected function tearDown(): void
     {

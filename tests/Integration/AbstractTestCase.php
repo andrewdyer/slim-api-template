@@ -98,6 +98,8 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->app = require_from_root('bootstrap/app.php')();
         $this->faker = FakerFactory::create();
     }

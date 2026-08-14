@@ -164,7 +164,7 @@ final class UserServiceTest extends TestCase
     {
         $result = $this->userService->paginated(10, 10);
 
-        $this->assertEmpty($result['users']);
+        $this->assertCount(0, $result['users']);
         $this->assertSame(5, $result['total']);
     }
 
