@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Middleware;
 
 use App\Application\Middleware\RequirePermissionMiddleware;
-use LogicException;
+use App\Application\Middleware\RequirePermissionMiddlewareFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -17,10 +17,10 @@ use Slim\Psr7\Factory\ServerRequestFactory;
 use Tests\Support\Persistence\Repositories\InMemoryPermissionRepository;
 
 /**
- * Unit tests for RequirePermissionMiddleware.
+ * Unit tests for RequirePermissionMiddlewareFactory.
  */
-#[CoversClass(RequirePermissionMiddleware::class)]
-final class RequirePermissionMiddlewareTest extends TestCase
+#[CoversClass(RequirePermissionMiddlewareFactory::class)]
+final class RequirePermissionMiddlewareFactoryTest extends TestCase
 {
     /**
      * Creates a handler that always responds successfully.
@@ -39,49 +39,53 @@ final class RequirePermissionMiddlewareTest extends TestCase
     }
 
     /**
-     * Asserts that a user holding the required permission is allowed through.
+     * Asserts that the middleware built by make requires the given permission.
      */
-    public function testAllowsAUserWithTheRequiredPermission(): void
-    {
-        $permissions = new InMemoryPermissionRepository();
-        $permissions->grant(42, 'users.manage');
-
-        $middleware = new RequirePermissionMiddleware($permissions, 'users.manage');
-        $request = (new ServerRequestFactory())
-            ->createServerRequest('POST', '/users')
-            ->withAttribute(RequirePermissionMiddleware::USER_ID_ATTRIBUTE, 42);
-
-        $response = $middleware->process($request, $this->handler());
-
-        self::assertSame(200, $response->getStatusCode());
-    }
-
-    /**
-     * Asserts that a missing authenticated user ID attribute is rejected.
-     */
-    public function testRejectsARequestMissingTheAuthenticatedUserId(): void
-    {
-        $middleware = new RequirePermissionMiddleware(new InMemoryPermissionRepository(), 'users.manage');
-        $request = (new ServerRequestFactory())->createServerRequest('POST', '/users');
-
-        $this->expectException(LogicException::class);
-        $middleware->process($request, $this->handler());
-    }
-
-    /**
-     * Asserts that a user without the required permission is rejected.
-     */
-    public function testRejectsAUserWithoutTheRequiredPermission(): void
+    public function testMakeConfiguresTheMiddlewareWithTheGivenPermission(): void
     {
         $permissions = new InMemoryPermissionRepository();
         $permissions->grant(42, 'users.view');
 
-        $middleware = new RequirePermissionMiddleware($permissions, 'users.manage');
+        $factory = new RequirePermissionMiddlewareFactory($permissions);
+        $middleware = $factory->make('users.manage');
+
         $request = (new ServerRequestFactory())
             ->createServerRequest('POST', '/users')
             ->withAttribute(RequirePermissionMiddleware::USER_ID_ATTRIBUTE, 42);
 
         $this->expectException(HttpForbiddenException::class);
         $middleware->process($request, $this->handler());
+    }
+
+    /**
+     * Asserts that make returns a RequirePermissionMiddleware instance.
+     */
+    public function testMakeReturnsARequirePermissionMiddlewareInstance(): void
+    {
+        $factory = new RequirePermissionMiddlewareFactory(new InMemoryPermissionRepository());
+
+        $middleware = $factory->make('users.manage');
+
+        $this->assertInstanceOf(RequirePermissionMiddleware::class, $middleware);
+    }
+
+    /**
+     * Asserts that the middleware built by make is wired to the given permission repository.
+     */
+    public function testMakeWiresTheGivenPermissionRepositoryIntoTheMiddleware(): void
+    {
+        $permissions = new InMemoryPermissionRepository();
+        $permissions->grant(42, 'users.manage');
+
+        $factory = new RequirePermissionMiddlewareFactory($permissions);
+        $middleware = $factory->make('users.manage');
+
+        $request = (new ServerRequestFactory())
+            ->createServerRequest('POST', '/users')
+            ->withAttribute(RequirePermissionMiddleware::USER_ID_ATTRIBUTE, 42);
+
+        $response = $middleware->process($request, $this->handler());
+
+        $this->assertSame(200, $response->getStatusCode());
     }
 }

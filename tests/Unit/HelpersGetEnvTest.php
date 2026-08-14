@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use PHPUnit\Framework\Attributes\CoversFunction;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Helpers.
+ * Unit tests for HelpersGetEnvTest.
  */
-final class HelpersTest extends TestCase
+#[CoversFunction('get_env')]
+#[CoversFunction('get_env_array')]
+final class HelpersGetEnvTest extends TestCase
 {
     /**
      * Backup of the original environment variables array.
+     *
+     * @var array<string, mixed>
      */
     private array $originalEnv;
 
@@ -26,6 +31,8 @@ final class HelpersTest extends TestCase
 
     /**
      * Backup of the original server variables array.
+     *
+     * @var array<string, mixed>
      */
     private array $originalServer;
 
@@ -66,7 +73,7 @@ final class HelpersTest extends TestCase
     }
 
     /**
-     * Processes restoration of the original environment variables after each test.
+     * Updates the environment and server variables to their original values after each test.
      */
     protected function tearDown(): void
     {
@@ -208,6 +215,7 @@ final class HelpersTest extends TestCase
 
         $this->assertSame('some-value', get_env('SOME_KEY'));
     }
+
     /**
      * Environment variable keys used by these tests.
      *

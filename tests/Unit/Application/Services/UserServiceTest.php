@@ -9,18 +9,69 @@ use App\Application\DTOs\Inputs\UpdateUserInput;
 use App\Application\Exceptions\UserEmailAlreadyExistsException;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
+use App\Domain\Models\User;
+use App\Domain\Repositories\UserRepositoryInterface;
+use LogicException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Persistence\Repositories\InMemoryUserRepository;
 
 /**
  * Unit tests for UserService.
  */
+#[CoversClass(UserService::class)]
+#[CoversClass(User::class)]
 final class UserServiceTest extends TestCase
 {
     /**
      * The service under test, backed by an in-memory repository.
      */
     private UserService $userService;
+
+    /**
+     * Creates a repository whose update() always returns null, regardless of findById().
+     *
+     * Simulates the user being removed between the existence check in
+     * UserService::find() and the update() call moments later, a state a
+     * single, well-behaved repository can't otherwise produce synchronously.
+     *
+     * @return UserRepositoryInterface The inconsistent test repository.
+     * @internal
+     */
+    private function repositoryThatLosesTheUserDuringUpdate(): UserRepositoryInterface
+    {
+        return new class () implements UserRepositoryInterface {
+            public function create(string $firstName, string $lastName, string $email): User
+            {
+                throw new LogicException('Not implemented.');
+            }
+
+            public function delete(int $id): bool
+            {
+                throw new LogicException('Not implemented.');
+            }
+
+            public function findAll(): array
+            {
+                throw new LogicException('Not implemented.');
+            }
+
+            public function findById(int $id): ?User
+            {
+                return new User($id, 'Ghost', 'User', 'ghost@example.com');
+            }
+
+            public function findPaginated(int $page, int $perPage): array
+            {
+                throw new LogicException('Not implemented.');
+            }
+
+            public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
+            {
+                return null;
+            }
+        };
+    }
 
     /**
      * Builds a fresh UserService backed by an in-memory repository before each test.
@@ -160,7 +211,7 @@ final class UserServiceTest extends TestCase
     {
         $result = $this->userService->paginated(10, 10);
 
-        $this->assertEmpty($result['users']);
+        $this->assertCount(0, $result['users']);
         $this->assertSame(5, $result['total']);
     }
 
@@ -244,6 +295,25 @@ final class UserServiceTest extends TestCase
         $this->expectExceptionMessage('User with ID 999 not found.');
 
         $this->userService->delete(999);
+    }
+
+    /**
+     * Asserts that UserNotFoundException is thrown when the repository reports no user was updated,
+     * despite the same ID resolving to a user moments earlier.
+     */
+    public function testThrowsUserNotFoundExceptionWhenRepositoryReportsNoUserWasUpdated(): void
+    {
+        $userService = new UserService($this->repositoryThatLosesTheUserDuringUpdate());
+
+        $input = new UpdateUserInput(
+            id: 1,
+            firstName: 'Test'
+        );
+
+        $this->expectException(UserNotFoundException::class);
+        $this->expectExceptionMessage('User with ID 1 not found.');
+
+        $userService->update($input);
     }
 
     /**

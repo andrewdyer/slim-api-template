@@ -83,6 +83,7 @@ final class InMemoryUserRepository implements UserRepositoryInterface
      * @param  string   $email     The email address to check.
      * @param  int|null $excludeId A user ID to exclude from the check, typically the user being updated.
      * @return bool     True if another stored user already has the given email.
+     * @internal
      */
     private function emailExists(string $email, ?int $excludeId = null): bool
     {

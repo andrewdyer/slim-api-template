@@ -6,12 +6,14 @@ namespace Tests\Unit\Application\DTOs\Inputs;
 
 use AndrewDyer\Actions\Exceptions\BadRequestException;
 use App\Application\DTOs\Inputs\CreateUserInput;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Unit tests for CreateUserInput.
  */
+#[CoversClass(CreateUserInput::class)]
 final class CreateUserInputTest extends TestCase
 {
     /**

@@ -6,11 +6,14 @@ namespace Tests\Unit\Application\DTOs\Outputs;
 
 use App\Application\DTOs\Outputs\UserOutput;
 use App\Domain\Models\User;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Unit tests for UserOutput.
  */
+#[CoversClass(UserOutput::class)]
+#[CoversClass(User::class)]
 final class UserOutputTest extends TestCase
 {
     /**
@@ -26,6 +29,21 @@ final class UserOutputTest extends TestCase
         $this->assertSame('Jane', $output->firstName);
         $this->assertSame('Doe', $output->lastName);
         $this->assertSame('jane@example.com', $output->email);
+    }
+
+    /**
+     * Asserts that jsonSerialize on the underlying domain User returns an associative array with the expected keys and values.
+     */
+    public function testReturnsAssociativeArrayWhenDomainUserIsSerialized(): void
+    {
+        $user = new User(3, 'Ada', 'Lovelace', 'ada@example.com');
+
+        $this->assertSame([
+            'id' => 3,
+            'firstName' => 'Ada',
+            'lastName' => 'Lovelace',
+            'email' => 'ada@example.com',
+        ], $user->jsonSerialize());
     }
 
     /**

@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Actions;
 
+use App\Application\Actions\ListUsersAction;
+use App\Infrastructure\Persistence\Models\EloquentUserModel;
+use App\Infrastructure\Persistence\Repositories\EloquentUserRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Integration tests for ListUsersAction.
  */
+#[CoversClass(ListUsersAction::class)]
+#[CoversClass(EloquentUserRepository::class)]
+#[CoversClass(EloquentUserModel::class)]
 final class ListUsersActionTest extends AbstractUserActionTestCase
 {
     /**
