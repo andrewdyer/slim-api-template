@@ -9,10 +9,11 @@ use PHPUnit\Framework\TestCase;
 /**
  * Unit tests for HelpersFileLoadingTest.
  *
- * Deliberately carries no #[CoversFunction] metadata. HelpersGetEnvTest restricts
- * coverage to the four functions' own bodies, which excludes the top-level
- * function_exists() guards wrapping each declaration -- those only run once
- * per process and are otherwise invisible to any restricted-coverage test.
+ * Deliberately carries no #[CoversFunction] metadata. HelpersGetEnvTest and
+ * HelpersRequireFromRootTest each restrict coverage to their own functions'
+ * bodies, which excludes the top-level function_exists() guards wrapping
+ * each declaration -- those only run once per process and are otherwise
+ * invisible to any restricted-coverage test.
  */
 final class HelpersFileLoadingTest extends TestCase
 {
