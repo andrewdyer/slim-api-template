@@ -10,6 +10,8 @@ use App\Application\Exceptions\UserEmailAlreadyExistsException;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use App\Domain\Models\User;
+use App\Domain\Repositories\UserRepositoryInterface;
+use LogicException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Persistence\Repositories\InMemoryUserRepository;
@@ -25,6 +27,51 @@ final class UserServiceTest extends TestCase
      * The service under test, backed by an in-memory repository.
      */
     private UserService $userService;
+
+    /**
+     * Creates a repository whose update() always returns null, regardless of findById().
+     *
+     * Simulates the user being removed between the existence check in
+     * UserService::find() and the update() call moments later, a state a
+     * single, well-behaved repository can't otherwise produce synchronously.
+     *
+     * @return UserRepositoryInterface The inconsistent test repository.
+     * @internal
+     */
+    private function repositoryThatLosesTheUserDuringUpdate(): UserRepositoryInterface
+    {
+        return new class () implements UserRepositoryInterface {
+            public function create(string $firstName, string $lastName, string $email): User
+            {
+                throw new LogicException('Not implemented.');
+            }
+
+            public function delete(int $id): bool
+            {
+                throw new LogicException('Not implemented.');
+            }
+
+            public function findAll(): array
+            {
+                throw new LogicException('Not implemented.');
+            }
+
+            public function findById(int $id): ?User
+            {
+                return new User($id, 'Ghost', 'User', 'ghost@example.com');
+            }
+
+            public function findPaginated(int $page, int $perPage): array
+            {
+                throw new LogicException('Not implemented.');
+            }
+
+            public function update(int $id, ?string $firstName, ?string $lastName, ?string $email): ?User
+            {
+                return null;
+            }
+        };
+    }
 
     /**
      * Builds a fresh UserService backed by an in-memory repository before each test.
