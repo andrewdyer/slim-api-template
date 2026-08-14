@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 use Tests\Integration\AbstractTestCase;
 
 /**
- * Integration tests for CorsPreflightTest.
+ * Integration tests for CORS preflight handling.
  */
 #[CoversNothing]
 final class CorsPreflightTest extends AbstractTestCase
