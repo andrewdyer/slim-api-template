@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Actions;
 
+use App\Application\Actions\UpdateUserAction;
+use PHPUnit\Framework\Attributes\CoversClass;
+
 /**
  * Integration tests for UpdateUserAction.
  */
+#[CoversClass(UpdateUserAction::class)]
 final class UpdateUserActionTest extends AbstractUserActionTestCase
 {
     /**

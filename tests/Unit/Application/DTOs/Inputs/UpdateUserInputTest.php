@@ -6,11 +6,13 @@ namespace Tests\Unit\Application\DTOs\Inputs;
 
 use AndrewDyer\Actions\Exceptions\BadRequestException;
 use App\Application\DTOs\Inputs\UpdateUserInput;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Unit tests for UpdateUserInput.
  */
+#[CoversClass(UpdateUserInput::class)]
 final class UpdateUserInputTest extends TestCase
 {
     /**

@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Actions;
 
+use App\Application\Actions\DeleteUserAction;
+use PHPUnit\Framework\Attributes\CoversClass;
+
 /**
  * Integration tests for DeleteUserAction.
  */
+#[CoversClass(DeleteUserAction::class)]
 final class DeleteUserActionTest extends AbstractUserActionTestCase
 {
     /**

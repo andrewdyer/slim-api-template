@@ -6,11 +6,14 @@ namespace Tests\Unit\Application\DTOs\Outputs;
 
 use App\Application\DTOs\Outputs\UserOutput;
 use App\Domain\Models\User;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Unit tests for UserOutput.
  */
+#[CoversClass(UserOutput::class)]
+#[CoversClass(User::class)]
 final class UserOutputTest extends TestCase
 {
     /**

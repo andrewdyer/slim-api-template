@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Http;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Tests\Integration\AbstractTestCase;
 
 /**
  * Integration tests for CORS preflight handling.
  */
+#[CoversNothing]
 final class CorsPreflightTest extends AbstractTestCase
 {
     /**

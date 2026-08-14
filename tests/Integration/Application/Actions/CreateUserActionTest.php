@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Actions;
 
+use App\Application\Actions\CreateUserAction;
+use PHPUnit\Framework\Attributes\CoversClass;
+
 /**
  * Integration tests for CreateUserAction.
  */
+#[CoversClass(CreateUserAction::class)]
 final class CreateUserActionTest extends AbstractUserActionTestCase
 {
     /**

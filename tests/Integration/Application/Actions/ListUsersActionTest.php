@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Application\Actions;
 
+use App\Application\Actions\ListUsersAction;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Integration tests for ListUsersAction.
  */
+#[CoversClass(ListUsersAction::class)]
 final class ListUsersActionTest extends AbstractUserActionTestCase
 {
     /**

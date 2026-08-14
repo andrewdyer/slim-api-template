@@ -9,12 +9,16 @@ use App\Application\DTOs\Inputs\UpdateUserInput;
 use App\Application\Exceptions\UserEmailAlreadyExistsException;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
+use App\Domain\Models\User;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Persistence\Repositories\InMemoryUserRepository;
 
 /**
  * Unit tests for UserService.
  */
+#[CoversClass(UserService::class)]
+#[CoversClass(User::class)]
 final class UserServiceTest extends TestCase
 {
     /**
