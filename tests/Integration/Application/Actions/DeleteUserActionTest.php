@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace Tests\Integration\Application\Actions;
 
 use App\Application\Actions\DeleteUserAction;
+use App\Infrastructure\Persistence\Models\EloquentUserModel;
+use App\Infrastructure\Persistence\Repositories\EloquentUserRepository;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Integration tests for DeleteUserAction.
  */
 #[CoversClass(DeleteUserAction::class)]
+#[CoversClass(EloquentUserRepository::class)]
+#[CoversClass(EloquentUserModel::class)]
 final class DeleteUserActionTest extends AbstractUserActionTestCase
 {
     /**
