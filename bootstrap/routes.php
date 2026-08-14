@@ -28,6 +28,12 @@ return static function(App $app): void {
                 $users->get('/{id}', ShowUserAction::class);
                 $users->put('/{id}', UpdateUserAction::class);
                 $users->delete('/{id}', DeleteUserAction::class);
+
+                // Once authentication middleware sets RequirePermissionMiddleware::USER_ID_ATTRIBUTE
+                // on the request, gate a route behind a permission like this:
+                //
+                //   $users->post('', CreateUserAction::class)
+                //       ->add($app->getContainer()->get(RequirePermissionMiddlewareFactory::class)->make('users.create'));
             });
         });
     });
