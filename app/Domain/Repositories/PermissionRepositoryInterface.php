@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Repositories;
 
 /**
- * Defines the contract for retrieving permission assignments.
+ * Manages retrieval of permission assignments.
  */
 interface PermissionRepositoryInterface
 {
