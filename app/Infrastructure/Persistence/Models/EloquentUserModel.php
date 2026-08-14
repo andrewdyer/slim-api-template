@@ -40,16 +40,19 @@ final class EloquentUserModel extends Model
     public $timestamps = true;
 
     /**
-     * Returns the distinct permissions granted to the user through its assigned roles.
+     * Resolves the distinct permissions granted to the user through its assigned roles.
      *
      * Permissions reach the user through two pivot tables (users_roles, then
      * roles_permissions), so this cannot be a genuine BelongsToMany relation
      * (Eloquent requires a single pivot table linking both sides). It is
-     * derived from the roles() relation instead.
+     * derived from the roles() relation instead. Deliberately not named
+     * permissions() or permissions: Eloquent treats any model method as a
+     * relation the moment it's accessed via property syntax or with()/load(),
+     * and throws because this doesn't return a Relation instance.
      *
      * @return Collection<int, EloquentPermissionModel> The user's distinct permissions.
      */
-    public function permissions(): Collection
+    public function resolvePermissions(): Collection
     {
         return $this->roles()
             ->with('permissions')

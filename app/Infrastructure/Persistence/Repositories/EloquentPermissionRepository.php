@@ -26,6 +26,6 @@ final class EloquentPermissionRepository implements PermissionRepositoryInterfac
             return [];
         }
 
-        return $user->permissions()->pluck('name')->sort()->values()->all();
+        return $user->resolvePermissions()->pluck('name')->sort()->values()->all();
     }
 }
