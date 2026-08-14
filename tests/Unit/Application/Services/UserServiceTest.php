@@ -298,6 +298,25 @@ final class UserServiceTest extends TestCase
     }
 
     /**
+     * Asserts that UserNotFoundException is thrown when the repository reports no user was updated,
+     * despite the same ID resolving to a user moments earlier.
+     */
+    public function testThrowsUserNotFoundExceptionWhenRepositoryReportsNoUserWasUpdated(): void
+    {
+        $userService = new UserService($this->repositoryThatLosesTheUserDuringUpdate());
+
+        $input = new UpdateUserInput(
+            id: 1,
+            firstName: 'Test'
+        );
+
+        $this->expectException(UserNotFoundException::class);
+        $this->expectExceptionMessage('User with ID 1 not found.');
+
+        $userService->update($input);
+    }
+
+    /**
      * Asserts that UserNotFoundException is thrown when attempting to update a non-existent user.
      */
     public function testThrowsUserNotFoundExceptionWhenUpdatingNonExistentUser(): void
