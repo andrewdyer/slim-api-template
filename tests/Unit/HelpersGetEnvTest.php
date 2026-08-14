@@ -9,11 +9,11 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Helpers.
+ * Unit tests for HelpersGetEnvTest.
  */
 #[CoversFunction('get_env')]
 #[CoversFunction('get_env_array')]
-final class HelpersTest extends TestCase
+final class HelpersGetEnvTest extends TestCase
 {
     /**
      * Backup of the original environment variables array.
@@ -215,6 +215,7 @@ final class HelpersTest extends TestCase
 
         $this->assertSame('some-value', get_env('SOME_KEY'));
     }
+
     /**
      * Environment variable keys used by these tests.
      *
