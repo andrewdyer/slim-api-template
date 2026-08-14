@@ -15,6 +15,7 @@ vendor/
 # Generated files
 .php-cs-fixer.cache
 .phpunit.result.cache
+build/
 
 # Local development
 .php-cs-fixer.php
