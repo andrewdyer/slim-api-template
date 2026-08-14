@@ -99,6 +99,12 @@ A focused, convention-following change is faster to review and less likely to in
 
 Writing tests helps verify changes behave as expected and reduces the chance of regressions reaching other contributors.
 
+Follow these conventions when writing tests:
+
+- Declare `#[CoversClass]`/`#[CoversFunction]` for the subject under test and any collaborator it genuinely exercises.
+- Add a dedicated integration test when a repository has behaviour the service layer can't reach.
+- Follow the existing test structure as the template when adding tests for a new resource.
+
 Before running the test suite, complete the [environment setup](#environment-setup), confirm `.env.test` points to an available test database, and run its migrations with `APP_ENV=testing composer db:migrate`.
 
 Run the validation suite before submitting changes:
