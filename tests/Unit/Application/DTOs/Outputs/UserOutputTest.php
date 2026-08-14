@@ -32,6 +32,21 @@ final class UserOutputTest extends TestCase
     }
 
     /**
+     * Asserts that jsonSerialize on the underlying domain User returns an associative array with the expected keys and values.
+     */
+    public function testReturnsAssociativeArrayWhenDomainUserIsSerialized(): void
+    {
+        $user = new User(3, 'Ada', 'Lovelace', 'ada@example.com');
+
+        $this->assertSame([
+            'id' => 3,
+            'firstName' => 'Ada',
+            'lastName' => 'Lovelace',
+            'email' => 'ada@example.com',
+        ], $user->jsonSerialize());
+    }
+
+    /**
      * Asserts that jsonSerialize returns an associative array with the expected keys and values.
      */
     public function testReturnsAssociativeArrayWhenSerialized(): void
