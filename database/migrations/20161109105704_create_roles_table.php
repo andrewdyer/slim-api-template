@@ -25,7 +25,7 @@ final class CreateRolesTable extends AbstractMigration
     public function up(): void
     {
         $this->table('roles')
-            ->addColumn('name', 'string', ['limit' => 120])
+            ->addColumn('name', 'string', ['limit' => 120, 'null' => false])
             ->addColumn('description', 'string', ['limit' => 255])
             ->addIndex(['name'], ['unique' => true])
             ->addColumn('created_at', 'timestamp', [
