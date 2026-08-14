@@ -21,7 +21,7 @@ final class InMemoryRoleRepository implements RoleRepositoryInterface
     private array $roles = [];
 
     /**
-     * Registers a role for a user in the in-memory store.
+     * Builds a role assignment for a user in the in-memory store.
      *
      * @param int    $userId The unique identifier of the user.
      * @param string $role   The name of the role to assign.

@@ -32,7 +32,7 @@ final class InMemoryPermissionRepository implements PermissionRepositoryInterfac
     }
 
     /**
-     * Registers a permission for a user in the in-memory store.
+     * Builds a permission grant for a user in the in-memory store.
      *
      * @param int    $userId     The unique identifier of the user.
      * @param string $permission The name of the permission to grant.
