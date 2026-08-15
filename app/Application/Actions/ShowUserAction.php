@@ -9,7 +9,9 @@ use App\Application\DTOs\Outputs\UserOutput;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use JsonException;
+use OpenApi\Attributes as OA;
 use Psr\Http\Message\ResponseInterface as Response;
+use RuntimeException;
 
 /**
  * Handles retrieving a single user by ID via HTTP.
@@ -29,9 +31,32 @@ final class ShowUserAction extends AbstractAction
      * Handles the retrieval of a single user by ID.
      *
      * @return Response              A 200 JSON response containing the requested user.
+     * @throws RuntimeException      If the id route argument is missing.
      * @throws UserNotFoundException If no user exists with the given ID.
      * @throws JsonException         If the request body contains invalid JSON.
      */
+    #[OA\Get(
+        path: '/users/{id}',
+        operationId: 'showUser',
+        summary: 'Retrieve a user',
+        tags: ['Users'],
+        parameters: [
+            new OA\PathParameter(name: 'id', description: 'The unique identifier of the user.', schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'The requested user.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', ref: '#/components/schemas/UserOutput'),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(ref: '#/components/responses/NotFound', response: 404),
+        ]
+    )]
     protected function handle(): Response
     {
         $userId = (int)$this->resolveArg('id');

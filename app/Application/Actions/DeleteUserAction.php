@@ -8,7 +8,9 @@ use AndrewDyer\Actions\AbstractAction;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use JsonException;
+use OpenApi\Attributes as OA;
 use Psr\Http\Message\ResponseInterface as Response;
+use RuntimeException;
 
 /**
  * Handles deleting a user via HTTP.
@@ -28,9 +30,23 @@ final class DeleteUserAction extends AbstractAction
      * Handles the deletion of a user.
      *
      * @return Response              A 204 JSON response with no body content.
+     * @throws RuntimeException      If the id route argument is missing.
      * @throws UserNotFoundException If no user exists with the given ID.
      * @throws JsonException         If the request body contains invalid JSON.
      */
+    #[OA\Delete(
+        path: '/users/{id}',
+        operationId: 'deleteUser',
+        summary: 'Delete a user',
+        tags: ['Users'],
+        parameters: [
+            new OA\PathParameter(name: 'id', description: 'The unique identifier of the user to delete.', schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(response: 204, description: 'The user was deleted successfully.'),
+            new OA\Response(ref: '#/components/responses/NotFound', response: 404),
+        ]
+    )]
     protected function handle(): Response
     {
         $userId = (int)$this->resolveArg('id');

@@ -5,10 +5,20 @@ declare(strict_types=1);
 namespace App\Application\DTOs\Inputs;
 
 use AndrewDyer\Actions\Exceptions\BadRequestException;
+use OpenApi\Attributes as OA;
 
 /**
  * Carries partial input data required to update an existing user.
  */
+#[OA\Schema(
+    schema: 'UpdateUserInput',
+    properties: [
+        new OA\Property(property: 'first_name', type: 'string', example: 'Jane', nullable: true),
+        new OA\Property(property: 'last_name', type: 'string', example: 'Doe', nullable: true),
+        new OA\Property(property: 'email', type: 'string', format: 'email', example: 'jane.doe@example.com', nullable: true),
+    ],
+    type: 'object'
+)]
 final class UpdateUserInput
 {
     /**

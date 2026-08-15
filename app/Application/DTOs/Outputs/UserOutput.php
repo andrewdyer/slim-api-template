@@ -6,10 +6,22 @@ namespace App\Application\DTOs\Outputs;
 
 use App\Domain\Models\User;
 use JsonSerializable;
+use OpenApi\Attributes as OA;
 
 /**
  * Carries user data for outbound API responses.
  */
+#[OA\Schema(
+    schema: 'UserOutput',
+    required: ['id', 'firstName', 'lastName', 'email'],
+    properties: [
+        new OA\Property(property: 'id', type: 'integer', example: 1),
+        new OA\Property(property: 'firstName', type: 'string', example: 'Jane'),
+        new OA\Property(property: 'lastName', type: 'string', example: 'Doe'),
+        new OA\Property(property: 'email', type: 'string', format: 'email', example: 'jane.doe@example.com'),
+    ],
+    type: 'object'
+)]
 final class UserOutput implements JsonSerializable
 {
     /**
