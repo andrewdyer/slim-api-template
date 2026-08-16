@@ -58,8 +58,40 @@ final class CreateUserAction extends AbstractAction
                     type: 'object'
                 )
             ),
-            new OA\Response(ref: '#/components/responses/BadRequest', response: 400),
-            new OA\Response(ref: '#/components/responses/Conflict', response: 409),
+            new OA\Response(
+                response: 400,
+                description: 'The request was malformed or missing required fields.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'BAD_REQUEST'),
+                                new OA\Property(property: 'description', type: 'string', example: 'Missing required fields'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 409,
+                description: 'The request conflicts with the current state of the resource.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'RESOURCE_CONFLICT'),
+                                new OA\Property(property: 'description', type: 'string', example: 'A user with email jane.doe@example.com already exists.'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
         ]
     )]
     protected function handle(): Response

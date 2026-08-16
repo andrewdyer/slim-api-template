@@ -63,9 +63,57 @@ final class UpdateUserAction extends AbstractAction
                     type: 'object'
                 )
             ),
-            new OA\Response(ref: '#/components/responses/BadRequest', response: 400),
-            new OA\Response(ref: '#/components/responses/NotFound', response: 404),
-            new OA\Response(ref: '#/components/responses/Conflict', response: 409),
+            new OA\Response(
+                response: 400,
+                description: 'The request was malformed or missing required fields.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'BAD_REQUEST'),
+                                new OA\Property(property: 'description', type: 'string', example: 'Invalid email address'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'The requested resource could not be found.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'RESOURCE_NOT_FOUND'),
+                                new OA\Property(property: 'description', type: 'string', example: 'User with ID 1 not found.'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 409,
+                description: 'The request conflicts with the current state of the resource.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'RESOURCE_CONFLICT'),
+                                new OA\Property(property: 'description', type: 'string', example: 'A user with email jane.doe@example.com already exists.'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
         ]
     )]
     protected function handle(): Response

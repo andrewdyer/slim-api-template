@@ -54,7 +54,23 @@ final class ShowUserAction extends AbstractAction
                     type: 'object'
                 )
             ),
-            new OA\Response(ref: '#/components/responses/NotFound', response: 404),
+            new OA\Response(
+                response: 404,
+                description: 'The requested resource could not be found.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'RESOURCE_NOT_FOUND'),
+                                new OA\Property(property: 'description', type: 'string', example: 'User with ID 1 not found.'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
         ]
     )]
     protected function handle(): Response
