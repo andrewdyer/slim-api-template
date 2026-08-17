@@ -16,7 +16,6 @@ vendor/
 .php-cs-fixer.cache
 .phpunit.result.cache
 build/
-resources/openapi.json
 
 # Local development
 .php-cs-fixer.php

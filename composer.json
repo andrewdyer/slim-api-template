@@ -46,7 +46,7 @@
         }
     ],
     "scripts": {
-        "api-contract:generate": "openapi app --output resources/openapi.json",
+        "api-contract:generate": "openapi app --output resources/openapi/openapi.json",
         "cs": "php-cs-fixer fix",
         "db:migrate": "phinx migrate",
         "db:migrate:create": "phinx create",

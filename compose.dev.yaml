@@ -23,9 +23,9 @@ services:
   swagger-ui:
     image: swaggerapi/swagger-ui:v5.32.13
     environment:
-      SWAGGER_JSON: /openapi.json
+      SWAGGER_JSON: /openapi/openapi.json
     volumes:
-      - ./resources/openapi.json:/openapi.json:ro
+      - ./resources/openapi:/openapi:ro
     ports:
       - "127.0.0.1:8081:8080"
 

@@ -200,7 +200,7 @@ Regenerate the specification after changing its documentation metadata:
 composer api-contract:generate
 ```
 
-This writes the specification to `resources/openapi.json`.
+This writes the specification to `resources/openapi/openapi.json`.
 
 Preview the generated specification locally with the `swagger-ui` service in `compose.dev.yaml`:
 

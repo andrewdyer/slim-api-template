@@ -61,7 +61,9 @@ repo/
 │   └── index.php                # HTTP entry point
 │
 ├── resources/                   # Development & documentation assets
-│   └── http/                    # HTTP request/response examples
+│   ├── http/                    # HTTP request/response examples
+│   └── openapi/                 # Generated API documentation
+│       └── openapi.json         # Generated OpenAPI specification
 │
 ├── storage/                     # File-based storage
 │   └── logs/                    # Monolog output
