@@ -60,7 +60,7 @@ composer db:migrate
 Start the development server:
 
 ```bash
-php -S 127.0.0.1:8887 -t public public/index.php
+php -S 127.0.0.1:8888 -t public public/index.php
 ```
 
 The API is available at `http://127.0.0.1:8888`.
