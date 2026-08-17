@@ -21,7 +21,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   swagger-ui:
-    image: swaggerapi/swagger-ui:latest
+    image: swaggerapi/swagger-ui:v5.32.13
     environment:
       SWAGGER_JSON: /openapi.json
     volumes:
