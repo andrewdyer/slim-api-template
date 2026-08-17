@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review PHP API changes for correctness, regressions, security, ADR boundaries, runtime configuration, persistence, and test coverage. Use for pull requests or diffs in this Slim Framework ADR project, including changes to application, domain, infrastructure, bootstrap, routes, middleware, error handling, database, tests, containers, or CI.
+description: Review PHP API changes for correctness, regressions, security, ADR boundaries, runtime configuration, persistence, API contract documentation, and test coverage. Use for pull requests or diffs in this Slim Framework ADR project, including changes to application, domain, infrastructure, bootstrap, routes, middleware, error handling, database, OpenAPI attributes, tests, containers, or CI.
 ---
 
 # Code review conventions
@@ -94,6 +94,42 @@ findings or unrelated pre-existing issues.
   exceptions expected by the Action/Responder boundary.
 - Preserve the response contract when changing Actions or error handling: status code, action
   payload envelope, metadata, JSON shape, content type, and empty-body semantics all matter.
+
+## OpenAPI documentation
+
+- Treat `#[OA\...]` attributes as documentation of the real wire contract, not aspirational or
+  copy-pasted boilerplate. Verify response content matches the serialized body when one exists —
+  for a success response, the outer envelope (e.g. a `data`/`meta` wrapper) as well as the inner
+  shape; for an error response, the real error envelope and the actual `type`/status values the
+  error-mapping layer produces, not placeholder strings. A bodyless response (e.g. `204`) should
+  declare no `content` at all, not an empty or invented schema.
+- Don't require error-response content to be inlined on every operation, and don't require it to
+  be factored into a shared component either — swagger-php supports both via `#[OA\Response]`
+  reused through `$ref`, and a project may reasonably choose either. The only hard constraint is
+  that attribute arguments must be compile-time constant expressions, so a shared *PHP builder
+  function* can't be called from inside one; that doesn't rule out shared components. Check that
+  whichever pattern the project has actually adopted is applied consistently, rather than assuming
+  one approach is mandatory.
+- Check that example values are representative of the response's real structure, meaning, and
+  error type for that specific operation and status code — not a generic placeholder reused
+  everywhere. Exact literal text isn't required, and often can't be: many real messages carry
+  dynamic values (an ID, an email), so an example only needs to match the format and intent, not
+  be pinned to one exact runtime string.
+- Require an explicit `operationId` on every path operation attribute. Without one, the generator
+  falls back to an opaque content hash, which breaks readability of the generated spec and any
+  client code generated from it.
+- Confirm every `$ref` (e.g. `#/components/schemas/...`) still resolves to a schema actually
+  defined somewhere in the scanned source tree. A rename or removal needs every reference updated
+  in the same change — the generator does not necessarily fail loudly on a dangling reference.
+- Verify documented responses cover the supported HTTP outcomes for that operation, including
+  responses produced by shared helpers, middleware, or framework error handling when they form
+  part of the API contract.
+- Check whether the generated spec artifact is gitignored or committed in this project before
+  judging its presence or absence in the diff. It is produced by a Composer script from these
+  attributes, and either choice is valid: gitignored means its absence is intentional, not an
+  oversight; committed means it should appear in the diff and match what a fresh regeneration
+  produces. Either way, regenerate it locally when reviewing a non-trivial attribute change and
+  confirm generation completes without warnings.
 
 ## Persistence and migrations
 
