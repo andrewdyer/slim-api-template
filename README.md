@@ -125,7 +125,6 @@ Key runtime packages are managed via Composer, including:
 - **[JSON Error Handler](https://github.com/andrewdyer/json-error-handler)** for consistent JSON-formatted error responses.
 - **[Shutdown Handler](https://github.com/andrewdyer/shutdown-handler)** for consistent shutdown and fatal error handling.
 - **[phpdotenv](https://github.com/vlucas/phpdotenv)** for loading environment-based configuration.
-- **[swagger-php](https://github.com/zircote/swagger-php)** for generating an OpenAPI specification from PHP attributes.
 
 See [composer.json](./composer.json) for the full list.
 
@@ -135,6 +134,7 @@ Development tooling is included for a consistent and reliable workflow:
 
 - **[PHPUnit](https://phpunit.de/)** for unit and integration testing.
 - **[PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)** for automated code style enforcement.
+- **[swagger-php](https://github.com/zircote/swagger-php)** for generating an OpenAPI specification from PHP attributes.
 - **[Docker](https://www.docker.com/)** for containerised development and deployment environments.
 - **[GitHub Actions](https://github.com/features/actions)** CI (Continuous Integration) workflow that runs on pushes to main and pull requests, executing unit and integration tests.
 
