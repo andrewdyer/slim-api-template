@@ -125,6 +125,7 @@ Key runtime packages are managed via Composer, including:
 - **[JSON Error Handler](https://github.com/andrewdyer/json-error-handler)** for consistent JSON-formatted error responses.
 - **[Shutdown Handler](https://github.com/andrewdyer/shutdown-handler)** for consistent shutdown and fatal error handling.
 - **[phpdotenv](https://github.com/vlucas/phpdotenv)** for loading environment-based configuration.
+- **[swagger-php](https://github.com/zircote/swagger-php)** for generating an OpenAPI specification from PHP attributes.
 
 See [composer.json](./composer.json) for the full list.
 
