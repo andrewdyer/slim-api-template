@@ -13,6 +13,7 @@ Thank you for your interest in contributing! Contributions and suggestions that 
   - [Testing](#testing)
   - [Committing](#committing)
 - [Dependency Management](#dependency-management)
+- [API Documentation](#api-documentation)
 - [Coding Standards](#coding-standards)
 - [Issue Reporting](#issue-reporting)
 
@@ -91,6 +92,7 @@ Write the change with the existing codebase in mind:
 - Keep changes limited to the branch's purpose, avoiding unrelated edits.
 - Match existing patterns and conventions already used nearby in the codebase.
 - Add or update tests alongside behavioural changes.
+- Update the API documentation metadata and regenerate the specification for any API-facing change — see [API Documentation](#api-documentation).
 - Apply the formatting expectations described in [Coding Standards](#coding-standards) while writing code.
 
 A focused, convention-following change is faster to review and less likely to introduce regressions.
@@ -179,6 +181,36 @@ Update dependencies to bring in fixes and improvements:
 - Update every dependency within the constraints in `composer.json` with `composer update`.
 
 After any dependency change, run the test suite, then commit `composer.json` and `composer.lock` together.
+
+## API Documentation
+
+The [OpenAPI](https://www.openapis.org/) specification is generated from documentation metadata in the application code, keeping the documentation close to the behaviour it describes.
+
+Keep the specification accurate whenever the API changes:
+
+- Revise documented operations when endpoints are added, updated, or removed.
+- Align parameters and request bodies with the inputs accepted by the application.
+- Verify that status codes and response bodies reflect the outputs returned by the application.
+
+A specification that reflects the application's behaviour provides a trustworthy reference for contributors and consumers.
+
+Regenerate the specification after changing its documentation metadata:
+
+```bash
+composer api-contract:generate
+```
+
+This writes the specification to `resources/openapi.json`.
+
+> **Note:** The command also runs automatically after `composer install` and `composer update`.
+
+Preview the generated specification locally with the `swagger-ui` service in `compose.dev.yaml`:
+
+```bash
+docker compose -f compose.dev.yaml up -d swagger-ui
+```
+
+Swagger UI is then available at `http://127.0.0.1:8081` and reads directly from the generated file.
 
 ## Coding Standards
 
