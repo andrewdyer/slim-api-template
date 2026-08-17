@@ -36,7 +36,8 @@
     "require-dev": {
         "fakerphp/faker": "^1.24.1",
         "friendsofphp/php-cs-fixer": "^3.95.18",
-        "phpunit/phpunit": "^12.5.33"
+        "phpunit/phpunit": "^12.5.33",
+        "zircote/swagger-php": "^6.5"
     },
     "repositories": [
         {
@@ -45,6 +46,7 @@
         }
     ],
     "scripts": {
+        "api-contract:generate": "openapi app --output resources/openapi/openapi.json",
         "cs": "php-cs-fixer fix",
         "db:migrate": "phinx migrate",
         "db:migrate:create": "phinx create",

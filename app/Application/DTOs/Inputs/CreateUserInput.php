@@ -5,10 +5,21 @@ declare(strict_types=1);
 namespace App\Application\DTOs\Inputs;
 
 use AndrewDyer\Actions\Exceptions\BadRequestException;
+use OpenApi\Attributes as OA;
 
 /**
  * Carries the validated input data required to create a new user.
  */
+#[OA\Schema(
+    schema: 'CreateUserInput',
+    required: ['first_name', 'last_name', 'email'],
+    properties: [
+        new OA\Property(property: 'first_name', type: 'string', example: 'Jane'),
+        new OA\Property(property: 'last_name', type: 'string', example: 'Doe'),
+        new OA\Property(property: 'email', type: 'string', format: 'email', example: 'jane.doe@example.com'),
+    ],
+    type: 'object'
+)]
 final class CreateUserInput
 {
     /**

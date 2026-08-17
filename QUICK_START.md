@@ -35,13 +35,19 @@ Replace the placeholder values and configure the database connection for the loc
 
 ### Database
 
-The application can connect to any compatible database configured in `.env`. Alternatively, start the included development MySQL container:
+The application can connect to any compatible database configured in `.env`. Alternatively, start the included development MySQL, Adminer, and Swagger UI containers:
 
 ```bash
 docker compose -f compose.dev.yaml up -d
 ```
 
-The container uses the `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, and `MYSQL_ROOT_PASSWORD` values from `.env` and exposes MySQL on `127.0.0.1:3307`.
+The development stack uses the `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, and `MYSQL_ROOT_PASSWORD` values from `.env`. It provides:
+
+- MySQL on `127.0.0.1:3307`.
+- [Adminer](https://www.adminer.org/) at `http://127.0.0.1:8080` for managing the database in a browser.
+- [Swagger UI](https://swagger.io/tools/swagger-ui/) at `http://127.0.0.1:8081` for browsing the API's OpenAPI spec. Run `composer api-contract:generate` at least once first (see [README.md](./README.md#api-documentation)) so it has something to display.
+
+In Adminer, use `mysql` as the server and the `DB_USERNAME`, `DB_PASSWORD`, and `DB_DATABASE` values from `.env` to connect.
 
 Once the configured database is available, run the migrations:
 

@@ -8,9 +8,12 @@ use AndrewDyer\Actions\AbstractAction;
 use AndrewDyer\Actions\Exceptions\BadRequestException;
 use App\Application\DTOs\Inputs\CreateUserInput;
 use App\Application\DTOs\Outputs\UserOutput;
+use App\Application\Exceptions\UserEmailAlreadyExistsException;
 use App\Application\Services\UserService;
 use JsonException;
+use OpenApi\Attributes as OA;
 use Psr\Http\Message\ResponseInterface as Response;
+use RuntimeException;
 
 /**
  * Handles creating a new user via HTTP.
@@ -29,10 +32,68 @@ final class CreateUserAction extends AbstractAction
     /**
      * Handles the creation of a new user.
      *
-     * @return Response            A 201 JSON response containing the newly created user.
-     * @throws BadRequestException If required fields are missing from the request body.
-     * @throws JsonException       If the request body contains invalid JSON.
+     * @return Response                        A 201 JSON response containing the newly created user.
+     * @throws RuntimeException                If the request body does not decode to an array.
+     * @throws BadRequestException             If required fields are missing from the request body.
+     * @throws UserEmailAlreadyExistsException If a user with the given email already exists.
+     * @throws JsonException                   If the request body contains invalid JSON.
      */
+    #[OA\Post(
+        path: '/users',
+        operationId: 'createUser',
+        summary: 'Create a user',
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: '#/components/schemas/CreateUserInput')
+        ),
+        tags: ['Users'],
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'The newly created user.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', ref: '#/components/schemas/UserOutput'),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 400,
+                description: 'The request was malformed or missing required fields.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'BAD_REQUEST'),
+                                new OA\Property(property: 'description', type: 'string', example: 'Missing required fields'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 409,
+                description: 'The request conflicts with the current state of the resource.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'RESOURCE_CONFLICT'),
+                                new OA\Property(property: 'description', type: 'string', example: 'A user with email jane.doe@example.com already exists.'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
+        ]
+    )]
     protected function handle(): Response
     {
         $input = CreateUserInput::fromArray($this->getParsedBody());

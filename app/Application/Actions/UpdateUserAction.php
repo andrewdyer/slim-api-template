@@ -8,10 +8,13 @@ use AndrewDyer\Actions\AbstractAction;
 use AndrewDyer\Actions\Exceptions\BadRequestException;
 use App\Application\DTOs\Inputs\UpdateUserInput;
 use App\Application\DTOs\Outputs\UserOutput;
+use App\Application\Exceptions\UserEmailAlreadyExistsException;
 use App\Application\Exceptions\UserNotFoundException;
 use App\Application\Services\UserService;
 use JsonException;
+use OpenApi\Attributes as OA;
 use Psr\Http\Message\ResponseInterface as Response;
+use RuntimeException;
 
 /**
  * Handles updating an existing user via HTTP.
@@ -30,11 +33,89 @@ final class UpdateUserAction extends AbstractAction
     /**
      * Handles the update of an existing user.
      *
-     * @return Response              A 200 JSON response containing the updated user.
-     * @throws UserNotFoundException If no user exists with the given ID.
-     * @throws BadRequestException   If an email address is provided but is not validly formatted.
-     * @throws JsonException         If the request body contains invalid JSON.
+     * @return Response                        A 200 JSON response containing the updated user.
+     * @throws RuntimeException                If the id route argument is missing, or the request body does not decode to an array.
+     * @throws UserNotFoundException           If no user exists with the given ID.
+     * @throws UserEmailAlreadyExistsException If another user with the given email already exists.
+     * @throws BadRequestException             If an email address is provided but is not validly formatted.
+     * @throws JsonException                   If the request body contains invalid JSON.
      */
+    #[OA\Put(
+        path: '/users/{id}',
+        operationId: 'updateUser',
+        summary: 'Update a user',
+        requestBody: new OA\RequestBody(
+            required: false,
+            content: new OA\JsonContent(ref: '#/components/schemas/UpdateUserInput')
+        ),
+        tags: ['Users'],
+        parameters: [
+            new OA\PathParameter(name: 'id', description: 'The unique identifier of the user to update.', schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'The updated user.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', ref: '#/components/schemas/UserOutput'),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 400,
+                description: 'The request was malformed or missing required fields.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'BAD_REQUEST'),
+                                new OA\Property(property: 'description', type: 'string', example: 'Invalid email address'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'The requested resource could not be found.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'RESOURCE_NOT_FOUND'),
+                                new OA\Property(property: 'description', type: 'string', example: 'User with ID 1 not found.'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 409,
+                description: 'The request conflicts with the current state of the resource.',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'error',
+                            properties: [
+                                new OA\Property(property: 'type', type: 'string', example: 'RESOURCE_CONFLICT'),
+                                new OA\Property(property: 'description', type: 'string', example: 'A user with email jane.doe@example.com already exists.'),
+                            ],
+                            type: 'object'
+                        ),
+                    ],
+                    type: 'object'
+                )
+            ),
+        ]
+    )]
     protected function handle(): Response
     {
         $userId = (int)$this->resolveArg('id');

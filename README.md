@@ -61,7 +61,9 @@ repo/
 │   └── index.php                # HTTP entry point
 │
 ├── resources/                   # Development & documentation assets
-│   └── http/                    # HTTP request/response examples
+│   ├── http/                    # HTTP request/response examples
+│   └── openapi/                 # Generated API documentation
+│       └── openapi.json         # Generated OpenAPI specification
 │
 ├── storage/                     # File-based storage
 │   └── logs/                    # Monolog output
@@ -134,6 +136,7 @@ Development tooling is included for a consistent and reliable workflow:
 
 - **[PHPUnit](https://phpunit.de/)** for unit and integration testing.
 - **[PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)** for automated code style enforcement.
+- **[swagger-php](https://github.com/zircote/swagger-php)** for generating an OpenAPI specification from PHP attributes.
 - **[Docker](https://www.docker.com/)** for containerised development and deployment environments.
 - **[GitHub Actions](https://github.com/features/actions)** CI (Continuous Integration) workflow that runs on pushes to main and pull requests, executing unit and integration tests.
 
