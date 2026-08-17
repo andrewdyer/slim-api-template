@@ -54,8 +54,6 @@
         "db:seed": "phinx seed:run",
         "db:seed:create": "phinx seed:create",
         "db:status": "phinx status",
-        "post-install-cmd": "@api-contract:generate",
-        "post-update-cmd": "@api-contract:generate",
         "test": "phpunit",
         "test:unit": "phpunit --testsuite Unit",
         "test:integration": "phpunit --testsuite Integration"

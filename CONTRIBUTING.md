@@ -202,8 +202,6 @@ composer api-contract:generate
 
 This writes the specification to `resources/openapi.json`.
 
-> **Note:** The command also runs automatically after `composer install` and `composer update`.
-
 Preview the generated specification locally with the `swagger-ui` service in `compose.dev.yaml`:
 
 ```bash
